@@ -9,6 +9,7 @@ on:
       RUNNER:
         type: string
         required: true
+        description: xxx
       CHECKOUT:
         type: string
         required: true
@@ -85,23 +86,23 @@ jobs:
           submodules: true
 
       - name: Install CMake
-        uses: ./.github/actions/install-cmake
+        uses: hwhsu1231/ci-sphinx/.github/actions/install-cmake
 
       - name: Install Conda
-        uses: ./.github/actions/install-conda
+        uses: hwhsu1231/ci-sphinx/.github/actions/install-conda
 
       - name: Install Gettext
-        uses: ./.github/actions/install-gettext
+        uses: hwhsu1231/ci-sphinx/.github/actions/install-gettext
 
       - name: Get Other Caches from versions.json
         id: gocv
-        uses: ./.github/actions/get-other-caches-from-versions-file
+        uses: hwhsu1231/ci-sphinx/.github/actions/get-other-caches-from-versions-file
         with:
           version: ${{ inputs.VERSION }}
           versions-file: 'versions.json'
 
       - name: Configure the '${{ inputs.LANGUAGE }}' preset for '${{ inputs.VERSION }}' version
-        uses: ./.github/actions/cmake-configure-preset
+        uses: hwhsu1231/ci-sphinx/.github/actions/cmake-configure-preset
         with:
           source-directory: ${{ github.workspace }}
           preset: ${{ inputs.LANGUAGE }}
@@ -116,35 +117,35 @@ jobs:
           cache-version-of-proj: ${{ steps.gocv.outputs.VERSION_OF_PROJ }}
 
       - name: Build the 'prepare_repositories' target
-        uses: ./.github/actions/cmake-build-target
+        uses: hwhsu1231/ci-sphinx/.github/actions/cmake-build-target
         with:
           source-directory: ${{ github.workspace }}
           preset: ${{ inputs.LANGUAGE }}
           target: 'prepare_repositories'
 
       - name: Build the 'install_requirements' target
-        uses: ./.github/actions/cmake-build-target
+        uses: hwhsu1231/ci-sphinx/.github/actions/cmake-build-target
         with:
           source-directory: ${{ github.workspace }}
           preset: ${{ inputs.LANGUAGE }}
           target: 'install_requirements'
 
       - name: Build the 'sphinx_update_pot' target
-        uses: ./.github/actions/cmake-build-target
+        uses: hwhsu1231/ci-sphinx/.github/actions/cmake-build-target
         with:
           source-directory: ${{ github.workspace }}
           preset: ${{ inputs.LANGUAGE }}
           target: 'sphinx_update_pot'
 
       - name: Build the 'gettext_update_po' target
-        uses: ./.github/actions/cmake-build-target
+        uses: hwhsu1231/ci-sphinx/.github/actions/cmake-build-target
         with:
           source-directory: ${{ github.workspace }}
           preset: ${{ inputs.LANGUAGE }}
           target: 'gettext_update_po'
 
       - name: Build the 'sphinx_build_docs' target
-        uses: ./.github/actions/cmake-build-target
+        uses: hwhsu1231/ci-sphinx/.github/actions/cmake-build-target
         with:
           source-directory: ${{ github.workspace }}
           preset: ${{ inputs.LANGUAGE }}

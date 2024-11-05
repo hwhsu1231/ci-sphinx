@@ -70,17 +70,17 @@ jobs:
           submodules: true
 
       - name: Install CMake
-        uses: ./.github/actions/install-cmake
+        uses: hwhsu1231/ci-sphinx/.github/actions/install-cmake
 
       - name: Configure the 'all' preset for '${{ inputs.VERSION }}' version
-        uses: ./.github/actions/cmake-configure-preset
+        uses: hwhsu1231/ci-sphinx/.github/actions/cmake-configure-preset
         with:
           source-directory: ${{ github.workspace }}
           preset: 'all'
           cache-version: ${{ inputs.VERSION }}
 
       - name: Build the 'readthedocs_symlinks' target
-        uses: ./.github/actions/cmake-build-target
+        uses: hwhsu1231/ci-sphinx/.github/actions/cmake-build-target
         with:
           source-directory: ${{ github.workspace }}
           preset: 'all'
