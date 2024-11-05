@@ -91,22 +91,22 @@ jobs:
       #     fi
 
       - name: Install CMake
-        uses: hwhsu1231/ci-sphinx/.github/actions/install-cmake
+        uses: hwhsu1231/ci-sphinx/.github/actions/install-cmake@main
 
       - name: Install Gettext
-        uses: hwhsu1231/ci-sphinx/.github/actions/install-gettext
+        uses: hwhsu1231/ci-sphinx/.github/actions/install-gettext@main
 
       - name: Install Crowdin
-        uses: hwhsu1231/ci-sphinx/.github/actions/install-crowdin
+        uses: hwhsu1231/ci-sphinx/.github/actions/install-crowdin@main
 
       - name: Get Other Caches from versions.json
         id: gocv
-        uses: hwhsu1231/ci-sphinx/.github/actions/get-other-caches-from-versions-file
+        uses: hwhsu1231/ci-sphinx/.github/actions/get-other-caches-from-versions-file@main
         with:
           version: ${{ inputs.VERSION }}
 
       - name: Configure the 'all' preset for the '${{ inputs.VERSION }}' version
-        uses: hwhsu1231/ci-sphinx/.github/actions/cmake-configure-preset
+        uses: hwhsu1231/ci-sphinx/.github/actions/cmake-configure-preset@main
         with:
           source-directory: ${{ github.workspace }}
           preset: 'all'
@@ -119,7 +119,7 @@ jobs:
           cache-version-of-proj: ${{ steps.gocv.outputs.VERSION_OF_PROJ }}
 
       - name: Build the 'tmscli_push_pot' target
-        uses: hwhsu1231/ci-sphinx/.github/actions/cmake-build-target
+        uses: hwhsu1231/ci-sphinx/.github/actions/cmake-build-target@main
         with:
           source-directory: ${{ github.workspace }}
           preset: 'all'
