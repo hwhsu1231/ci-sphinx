@@ -7,42 +7,49 @@ on:
   workflow_call:
     inputs:
       RUNNER:
-        type: string
         required: true
-        description: xxx
+        type: string
+        description: Runner image for executing the job (e.g., 'ubuntu-latest').
       CHECKOUT:
-        type: string
         required: true
+        type: string
       VERSION:
-        type: string
         required: true
+        type: string
       LANGUAGE:
-        type: string
         required: true
+        type: string
       MODE_OF_UPDATE:
-        type: string
         required: true
+        type: string
       BASEURL_HREF:
-        type: string
         required: true
+        type: string
+        description: Base URL for the generated HTML documentation.
       CALLER_JOB:
-        type: string
         required: true
+        type: string
+        description: Name of the job that triggers this workflow call.
       ENABLE_JOB:
-        type: boolean
         required: true
+        type: boolean
+        description: Whether to enable the job.
       DEPLOY_HTML:
+        required: true
         type: boolean
-        required: true
+        description: Whether to deploy the generated HTML documentation.
       ACTOR_ID:
-        type: string
         required: true
+        type: string
+        description: Unique ID of the GitHub actor.
       ACTOR_NAME:
-        type: string
         required: true
+        type: string
+        description: Name of the GitHub actor.
       ACTOR_LOGIN:
-        type: string
         required: true
+        type: string
+        description: Login handle of the GitHub actor.
     secrets:
       ACTOR_GITHUB_TOKEN:
         required: true
