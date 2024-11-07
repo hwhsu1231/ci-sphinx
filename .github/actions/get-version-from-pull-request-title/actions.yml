@@ -21,7 +21,7 @@ runs:
     - name: Get VERSION from the Pull Request Title
       id: gvprt
       run: |
-        PR_TITLE="${{ github.event.pull_request.title }}"
+        PR_TITLE="${{ inputs.pr-title }}"
         VERSION_REGEX="pot\(([^)]+)\):"
         if [[ "${PR_TITLE}" =~ "${VERSION_REGEX}" ]]; then
           VERSION="${BASH_REMATCH[1]}"
