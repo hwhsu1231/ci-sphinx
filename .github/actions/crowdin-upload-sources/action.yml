@@ -32,7 +32,7 @@ inputs:
     default: 'false'
   working-directory:
     required: false
-    description: The directory from which to run commands or locale files.
+    description: The directory from which to run commands or locate files.
     default: '${{ github.workspace }}'
 
 runs:
