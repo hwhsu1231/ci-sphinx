@@ -18,6 +18,9 @@ on:
       TMSCLI:
         type: string
         required: true
+      CALLER_JOB:
+        type: string
+        required: true
       ENABLE_JOB:
         type: boolean
         required: true
@@ -49,6 +52,7 @@ jobs:
           echo "inputs.PR_TITLE = ${{ inputs.PR_TITLE }}"
           echo "inputs.GETTEXT = ${{ inputs.GETTEXT }}"
           echo "inputs.TMSCLI = ${{ inputs.TMSCLI }}"
+          echo "inputs.CALLER_JOB = ${{ inputs.CALLER_JOB }}"
           echo "inputs.ENABLE_JOB = ${{ inputs.ENABLE_JOB }}"
           echo "[Secrets]"
           echo "secrets.ACTOR_GITHUB_TOKEN = ${{ secrets.ACTOR_GITHUB_TOKEN }}"
