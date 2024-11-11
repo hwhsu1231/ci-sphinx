@@ -161,7 +161,7 @@ jobs:
           PULL_REQUEST_LABEL_LIST="gettext"
           for VER in "${VERS[@]}"; do
             if [[ "${VERSION}" == "${VER}" ]]; then
-              PULL_REQUEST_LABEL_LIST="${PULL_REQUEST_LABEL_LIST},crowdin"
+              PULL_REQUEST_LABEL_LIST="${PULL_REQUEST_LABEL_LIST},tmscli"
               break
             fi
           done
