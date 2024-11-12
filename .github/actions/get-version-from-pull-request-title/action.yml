@@ -24,7 +24,8 @@ runs:
       run: |
         PR_TITLE="${{ inputs.pr-title }}"
         VERSION_REGEX="pot\(([^)]+)\):"
-        if [[ "${PR_TITLE}" =~ "${VERSION_REGEX}" ]]; then
+        # See https://stackoverflow.com/a/218217/16265240 for details.
+        if [[ ${PR_TITLE} =~ ${VERSION_REGEX} ]]; then
           VERSION="${BASH_REMATCH[1]}"
           echo "Found version: ${VERSION}"
         else
