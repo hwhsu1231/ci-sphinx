@@ -33,7 +33,7 @@ jobs:
     if: ${{ inputs.ENABLE_JOB }}
     runs-on: ${{ inputs.RUNNER }}
     steps:
-      - name: Print Contexts/Inputs/Secrets
+      - name: Print Contexts/Inputs
         shell: bash
         run: |
           echo "[Contexts]"
@@ -54,8 +54,6 @@ jobs:
           echo "inputs.TMSCLI = ${{ inputs.TMSCLI }}"
           echo "inputs.CALLER_JOB = ${{ inputs.CALLER_JOB }}"
           echo "inputs.ENABLE_JOB = ${{ inputs.ENABLE_JOB }}"
-          echo "[Secrets]"
-          echo "secrets.ACTOR_GITHUB_TOKEN = ${{ secrets.ACTOR_GITHUB_TOKEN }}"
 
       - name: Get VERSION from the Pull Request Title
         id: gvprt
