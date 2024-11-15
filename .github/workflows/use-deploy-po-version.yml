@@ -87,12 +87,12 @@ jobs:
           preset: 'all'
           cache-version: ${{ inputs.VERSION }}
 
-      - name: Build the 'readthedocs_symlinks' target
+      - name: Build the 'create_rtd_symlinks' target
         uses: hwhsu1231/ci-sphinx/.github/actions/cmake-build-target@main
         with:
           source-directory: ${{ github.workspace }}
           preset: 'all'
-          target: 'readthedocs_symlinks'
+          target: 'create_rtd_symlinks'
 
       - name: Remove 'l10n/${{ inputs.VERSION }}/locale/pot' directory
         run: |
