@@ -13,15 +13,19 @@ on:
       CHECKOUT:
         required: true
         type: string
+        description: Git reference to be checked out (e.g., 'github.ref').
       VERSION:
         required: true
         type: string
+        description: Version of the documentation.
       LANGUAGE:
         required: true
         type: string
+        description: Language of the documentation.
       MODE_OF_UPDATE:
         required: true
         type: string
+        description: Mode of updating .pot and .po files.
       BASEURL_HREF:
         required: true
         type: string
