@@ -54,6 +54,10 @@ on:
         required: true
         type: string
         description: Login handle of the GitHub actor.
+      ACTOR_EMAIL:
+        required: true
+        type: string
+        description: Email of the GitHub actor.
     secrets:
       ACTOR_GITHUB_TOKEN:
         required: true
@@ -94,6 +98,7 @@ jobs:
           echo "inputs.ACTOR_ID = ${{ inputs.ACTOR_ID }}"
           echo "inputs.ACTOR_NAME = ${{ inputs.ACTOR_NAME }}"
           echo "inputs.ACTOR_LOGIN = ${{ inputs.ACTOR_LOGIN }}"
+          echo "inputs.ACTOR_EMAIL = ${{ inputs.ACTOR_EMAIL }}"
           echo "[Secrets]"
           echo "secrets.ACTOR_GITHUB_TOKEN = ${{ secrets.ACTOR_GITHUB_TOKEN }}"
 
@@ -183,7 +188,7 @@ jobs:
         with:
           token: ${{ secrets.ACTOR_GITHUB_TOKEN }}
           git-config-name: ${{ inputs.ACTOR_NAME }}
-          git-config-email: ${{ inputs.ACTOR_ID }}+${{ inputs.ACTOR_LOGIN }}@users.noreply.github.com
+          git-config-email: ${{ inputs.ACTOR_EMAIL }}
           branch: 'gh-pages'
           folder: './out/html'
           target-folder: '.'

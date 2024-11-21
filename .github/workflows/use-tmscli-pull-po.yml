@@ -36,6 +36,9 @@ on:
       ACTOR_LOGIN:
         type: string
         required: true
+      ACTOR_EMAIL:
+        required: true
+        type: string
     secrets:
       ACTOR_GITHUB_TOKEN:
         required: true

@@ -18,13 +18,10 @@ on:
       ENABLE_JOB:
         type: boolean
         required: true
-      ACTOR_ID:
-        type: string
-        required: true
       ACTOR_NAME:
         type: string
         required: true
-      ACTOR_LOGIN:
+      ACTOR_EMAIL:
         type: string
         required: true
     secrets:
@@ -59,9 +56,8 @@ jobs:
           echo "inputs.CHECKOUT = ${{ inputs.CHECKOUT }}"
           echo "inputs.VERSION = ${{ inputs.VERSION }}"
           echo "inputs.ENABLE_JOB = ${{ inputs.ENABLE_JOB }}"
-          echo "inputs.ACTOR_ID = ${{ inputs.ACTOR_ID }}"
           echo "inputs.ACTOR_NAME = ${{ inputs.ACTOR_NAME }}"
-          echo "inputs.ACTOR_LOGIN = ${{ inputs.ACTOR_LOGIN }}"
+          echo "inputs.ACTOR_EMAIL = ${{ inputs.ACTOR_EMAIL }}"
           echo "[Secrets]"
           echo "secrets.CROWDIN_PERSONAL_TOKEN = ${{ secrets.CROWDIN_PERSONAL_TOKEN }}"
 
