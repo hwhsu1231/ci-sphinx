@@ -160,28 +160,11 @@ jobs:
         with:
           version: ${{ inputs.VERSION }}
 
-      # get-label-list-for-pr-from-versions-file
       - name: Get the Label List for the Pull Request from versions.json
         id: gllpr
         uses: hwhsu1231/ci-sphinx/.github/actions/get-label-list-for-pr-from-versions-file@main
         with:
           version: ${{ inputs.VERSION }}
-        # shell: bash
-        # run: |
-        #   VERSION="${{ inputs.VERSION }}"
-        #   JQ_FILTER="[.[] | map(select(.VERSION_COMPENDIUM == \"\"))] | add | .[].VERSION"
-        #   JQ_FILE="versions.json"
-        #   VERS=($(jq -r "${JQ_FILTER}" "${JQ_FILE}" | tr -d '\r'))
-        #   PULL_REQUEST_LABEL_LIST="gettext"
-        #   for VER in "${VERS[@]}"; do
-        #     if [[ "${VERSION}" == "${VER}" ]]; then
-        #       PULL_REQUEST_LABEL_LIST="${PULL_REQUEST_LABEL_LIST},tmscli"
-        #       break
-        #     fi
-        #   done
-        #   echo "PULL_REQUEST_LABEL_LIST=${PULL_REQUEST_LABEL_LIST}" >> ${GITHUB_OUTPUT}
-        #   echo "PULL_REQUEST_LABEL_LIST:"
-        #   echo "${PULL_REQUEST_LABEL_LIST}"
 
       - name: Get the Current Job's ID
         id: gcji
