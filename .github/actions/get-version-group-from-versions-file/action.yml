@@ -8,15 +8,15 @@ description: Get the Version Group from versions.json
 inputs:
   version:
     required: true    # [required]
-    description: 'The version to search for in the specified versions.json file.'
+    description: The version to search for in the specified versions.json file.
   versions-file:
     required: false
-    description: xxx
     default: 'versions.json'
+    description: The path to the JSON file containing version data.
   working-directory:
     required: false
-    description: 'The root directory for running commands or locating files.'
     default: '${{ github.workspace }}'
+    description: The root directory for running commands or locating files.
 
 outputs:
   VERSION_GROUP:
