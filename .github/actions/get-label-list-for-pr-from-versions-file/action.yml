@@ -1,0 +1,50 @@
+# Distributed under the OSI-approved BSD 3-Clause License.
+# See accompanying file LICENSE.txt for details.
+
+name: get-label-list-for-pr-from-versions-file
+
+description: Get the Label List for the Pull Request from versions.json
+
+inputs:
+  version:
+    required: true    # [required]
+    description: The version to search for in the specified versions.json file.
+  versions-file:
+    required: false
+    description: The path to the JSON file containing version data.
+    default: 'versions.json'
+  working-directory:
+    required: false
+    description: The directory from which to run commands or locate files.
+    default: '${{ github.workspace }}'
+
+outputs:
+  PULL_REQUEST_LABEL_LIST:
+    value: ${{ steps.gllpr.outputs.PULL_REQUEST_LABEL_LIST }}
+    description: xxx
+
+runs:
+  using: composite
+  steps:
+    - name: Get the Label List for the Pull Request from versions.json
+      id: gllpr
+      shell: bash
+      run: |
+        VERSION="${{ inputs.version }}"
+        VERSIONS_FILE="${{ inputs.versions-file }}"
+        WORKING_DIRECTORY="${{ inputs.working-directory }}"
+
+        JQ_FILTER="[.[] | map(select(.VERSION_COMPENDIUM == \"\"))] | add | .[].VERSION"
+        JQ_FILE="${VERSIONS_FILE}"
+        VERSION_LINES=($(jq -r "${JQ_FILTER}" "${JQ_FILE}" | tr -d '\r'))
+        PULL_REQUEST_LABEL_LIST="gettext"
+        for VERSION_LINE in "${VERSION_LINES[@]}"; do
+          if [[ "${VERSION}" == "${VERSION_LINE}" ]]; then
+            PULL_REQUEST_LABEL_LIST="${PULL_REQUEST_LABEL_LIST},tmscli"
+            break
+          fi
+        done
+
+        echo "PULL_REQUEST_LABEL_LIST=${PULL_REQUEST_LABEL_LIST}" >> ${GITHUB_OUTPUT}
+        echo "PULL_REQUEST_LABEL_LIST:"
+        echo "${PULL_REQUEST_LABEL_LIST}"
