@@ -24,18 +24,12 @@ on:
       ENABLE_JOB:
         type: boolean
         required: true  # [required]
-      ACTOR_ID:
-        type: string
-        required: true  # [required]
       ACTOR_NAME:
         type: string
         required: true  # [required]
-      ACTOR_LOGIN:
+      ACTOR_EMAIL:
         type: string
         required: true  # [required]
-      ACTOR_EMAIL:
-        required: true
-        type: string
     secrets:
       ACTOR_GITHUB_TOKEN:
         required: true
@@ -72,9 +66,8 @@ jobs:
           echo "inputs.LANGUAGE = ${{ inputs.LANGUAGE }}"
           echo "inputs.CALLER_JOB = ${{ inputs.CALLER_JOB }}"
           echo "inputs.ENABLE_JOB = ${{ inputs.ENABLE_JOB }}"
-          echo "inputs.ACTOR_ID = ${{ inputs.ACTOR_ID }}"
           echo "inputs.ACTOR_NAME = ${{ inputs.ACTOR_NAME }}"
-          echo "inputs.ACTOR_LOGIN = ${{ inputs.ACTOR_LOGIN }}"
+          echo "inputs.ACTOR_EMAIL = ${{ inputs.ACTOR_EMAIL }}"
           echo "[Secrets]"
           echo "secrets.ACTOR_GITHUB_TOKEN = ${{ secrets.ACTOR_GITHUB_TOKEN }}"
           echo "secrets.CROWDIN_PERSONAL_TOKEN = ${{ secrets.CROWDIN_PERSONAL_TOKEN }}"
@@ -165,7 +158,7 @@ jobs:
           add: '.'
           pull: '--rebase --autostash'
           author_name: ${{ inputs.ACTOR_NAME }}
-          author_email: ${{ inputs.ACTOR_ID }}+${{ inputs.ACTOR_LOGIN }}@users.noreply.github.com
+          author_email: ${{ inputs.ACTOR_EMAIL }}
           message: |
             tr(${{ inputs.VERSION }}): pull ${{ inputs.LANGUAGE }} translations from Crowdin
 

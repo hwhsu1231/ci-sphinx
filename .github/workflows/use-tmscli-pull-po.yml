@@ -27,18 +27,12 @@ on:
       ENABLE_JOB:
         type: boolean
         required: true
-      ACTOR_ID:
-        type: string
-        required: true
       ACTOR_NAME:
         type: string
         required: true
-      ACTOR_LOGIN:
-        type: string
-        required: true
       ACTOR_EMAIL:
-        required: true
         type: string
+        required: true
     secrets:
       ACTOR_GITHUB_TOKEN:
         required: true
@@ -78,7 +72,7 @@ jobs:
           echo "inputs.ENABLE_JOB = ${{ inputs.ENABLE_JOB }}"
           echo "inputs.ACTOR_ID = ${{ inputs.ACTOR_ID }}"
           echo "inputs.ACTOR_NAME = ${{ inputs.ACTOR_NAME }}"
-          echo "inputs.ACTOR_LOGIN = ${{ inputs.ACTOR_LOGIN }}"
+          echo "inputs.ACTOR_EMAIL = ${{ inputs.ACTOR_EMAIL }}"
           echo "[Secrets]"
           echo "secrets.ACTOR_GITHUB_TOKEN = ${{ secrets.ACTOR_GITHUB_TOKEN }}"
           echo "secrets.CROWDIN_PERSONAL_TOKEN = ${{ secrets.CROWDIN_PERSONAL_TOKEN }}"
@@ -176,7 +170,7 @@ jobs:
           add: './${{ inputs.VERSION }}'
           pull: '--rebase --autostash'  # required 'actions/checkout' with 'fetch-depth: 0'
           author_name: ${{ inputs.ACTOR_NAME }}
-          author_email: ${{ inputs.ACTOR_ID }}+${{ inputs.ACTOR_LOGIN }}@users.noreply.github.com
+          author_email: ${{ inputs.ACTOR_EMAIL }}
           message: |
             tr(${{ inputs.VERSION }}): pull ${{ inputs.LANGUAGE }} translations from Crowdin
 

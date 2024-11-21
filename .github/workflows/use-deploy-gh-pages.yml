@@ -42,22 +42,14 @@ on:
         required: true
         type: boolean
         description: Whether to deploy the generated HTML documentation.
-      ACTOR_ID:
-        required: true
-        type: string
-        description: Unique ID of the GitHub actor.
       ACTOR_NAME:
         required: true
         type: string
         description: Name of the GitHub actor.
-      ACTOR_LOGIN:
-        required: true
-        type: string
-        description: Login handle of the GitHub actor.
       ACTOR_EMAIL:
         required: true
         type: string
-        description: Email of the GitHub actor.
+        description: Login handle of the GitHub actor.
     secrets:
       ACTOR_GITHUB_TOKEN:
         required: true
@@ -97,7 +89,7 @@ jobs:
           echo "inputs.DEPLOY_HTML = ${{ inputs.DEPLOY_HTML }}"
           echo "inputs.ACTOR_ID = ${{ inputs.ACTOR_ID }}"
           echo "inputs.ACTOR_NAME = ${{ inputs.ACTOR_NAME }}"
-          echo "inputs.ACTOR_LOGIN = ${{ inputs.ACTOR_LOGIN }}"
+          echo "inputs.ACTOR_EMAIL = ${{ inputs.ACTOR_EMAIL }}"
           echo "inputs.ACTOR_EMAIL = ${{ inputs.ACTOR_EMAIL }}"
           echo "[Secrets]"
           echo "secrets.ACTOR_GITHUB_TOKEN = ${{ secrets.ACTOR_GITHUB_TOKEN }}"
