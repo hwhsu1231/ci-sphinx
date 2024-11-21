@@ -236,6 +236,7 @@ jobs:
           source_branch: sphinx/pot/${{ inputs.VERSION }}
           target_branch: l10n
           label: ${{ steps.gllpr.outputs.PULL_REQUEST_LABEL_LIST }}
+          get_diff: true
           title: |
             pot(${{ inputs.VERSION }}): update .pot from sphinx
           body: |
