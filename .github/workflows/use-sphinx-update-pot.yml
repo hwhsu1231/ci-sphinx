@@ -9,33 +9,43 @@ on:
       RUNNER:
         type: string
         required: true
+        description: Runner image for executing the job (e.g., 'ubuntu-latest').
       VERSION:
         type: string
         required: true
+        description: Version of the documentation.
       LANGUAGE:
         type: string
         required: true
+        description: Language of the documentation.
       MODE_OF_UPDATE:
         type: string
         required: true
+        description: Mode of updating .pot and .po files.
       CALLER_JOB:
         type: string
         required: true
+        description: Name of the job that triggers this workflow call.
       ENABLE_JOB:
         type: boolean
         required: true
+        description: Whether to enable the job.
       CREATE_PR:
         type: boolean
         required: true
+        description: Whether to create the pull request.
       ACTOR_ID:
         type: string
         required: true
+        description: Unique ID of the GitHub actor.
       ACTOR_NAME:
         type: string
         required: true
+        description: Name of the GitHub actor.
       ACTOR_LOGIN:
         type: string
         required: true
+        description: Login handle of the GitHub actor.
     secrets:
       ACTOR_GITHUB_TOKEN:
         required: true
