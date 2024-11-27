@@ -20,7 +20,7 @@ inputs:
     default: ''
   crowdin-language-list:
     required: false
-    description: Comma-separated list of languages to download.
+    description: The comma-separated list of languages to download.
     default: ''
   crowdin-export-only-approved:
     required: false
