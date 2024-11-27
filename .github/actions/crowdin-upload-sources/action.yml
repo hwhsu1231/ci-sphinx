@@ -16,19 +16,19 @@ inputs:
     default: ''
   crowdin-personal-token:
     required: false
-    description: The personal access token for Crowdin authentication.
+    description: The personal access token for authentication.
     default: ''
   crowdin-no-progress:
     required: false
-    description: Whether to disable the progress bar output during the operation.
+    description: Whether to disable progress on executed command.
     default: 'false'
   crowdin-verbose:
     required: false
-    description: Whether to enable verbose output for detailed logs.
+    description: Whether to provide more information about the command execution.
     default: 'false'
   crowdin-dryrun:
     required: false
-    description: xxx
+    description: Whether to print a command output without execution.
     default: 'false'
   working-directory:
     required: false
