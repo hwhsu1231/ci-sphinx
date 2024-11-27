@@ -15,7 +15,7 @@ inputs:
     description: The name of the branch to delete in Crowdin.
     default: ''
   crowdin-personal-token:
-    required: true
+    required: false
     description: The personal access token for Crowdin authentication.
     default: ''
   crowdin-no-progress:
