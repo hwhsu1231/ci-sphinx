@@ -12,11 +12,11 @@ inputs:
     default: ''
   crowdin-branch-name:
     required: false
-    description: The branch name in Crowdin.
+    description: The name of the branch to download translations in Crowdin.
     default: ''
   crowdin-personal-token:
     required: false
-    description: Your personal access token for Crowdin.
+    description: The personal access token for authentication.
     default: ''
   crowdin-language-list:
     required: false
@@ -28,15 +28,15 @@ inputs:
     default: 'false'
   crowdin-no-progress:
     required: false
-    description: Disable the progress bar.
+    description: hether to disable progress on executed command.
     default: 'false'
   crowdin-verbose:
     required: false
-    description: Enable verbose logging.
+    description: Whether to provide more information about the command execution.
     default: 'false'
   crowdin-dryrun:
     required: false
-    description: Perform a dry run without downloading files.
+    description: Whether to print a command output without execution.
     default: 'false'
   working-directory:
     required: false

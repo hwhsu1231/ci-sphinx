@@ -12,7 +12,7 @@ inputs:
     default: ''
   crowdin-branch-name:
     required: false
-    description: The name of the branch to delete in Crowdin.
+    description: The name of the branch to upload sources in Crowdin.
     default: ''
   crowdin-personal-token:
     required: false
