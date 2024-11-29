@@ -1,0 +1,86 @@
+# Distributed under the OSI-approved BSD 3-Clause License.
+# See accompanying file LICENSE.txt for details.
+
+name: get-all-in-one-list-from-versions-file
+
+description: Get the ALL_IN_ONE List from versions.json
+
+inputs:
+  type:
+    required: true    # [required]
+    description: >
+      Type of processing: 'matrix' or 'single'.
+  version:
+    required: true    # [required]
+    description: Version to filter (used in 'single' mode).
+  version-group:
+    required: true    # [required]
+    description: >
+      Group of versions: 'dev', 'v3', or 'all'.
+  versions-file:
+    required: false
+    description: Path to the versions.json file.
+    default: 'versions.json'
+  working-directory:
+    required: false
+    description: Working directory for the action.
+    default: ${{ github.workspace }}
+
+outputs:
+  ALL_IN_ONE_NUM:
+    value: ${{ steps.gain.outputs.ALL_IN_ONE_NUM }}
+    description: Number of items in the ALL_IN_ONE list.
+  ALL_IN_ONE_LIST:
+    value: ${{ steps.gain.outputs.ALL_IN_ONE_LIST }}
+    description: JSON list of ALL_IN_ONE values.
+
+runs:
+  using: composite
+  steps:
+    - name: Get the ALL_IN_ONE List from versions.json
+      id: gain
+      shell: bash
+      run: |
+        TYPE="${{ inputs.type }}"
+        VERSION="${{ inputs.version }}"
+        VERSION_GROUP="${{ inputs.version-group }}"
+        VERSIONS_FILE="${{ inputs.versions-file }}"
+        WORKING_DIRECTORY=$(echo "${{ inputs.working-directory }}" | sed 's#\\#/#g' | sed 's#^\([A-Za-z]\):#/\L\1#')
+
+        cd ${WORKING_DIRECTORY}
+
+        if [[ "${TYPE}" == "matrix" ]]; then
+          if [[ ${VERSION_GROUP} == "all" ]]; then
+            VERSION_GROUP_FILTER=""
+          else
+            VERSION_GROUP_FILTER="\"${VERSION_GROUP}\""
+          fi
+
+          JQ_FILTER="[.[${VERSION_GROUP_FILTER}] | map(.LANGUAGE_ALL_IN_ONE)] | add"
+          JQ_FILE="${VERSIONS_FILE}"
+          ALL_IN_ONE_LIST=$(jq -c "${JQ_FILTER}" "${JQ_FILE}")
+
+        elif [[ "${TYPE}" == "single" ]]; then
+          JQ_FILTER=".[] | .[] | select(.VERSION == \"${VERSION}\") | .LANGUAGE_ALL_IN_ONE"
+          JQ_FILE="${VERSIONS_FILE}"
+          ALL_IN_ONE_VALUE=$(jq -r "${JQ_FILTER}" "${JQ_FILE}")
+
+          if [[ -z "${ALL_IN_ONE_VALUE}" ]]; then
+            echo "Error: No matching entry for version '${VERSION}' in the list." >&2
+            exit 1
+          fi
+          ALL_IN_ONE_LIST="[ ${ALL_IN_ONE_VALUE} ]"
+        else
+          echo "Error: Invalid TYPE value. (${TYPE})" >&2
+          exit 1
+        fi
+
+        ALL_IN_ONE_NUM=$(jq "length" <<< "${ALL_IN_ONE_LIST}")
+
+        echo "ALL_IN_ONE_NUM=${ALL_IN_ONE_NUM}" >> ${GITHUB_OUTPUT}
+        echo "ALL_IN_ONE_NUM:"
+        echo "${ALL_IN_ONE_NUM}"
+
+        echo "ALL_IN_ONE_LIST=${ALL_IN_ONE_LIST}" >> ${GITHUB_OUTPUT}
+        echo "ALL_IN_ONE_LIST:"
+        echo "${ALL_IN_ONE_LIST}" | jq "."
