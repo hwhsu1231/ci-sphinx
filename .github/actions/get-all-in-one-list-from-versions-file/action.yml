@@ -3,7 +3,7 @@
 
 name: get-all-in-one-list-from-versions-file
 
-description: Get the ALL_IN_ONE List from versions.json
+description: Get the ALLINONE List from versions.json
 
 inputs:
   type:
@@ -31,17 +31,17 @@ inputs:
     default: ${{ github.workspace }}
 
 outputs:
-  ALL_IN_ONE_NUM:
-    value: ${{ steps.gain.outputs.ALL_IN_ONE_NUM }}
-    description: Number of items in the ALL_IN_ONE list.
-  ALL_IN_ONE_LIST:
-    value: ${{ steps.gain.outputs.ALL_IN_ONE_LIST }}
-    description: JSON list of ALL_IN_ONE values.
+  ALLINONE_NUM:
+    value: ${{ steps.gain.outputs.ALLINONE_NUM }}
+    description: Number of items in the ALLINONE list.
+  ALLINONE_LIST:
+    value: ${{ steps.gain.outputs.ALLINONE_LIST }}
+    description: JSON list of ALLINONE values.
 
 runs:
   using: composite
   steps:
-    - name: Get the ALL_IN_ONE List from versions.json
+    - name: Get the ALLINONE List from versions.json
       id: gain
       shell: bash
       run: |
@@ -73,27 +73,27 @@ runs:
         OBJECT_LIST=$(jq -c "${JQ_FILTER}" "${JQ_FILE}")
 
         if [[ "${TYPE}" == "matrix" ]]; then
-          ALL_IN_ONE_LIST=$(echo "${OBJECT_LIST}" | jq -c "[.[].ALL_IN_ONE]")
+          ALLINONE_LIST=$(echo "${OBJECT_LIST}" | jq -c "[.[].ALLINONE]")
         elif [[ "${TYPE}" == "single" ]]; then
-          ALL_IN_ONE=$(echo "${OBJECT_LIST}" | jq -r ".[] | select(.VERSION == \"${VERSION}\") | .ALL_IN_ONE")
-          if [ "${ALL_IN_ONE}" == "true" ] || [ "${ALL_IN_ONE}" == "false" ]; then
-            echo "ALL_IN_ONE value for VERSION '${VERSION}' is: ${ALL_IN_ONE}"
+          ALLINONE=$(echo "${OBJECT_LIST}" | jq -r ".[] | select(.VERSION == \"${VERSION}\") | .ALLINONE")
+          if [ "${ALLINONE}" == "true" ] || [ "${ALLINONE}" == "false" ]; then
+            echo "ALLINONE value for VERSION '${VERSION}' is: ${ALLINONE}"
           else
             echo "Error: Version '${VERSION}' is NOT found in the list." >&2
             exit 1
           fi
-          ALL_IN_ONE_LIST="[ \"${ALL_IN_ONE_VALUE}\" ]"
+          ALLINONE_LIST="[ \"${ALLINONE_VALUE}\" ]"
         else
           echo "Error: Invalid TYPE value. (${TYPE})" >&2
           exit 1
         fi
 
-        ALL_IN_ONE_NUM=$(jq "length" <<< "${ALL_IN_ONE_LIST}")
+        ALLINONE_NUM=$(jq "length" <<< "${ALLINONE_LIST}")
 
-        echo "ALL_IN_ONE_NUM=${ALL_IN_ONE_NUM}" >> ${GITHUB_OUTPUT}
-        echo "ALL_IN_ONE_NUM:"
-        echo "${ALL_IN_ONE_NUM}"
+        echo "ALLINONE_NUM=${ALLINONE_NUM}" >> ${GITHUB_OUTPUT}
+        echo "ALLINONE_NUM:"
+        echo "${ALLINONE_NUM}"
 
-        echo "ALL_IN_ONE_LIST=${ALL_IN_ONE_LIST}" >> ${GITHUB_OUTPUT}
-        echo "ALL_IN_ONE_LIST:"
-        echo "${ALL_IN_ONE_LIST}" | jq "."
+        echo "ALLINONE_LIST=${ALLINONE_LIST}" >> ${GITHUB_OUTPUT}
+        echo "ALLINONE_LIST:"
+        echo "${ALLINONE_LIST}" | jq "."
