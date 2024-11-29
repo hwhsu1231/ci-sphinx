@@ -7,15 +7,15 @@ description: Get the Version Reference from references.json
 
 inputs:
   jq-filter:
-    required: true
+    required: true    # [required]
     description: xxx
   jq-file:
-    required: true
+    required: true    # [required]
     description: xxx
   working-directory:
     required: false
-    description: xxx
     default: ${{ github.workspace }}
+    description: xxx
 
 outputs:
   VERSION_REF:

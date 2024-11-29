@@ -8,15 +8,18 @@ description: Get Other Caches from versions.json
 inputs:
   version:
     required: true    # [required]
-    description: The version to search for in the specified versions.json file.
+    description: >
+      The version to search for in the specified versions.json file.
   versions-file:
     required: false
-    description: The path to the JSON file containing version data.
     default: 'versions.json'
+    description: >
+      The path to the JSON file containing version data.
   working-directory:
     required: false
-    description: The directory from which to run commands or locate files.
     default: '${{ github.workspace }}'
+    description: >
+      The directory from which to run commands or locate files.
 
 outputs:
   COMPENDIUM:
