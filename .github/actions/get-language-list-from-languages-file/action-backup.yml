@@ -9,6 +9,10 @@ inputs:
   language:
     required: true    # [required]
     description: xxx
+  all-in-one:
+    required: false
+    description: xxx
+    default: 'true'
   languages-file:
     required: false
     description: xxx
@@ -34,15 +38,23 @@ runs:
       shell: bash
       run: |
         LANGUAGE="${{ inputs.language }}"
+        ALL_IN_ONE="${{ inputs.all-in-one }}"
         LANGUAGES_FILE="${{ inputs.languages-file }}"
         WORKING_DIRECTORY=$(echo "${{ inputs.working-directory }}" | sed 's#\\#/#g' | sed 's#^\([A-Za-z]\):#/\L\1#')
 
         cd ${WORKING_DIRECTORY}
 
         if [[ "${LANGUAGE}" == "all" ]]; then
-          JQ_FILTER="keys"
-          JQ_FILE="${LANGUAGES_FILE}"
-          LANGUAGE_LIST=$(jq -c "${JQ_FILTER}" "${JQ_FILE}")
+          if [[ "${ALL_IN_ONE}" == "true" ]]; then
+            LANGUAGE_LIST="[ \"all\" ]"
+          elif [[ "${ALL_IN_ONE}" == "false" ]]; then
+            JQ_FILTER="keys"
+            JQ_FILE="${LANGUAGES_FILE}"
+            LANGUAGE_LIST=$(jq -c "${JQ_FILTER}" "${JQ_FILE}")
+          else
+            echo "Error: Invalid ALL_IN_ONE value. (${ALL_IN_ONE})" >&2
+            exit 1
+          fi
         else
           JQ_FILTER="keys[]"
           JQ_FILE="${LANGUAGES_FILE}"
