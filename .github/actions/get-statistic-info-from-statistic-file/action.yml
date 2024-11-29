@@ -11,8 +11,8 @@ inputs:
     description: xxx
   working-directory:
     required: false
-    description: xxx
     default: '${{ github.workspace }}'
+    description: xxx
 
 outputs:
   STATISTIC_INFO:

@@ -11,12 +11,12 @@ inputs:
     description: xxx
   languages-file:
     required: false
-    description: xxx
     default: 'languages.json'
+    description: xxx
   working-directory:
     required: false
-    description: The directory from which to run commands or locate files.
     default: ${{ github.workspace }}
+    description: The directory from which to run commands or locate files.
 
 outputs:
   LANGUAGE_NUM:

@@ -9,7 +9,7 @@ inputs:
   matrix-type:
     required: true    # [required]
     description: >
-      Type of processing: 'version-only' or 'version-language'.
+      Possible values are: 'version-only' or 'version-language'.
   version-list:
     required: true    # [required]
     description: xxx
