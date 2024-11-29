@@ -71,7 +71,7 @@ runs:
         OBJECT_LIST=$(jq -c "${JQ_FILTER}" "${JQ_FILE}")
 
         if [[ "${TYPE}" == "matrix" ]]; then
-          VERSION_LIST=$(echo "${OBJECT_LIST}" | jq -c -r "[.[].VERSION]")
+          VERSION_LIST=$(echo "${OBJECT_LIST}" | jq -c "[.[].VERSION]")
         elif [[ "${TYPE}" == "single" ]]; then
           VERSION_LINES=($(echo "${OBJECT_LIST}" | jq -c -r ".[].VERSION" | tr -d '\r'))
           FOUND_VERSION=false
@@ -97,6 +97,8 @@ runs:
         echo "VERSION_NUM=${VERSION_NUM}" >> ${GITHUB_OUTPUT}
         echo "VERSION_NUM:"
         echo "${VERSION_NUM}"
+
+        VERSION_LIST=$(echo "${VERSION_LIST}" | sed 's/^"//;s/"$//')
 
         echo "VERSION_LIST=${VERSION_LIST}" >> ${GITHUB_OUTPUT}
         echo "VERSION_LIST:"
