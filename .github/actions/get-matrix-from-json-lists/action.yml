@@ -1,0 +1,84 @@
+# Distributed under the OSI-approved BSD 3-Clause License.
+# See accompanying file LICENSE.txt for details.
+
+name: get-matrix-from-json-lists
+
+description: Get the MATRIX from the JSON Lists
+
+inputs:
+  matrix-type:
+    required: true    # [required]
+    description: >
+      Type of processing: 'version-only' or 'version-language'.
+  version-list:
+    required: true    # [required]
+    description: xxx
+  allinone-list:
+    required: false
+    default: '[]'
+    description: xxx
+  language-list:
+    required: false
+    default: '[]'
+    description: xxx
+
+outputs:
+  MATRIX:
+    value: ${{ steps.gain.outputs.MATRIX }}
+    description: xxx
+
+runs:
+  using: composite
+  steps:
+    - name: Get the MATRIX from the JSON Lists
+      id: gain
+      shell: bash
+      run: |
+        # Get the Matrix type and the JSON lists from Inputs.
+        MATRIX_TYPE='${{ inputs.matrix-type }}'
+        VERSION_LIST='${{ inputs.version-list }}'
+        ALLINONE_LIST='${{ inputs.allinone-list }}'
+        LANGUAGE_LIST='${{ inputs.language-list }}'
+
+        # Convert the JSON lists to the Bash arraies.
+        VERSION_ARRAY=($(echo "$VERSION_LIST" | jq -r '.[]'))
+        ALLINONE_ARRAY=($(echo "$ALLINONE_LIST" | jq -r '.[]'))
+        LANGUAGE_ARRAY=($(echo "$LANGUAGE_LIST" | jq -r '.[]'))
+
+        # Initialize the Matrix Array
+        MATRIX_ARRAY=()
+
+        # Check the type of matrix to generate
+        if [[ "${MATRIX_TYPE}" == "version-only" ]]; then
+          # Generate a matrix with only VERSION objects
+          for VERSION in "${VERSION_ARRAY[@]}"; do
+            MATRIX_ARRAY+=("{\"VERSION\":\"${VERSION}\"}")
+          done
+        elif [[ "${MATRIX_TYPE}" == "version-language" ]]; then
+          # Generate a full matrix with VERSION and LANGUAGE combinations
+          for INDEX in "${!VERSION_ARRAY[@]}"; do
+            VERSION="${VERSION_ARRAY[${INDEX}]}"
+            ALLINONE="${ALLINONE_ARRAY[${INDEX}]}"
+            if [[ "${ALLINONE}" == "true" ]]; then
+              MATRIX_ARRAY+=("{\"VERSION\":\"${VERSION}\",\"LANGUAGE\":\"all\"}")
+            else
+              for LANGUAGE in "${LANGUAGE_ARRAY[@]}"; do
+                MATRIX_ARRAY+=("{\"VERSION\":\"${VERSION}\",\"LANGUAGE\":\"${LANGUAGE}\"}")
+              done
+            fi
+          done
+        else
+          echo "Error: Invalid MATRIX_TYPE value. (${MATRIX_TYPE})" >&2
+          exit 1
+        fi
+
+        echo "MATRIX_ARRAY:"
+        echo "${MATRIX_ARRAY[@]}"
+
+        # Convert the MATRIX_ARRAY to the MATRIX.
+        MATRIX=$(printf '%s\n' "${MATRIX_ARRAY[@]}" | jq -c -s '.')
+
+        # Output and Print the Matrix.
+        echo "MATRIX=${MATRIX}" >> ${GITHUB_OUTPUT}
+        echo "MATRIX:"
+        echo "${MATRIX}" | jq .
