@@ -17,6 +17,10 @@ inputs:
     required: true    # [required]
     description: >
       Group of versions: 'dev', 'v3', or 'all'.
+  version-filter:
+    required: true    # [required]
+    description: >
+      Possible values are: 'all', 'gettext', and 'tmscli'.
   versions-file:
     required: false
     description: Path to the versions.json file.
@@ -44,6 +48,7 @@ runs:
         TYPE="${{ inputs.type }}"
         VERSION="${{ inputs.version }}"
         VERSION_GROUP="${{ inputs.version-group }}"
+        VERSION_FILTER="${{ inputs.version-filter }}"
         VERSIONS_FILE="${{ inputs.versions-file }}"
         WORKING_DIRECTORY=$(echo "${{ inputs.working-directory }}" | sed 's#\\#/#g' | sed 's#^\([A-Za-z]\):#/\L\1#')
 
