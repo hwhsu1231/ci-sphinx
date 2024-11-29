@@ -34,7 +34,7 @@ runs:
         VERSIONS_FILE="${{ inputs.versions-file }}"
         WORKING_DIRECTORY="${{ inputs.working-directory }}"
 
-        JQ_FILTER="[.[] | map(select(.VERSION_COMPENDIUM == \"\"))] | add | .[].VERSION"
+        JQ_FILTER="[.[] | map(select(.COMPENDIUM == \"\"))] | add | .[].VERSION"
         JQ_FILE="${VERSIONS_FILE}"
         VERSION_LINES=($(jq -r "${JQ_FILTER}" "${JQ_FILE}" | tr -d '\r'))
         PULL_REQUEST_LABEL_LIST="gettext"

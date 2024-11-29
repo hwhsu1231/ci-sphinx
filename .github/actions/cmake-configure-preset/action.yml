@@ -18,6 +18,10 @@ inputs:
     required: false
     description: The value for the VERSION cache entry.
     default: '[default]'
+  cache-compendium:
+    required: false
+    description: The value for the COMPENDIUM cache entry.
+    default: '[default]'
   cache-auto-depend:
     required: false
     description: The value for the AUTO_DEPEND cache entry.
@@ -37,10 +41,6 @@ inputs:
   cache-baseurl-href:
     required: false
     description: The value for the BASEURL_HREF cache entry.
-    default: '[default]'
-  cache-version-compendium:
-    required: false
-    description: The value for the VERSION_COMPENDIUM cache entry.
     default: '[default]'
   cache-version-of-python:
     required: false

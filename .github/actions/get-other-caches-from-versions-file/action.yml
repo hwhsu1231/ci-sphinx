@@ -19,9 +19,9 @@ inputs:
     default: '${{ github.workspace }}'
 
 outputs:
-  VERSION_COMPENDIUM:
-    value: ${{ steps.gocv.outputs.VERSION_COMPENDIUM }}
-    description: The VERSION_COMPENDIUM retrieved from versions.json, or '[default]' if not found.
+  COMPENDIUM:
+    value: ${{ steps.gocv.outputs.COMPENDIUM }}
+    description: The COMPENDIUM retrieved from versions.json, or '[default]' if not found.
   VERSION_OF_PYTHON:
     value: ${{ steps.gocv.outputs.VERSION_OF_PYTHON }}
     description: The VERSION_OF_PYTHON retrieved from versions.json, or '[default]' if not found.
@@ -58,7 +58,7 @@ runs:
         cd ${WORKING_DIRECTORY}
 
         CACHE_VERSIONS=(
-          "VERSION_COMPENDIUM"
+          "COMPENDIUM"
           "VERSION_OF_PYTHON"
           "VERSION_OF_SPHINX"
           "VERSION_OF_DOXYGEN"

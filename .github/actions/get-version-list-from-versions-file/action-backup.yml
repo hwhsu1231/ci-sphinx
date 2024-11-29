@@ -61,9 +61,9 @@ runs:
           if [[ "${VERSION_FILTER}" == "all" ]]; then
             JQ_FILTER="[.[${VERSION_GROUP_FILTER}] | map(.VERSION)] | add"
           elif [[ "${VERSION_FILTER}" == "gettext" ]]; then
-            JQ_FILTER="[.[${VERSION_GROUP_FILTER}] | map(select(.VERSION_COMPENDIUM != \"\") | .VERSION)] | add"
+            JQ_FILTER="[.[${VERSION_GROUP_FILTER}] | map(select(.COMPENDIUM != \"\") | .VERSION)] | add"
           elif [[ "${VERSION_FILTER}" == "tmscli" ]]; then
-            JQ_FILTER="[.[${VERSION_GROUP_FILTER}] | map(select(.VERSION_COMPENDIUM == \"\") | .VERSION)] | add"
+            JQ_FILTER="[.[${VERSION_GROUP_FILTER}] | map(select(.COMPENDIUM == \"\") | .VERSION)] | add"
           else
             echo "Error: Invalid VERSION_FILTER value. (${VERSION_FILTER})" >&2
             exit 1
@@ -74,9 +74,9 @@ runs:
           if [[ "${VERSION_FILTER}" == "all" ]]; then
             JQ_FILTER=".[] | .[] | .VERSION"
           elif [[ "${VERSION_FILTER}" == "gettext" ]]; then
-            JQ_FILTER=".[] | .[] | select(.VERSION_COMPENDIUM != \"\") | .VERSION"
+            JQ_FILTER=".[] | .[] | select(.COMPENDIUM != \"\") | .VERSION"
           elif [[ "${VERSION_FILTER}" == "tmscli" ]]; then
-            JQ_FILTER=".[] | .[] | select(.VERSION_COMPENDIUM == \"\") | .VERSION"
+            JQ_FILTER=".[] | .[] | select(.COMPENDIUM == \"\") | .VERSION"
           else
             echo "Error: Invalid VERSION_FILTER value. (${VERSION_FILTER})" >&2
             exit 1
