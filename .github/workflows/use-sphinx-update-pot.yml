@@ -224,7 +224,7 @@ jobs:
           title: |
             pot(${{ inputs.VERSION }}): update .pot from sphinx
           body: |
-            Created by GitHub Workflows:
+            Created by the GitHub Workflow:
 
             - File: [${{ github.workflow }}](${{ github.server_url }}/${{ github.repository }}/actions/workflows/${{ github.workflow }}.yml)
             - Run: [${{ github.workflow }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})

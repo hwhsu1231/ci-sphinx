@@ -146,7 +146,7 @@ jobs:
 
             ${{ steps.gsi.outputs.STATISTIC_INFO }}
 
-            Created by GitHub Workflows:
+            Created by the GitHub Workflow:
 
             - File: ${{ github.server_url }}/${{ github.repository }}/actions/workflows/${{ github.workflow }}.yml
             - Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
