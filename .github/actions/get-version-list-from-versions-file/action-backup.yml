@@ -52,28 +52,37 @@ runs:
 
         cd ${WORKING_DIRECTORY}
 
-        if [[ ${VERSION_GROUP} == "all" ]]; then
-          VERSION_GROUP_FILTER=""
-        else
-          VERSION_GROUP_FILTER="\"${VERSION_GROUP}\""
-        fi
-        if [[ "${VERSION_FILTER}" == "all" ]]; then
-          JQ_FILTER="[.[${VERSION_GROUP_FILTER}] | map(.)] | add"
-        elif [[ "${VERSION_FILTER}" == "gettext" ]]; then
-          JQ_FILTER="[.[${VERSION_GROUP_FILTER}] | map(select(.VERSION_COMPENDIUM != \"\") | .)] | add"
-        elif [[ "${VERSION_FILTER}" == "tmscli" ]]; then
-          JQ_FILTER="[.[${VERSION_GROUP_FILTER}] | map(select(.VERSION_COMPENDIUM == \"\") | .)] | add"
-        else
-          echo "Error: Invalid VERSION_FILTER value. (${VERSION_FILTER})" >&2
-          exit 1
-        fi
-        JQ_FILE="${VERSIONS_FILE}"
-        OBJECT_LIST=$(jq -c "${JQ_FILTER}" "${JQ_FILE}")
-
         if [[ "${TYPE}" == "matrix" ]]; then
-          VERSION_LIST=$(echo "${OBJECT_LIST}" | jq -c "[.[].VERSION]")
+          if [[ ${VERSION_GROUP} == "all" ]]; then
+            VERSION_GROUP_FILTER=""
+          else
+            VERSION_GROUP_FILTER="\"${VERSION_GROUP}\""
+          fi
+          if [[ "${VERSION_FILTER}" == "all" ]]; then
+            JQ_FILTER="[.[${VERSION_GROUP_FILTER}] | map(.VERSION)] | add"
+          elif [[ "${VERSION_FILTER}" == "gettext" ]]; then
+            JQ_FILTER="[.[${VERSION_GROUP_FILTER}] | map(select(.VERSION_COMPENDIUM != \"\") | .VERSION)] | add"
+          elif [[ "${VERSION_FILTER}" == "tmscli" ]]; then
+            JQ_FILTER="[.[${VERSION_GROUP_FILTER}] | map(select(.VERSION_COMPENDIUM == \"\") | .VERSION)] | add"
+          else
+            echo "Error: Invalid VERSION_FILTER value. (${VERSION_FILTER})" >&2
+            exit 1
+          fi
+          JQ_FILE="${VERSIONS_FILE}"
+          VERSION_LIST=$(jq -c "${JQ_FILTER}" "${JQ_FILE}")
         elif [[ "${TYPE}" == "single" ]]; then
-          VERSION_LINES=($(echo "${OBJECT_LIST}" | jq -c -r ".[].VERSION" | tr -d '\r'))
+          if [[ "${VERSION_FILTER}" == "all" ]]; then
+            JQ_FILTER=".[] | .[] | .VERSION"
+          elif [[ "${VERSION_FILTER}" == "gettext" ]]; then
+            JQ_FILTER=".[] | .[] | select(.VERSION_COMPENDIUM != \"\") | .VERSION"
+          elif [[ "${VERSION_FILTER}" == "tmscli" ]]; then
+            JQ_FILTER=".[] | .[] | select(.VERSION_COMPENDIUM == \"\") | .VERSION"
+          else
+            echo "Error: Invalid VERSION_FILTER value. (${VERSION_FILTER})" >&2
+            exit 1
+          fi
+          JQ_FILE="${VERSIONS_FILE}"
+          VERSION_LINES=($(jq -r "${JQ_FILTER}" "${JQ_FILE}" | tr -d '\r'))
           FOUND_VERSION=false
           for VERSION_LINE in ${VERSION_LINES[@]}; do
             if [[ "${VERSION_LINE}" == "${VERSION}" ]]; then
