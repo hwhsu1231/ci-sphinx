@@ -71,7 +71,7 @@ runs:
         OBJECT_LIST=$(jq -c "${JQ_FILTER}" "${JQ_FILE}")
 
         if [[ "${TYPE}" == "matrix" ]]; then
-          VERSION_LIST=$(echo "${OBJECT_LIST}" | jq -c "[.[].VERSION]")
+          VERSION_LIST=$(echo "${OBJECT_LIST}" | jq -c -r "[.[].VERSION]")
         elif [[ "${TYPE}" == "single" ]]; then
           VERSION_LINES=($(echo "${OBJECT_LIST}" | jq -c -r ".[].VERSION" | tr -d '\r'))
           FOUND_VERSION=false
