@@ -92,8 +92,8 @@ jobs:
           source-directory: ${{ github.workspace }}
           preset: 'all'
           cache-version: ${{ inputs.VERSION }}
-          cache-auto-depend: 'OFF'
           cache-compendium: ${{ steps.gocv.outputs.COMPENDIUM }}
+          cache-auto-depend: 'OFF'
           cache-version-of-python: ${{ steps.gocv.outputs.VERSION_OF_PYTHON }}
           cache-version-of-sphinx: ${{ steps.gocv.outputs.VERSION_OF_SPHINX }}
           cache-version-of-doxygen: ${{ steps.gocv.outputs.VERSION_OF_DOXYGEN }}

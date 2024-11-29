@@ -123,10 +123,10 @@ jobs:
           source-directory: ${{ github.workspace }}
           preset: ${{ inputs.LANGUAGE }}
           cache-version: ${{ inputs.VERSION }}
+          cache-compendium: ${{ steps.gocv.outputs.COMPENDIUM }}
           cache-auto-depend: 'OFF'
           cache-mode-of-update: ${{ inputs.MODE_OF_UPDATE }}
           cache-baseurl-href: ${{ inputs.BASEURL_HREF }}
-          cache-compendium: ${{ steps.gocv.outputs.COMPENDIUM }}
           cache-version-of-python: ${{ steps.gocv.outputs.VERSION_OF_PYTHON }}
           cache-version-of-sphinx: ${{ steps.gocv.outputs.VERSION_OF_SPHINX }}
           cache-version-of-doxygen: ${{ steps.gocv.outputs.VERSION_OF_DOXYGEN }}
