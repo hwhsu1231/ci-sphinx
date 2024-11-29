@@ -85,11 +85,11 @@ jobs:
           commitAuthorName: ${{ inputs.ACTOR_NAME }}
           commitAuthorEmail: ${{ inputs.ACTOR_EMAIL }}
           commitTitle: |
-            docs(license): update copyright year(s) of LICENSE
+            docs(license): update copyright year(s)
           commitBody: |
             Update the Copyright Year(s) to {{currentYear}}.
           prTitle: |
-            docs(license): update copyright year(s) of LICENSE
+            docs(license): update copyright year(s)
           prBody: |
             Created by the GitHub Workflow:
 
