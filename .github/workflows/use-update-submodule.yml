@@ -33,6 +33,7 @@ on:
 
 jobs:
   update-submodule:
+    if: ${{ inputs.ENABLE_JOB }}
     runs-on: ${{ inputs.RUNNER }}
     steps:
       - name: Print Contexts/Inputs/Secrets
