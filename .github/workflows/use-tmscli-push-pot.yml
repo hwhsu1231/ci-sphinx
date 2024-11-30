@@ -15,6 +15,9 @@ on:
       VERSION:
         type: string
         required: true
+      CALLER_JOB:
+        type: string
+        required: true
       ENABLE_JOB:
         type: boolean
         required: true
