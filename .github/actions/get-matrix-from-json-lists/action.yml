@@ -87,8 +87,12 @@ runs:
         echo "MATRIX_ARRAY:"
         echo "${MATRIX_ARRAY[@]}"
 
-        # Convert the MATRIX_ARRAY to the MATRIX.
-        MATRIX=$(printf '%s\n' "${MATRIX_ARRAY[@]}" | jq -c -s '.')
+        # Convert the MATRIX_ARRAY to the MATRIX_LIST.
+        MATRIX_LIST=$(printf '%s\n' "${MATRIX_ARRAY[@]}" | jq -c -s '.')
+
+        # Wrap the MATRIX_LIST in an include object.
+        MATRIX=$(echo "${MATRIX_LIST}" | jq -c '{include: .}')
+
 
         # Output and Print the Matrix.
         echo "MATRIX=${MATRIX}" >> ${GITHUB_OUTPUT}
