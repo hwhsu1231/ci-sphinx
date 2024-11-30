@@ -11,7 +11,8 @@ inputs:
     description: >
       Possible values are: 'version', 'submodule', or 'version-language'.
   version-list:
-    required: true    # [required]
+    required: false
+    default: '[]'
     description: xxx
   allinone-list:
     required: false
