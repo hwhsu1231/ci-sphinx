@@ -8,80 +8,99 @@ description: Configure the CMake preset
 inputs:
   source-directory:
     required: false
-    description: The source directory of the CMake project.
     default: '${{ github.workspace }}'
+    description: >
+      The source directory of the CMake project.
   preset:
     required: false
-    description: The name of the CMake preset to use.
     default: 'all'
+    description: >
+      The name of the CMake preset to use.
   cache-version:
     required: false
-    description: The value for the VERSION cache entry.
     default: '[default]'
+    description: >
+      The value for the VERSION cache entry.
   cache-compendium:
     required: false
-    description: The value for the COMPENDIUM cache entry.
     default: '[default]'
+    description: >
+      The value for the COMPENDIUM cache entry.
   cache-auto-depend:
     required: false
-    description: The value for the AUTO_DEPEND cache entry.
     default: '[default]'
+    description: >
+      The value for the AUTO_DEPEND cache entry.
   cache-remove-redundant:
     required: false
-    description: The value for the REMOVE_REDUNDANT cache entry.
     default: '[default]'
+    description: >
+      The value for the REMOVE_REDUNDANT cache entry.
   cache-mode-of-update:
     required: false
-    description: The value for the MODE_OF_UPDATE cache entry.
     default: '[default]'
+    description: >
+      The value for the MODE_OF_UPDATE cache entry.
   cache-mode-of-install:
     required: false
-    description: The value for the MODE_OF_INSTALL cache entry.
     default: '[default]'
+    description: >
+      The value for the MODE_OF_INSTALL cache entry.
   cache-baseurl-href:
     required: false
-    description: The value for the BASEURL_HREF cache entry.
     default: '[default]'
+    description: >
+      The value for the BASEURL_HREF cache entry.
   cache-version-of-python:
     required: false
-    description: The value for the VERSION_OF_PYTHON cache entry.
     default: '[default]'
+    description: >
+      The value for the VERSION_OF_PYTHON cache entry.
   cache-version-of-sphinx:
     required: false
-    description: The value for the VERSION_OF_SPHINX cache entry.
     default: '[default]'
+    description: >
+      The value for the VERSION_OF_SPHINX cache entry.
   cache-version-of-doxygen:
     required: false
-    description: The value for the VERSION_OF_DOXYGEN cache entry.
     default: '[default]'
+    description: >
+      The value for the VERSION_OF_DOXYGEN cache entry.
   cache-version-of-proj:
     required: false
-    description: The value for the VERSION_OF_PROJ cache entry.
     default: '[default]'
+    description: >
+      The value for the VERSION_OF_PROJ cache entry.
   cache-sphinx-builder:
     required: false
-    description: The value for the SPHINX_BUILDER cache entry.
     default: '[default]'
+    description: >
+      The value for the SPHINX_BUILDER cache entry.
   cache-sphinx-job-number:
     required: false
-    description: The value for the GETTEXT_JOB_NUMBER cache entry.
     default: '[default]'
+    description: >
+      The value for the GETTEXT_JOB_NUMBER cache entry.
   cache-sphinx-verbose-level:
     required: false
-    description: The value for the SPHINX_VERBOSE_LEVEL cache entry.
     default: '[default]'
+    description: >
+      The value for the SPHINX_VERBOSE_LEVEL cache entry.
   cache-sphinx-console-locale:
     required: false
-    description: The value for the SPHINX_CONSOLE_LOCALE cache entry.
     default: '[default]'
+    description: >
+      The value for the SPHINX_CONSOLE_LOCALE cache entry.
   cache-gettext-wrap-width:
     required: false
-    description: The value for the GETTEXT_WRAP_WIDTH cache entry.
     default: '[default]'
+    description: >
+      The value for the GETTEXT_WRAP_WIDTH cache entry.
   cache-gettext-additional-targets:
     required: false
-    description: The value for the GETTEXT_ADDITIONAL_TARGETS cache entry.
     default: '[default]'
+    description: >
+      The value for the GETTEXT_ADDITIONAL_TARGETS cache entry.
 
 runs:
   using: composite
