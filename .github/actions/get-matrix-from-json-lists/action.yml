@@ -9,7 +9,7 @@ inputs:
   matrix-type:
     required: true    # [required]
     description: >
-      Possible values are: 'version-only' or 'version-language'.
+      Possible values are: 'version', 'submodule', or 'version-language'.
   version-list:
     required: true    # [required]
     description: xxx
@@ -18,6 +18,10 @@ inputs:
     default: '[]'
     description: xxx
   language-list:
+    required: false
+    default: '[]'
+    description: xxx
+  submodule-list:
     required: false
     default: '[]'
     description: xxx
@@ -39,20 +43,27 @@ runs:
         VERSION_LIST='${{ inputs.version-list }}'
         ALLINONE_LIST='${{ inputs.allinone-list }}'
         LANGUAGE_LIST='${{ inputs.language-list }}'
+        SUBMODULE_LIST='${{ inputs.submodule-list }}'
 
         # Convert the JSON lists to the Bash arraies.
-        VERSION_ARRAY=($(echo "$VERSION_LIST" | jq -r '.[]'))
-        ALLINONE_ARRAY=($(echo "$ALLINONE_LIST" | jq -r '.[]'))
-        LANGUAGE_ARRAY=($(echo "$LANGUAGE_LIST" | jq -r '.[]'))
+        VERSION_ARRAY=($(echo "${VERSION_LIST}" | jq -r '.[]'))
+        ALLINONE_ARRAY=($(echo "${ALLINONE_LIST}" | jq -r '.[]'))
+        LANGUAGE_ARRAY=($(echo "${LANGUAGE_LIST}" | jq -r '.[]'))
+        SUBMODULE_ARRAY=($(echo "${SUBMODULE_LIST}" | jq -r '.[]'))
 
         # Initialize the Matrix Array
         MATRIX_ARRAY=()
 
         # Check the type of matrix to generate
-        if [[ "${MATRIX_TYPE}" == "version-only" ]]; then
+        if [[ "${MATRIX_TYPE}" == "version" ]]; then
           # Generate a matrix with only VERSION objects
           for VERSION in "${VERSION_ARRAY[@]}"; do
             MATRIX_ARRAY+=("{\"VERSION\":\"${VERSION}\"}")
+          done
+        elif [[ "${MATRIX_TYPE}" == "submodule" ]]; then
+          # Generate a matrix with only SUBMODULE objects
+          for SUBMODULE in "${SUBMODULE_ARRAY[@]}"; do
+            MATRIX_ARRAY+=("{\"SUBMODULE\":\"${SUBMODULE}\"}")
           done
         elif [[ "${MATRIX_TYPE}" == "version-language" ]]; then
           # Generate a full matrix with VERSION and LANGUAGE combinations
