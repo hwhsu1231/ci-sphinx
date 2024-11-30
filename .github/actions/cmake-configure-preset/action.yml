@@ -105,6 +105,7 @@ runs:
           elif [[ "${KEY}" =~ ^cache- ]]; then
             if [[ "${VALUE}" != "[default]" ]]; then
               # Convert lowercase to uppercase by tr since BSD-sed cannot support '\U'. (for macOS bash)
+              # See: https://stackoverflow.com/questions/4569825#4581564
               CACHE_NAME=$(echo "${KEY}" | sed 's/^cache-//' | tr '[:lower:]' '[:upper:]' | sed 's/-/_/g')
               CACHE_VALUE=${VALUE}
               CMAKE_ARG="-D${CACHE_NAME}=${CACHE_VALUE}"
