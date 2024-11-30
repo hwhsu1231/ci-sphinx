@@ -21,12 +21,12 @@ inputs:
       Possible values are: 'all', 'gettext', and 'tmscli'.
   versions-file:
     required: false
-    description: xxx
     default: 'versions.json'
+    description: xxx
   working-directory:
     required: false
-    description: xxx
     default: ${{ github.workspace }}
+    description: xxx
 
 outputs:
   VERSION_NUM:
