@@ -8,40 +8,49 @@ description: Download Translations from Crowdin
 inputs:
   crowdin-config-file:
     required: false
-    description: The path to the Crowdin configuration file.
     default: ''
+    description: >
+      The path to the Crowdin configuration file.
   crowdin-branch-name:
     required: false
-    description: The name of the branch to download translations in Crowdin.
     default: ''
+    description: >
+      The name of the branch to download translations in Crowdin.
   crowdin-personal-token:
     required: false
-    description: The personal access token for authentication.
     default: ''
+    description: >
+      The personal access token for authentication.
   crowdin-language-list:
     required: false
-    description: The comma-separated list of languages to download.
     default: ''
+    description: >
+      The comma-separated list of languages to download.
   crowdin-export-only-approved:
     required: false
-    description: Whether to export only approved translations.
     default: 'false'
+    description: >
+      Whether to export only approved translations.
   crowdin-no-progress:
     required: false
-    description: hether to disable progress on executed command.
     default: 'false'
+    description: >
+      hether to disable progress on executed command.
   crowdin-verbose:
     required: false
-    description: Whether to provide more information about the command execution.
     default: 'false'
+    description: >
+      Whether to provide more information about the command execution.
   crowdin-dryrun:
     required: false
-    description: Whether to print a command output without execution.
     default: 'false'
+    description: >
+      Whether to print a command output without execution.
   working-directory:
     required: false
-    description: The root directory from which to run commands or find files.
     default: '${{ github.workspace }}'
+    description: >
+      The root directory from which to run commands or find files.
 
 runs:
   using: composite
