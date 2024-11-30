@@ -36,10 +36,10 @@ outputs:
     value: ${{ steps.gvlv.outputs.VERSION_LIST }}
     description: xxx
   ALLINONE_NUM:
-    value: ${{ steps.gain.outputs.ALLINONE_NUM }}
+    value: ${{ steps.gvlv.outputs.ALLINONE_NUM }}
     description: Number of items in the ALLINONE list.
   ALLINONE_LIST:
-    value: ${{ steps.gain.outputs.ALLINONE_LIST }}
+    value: ${{ steps.gvlv.outputs.ALLINONE_LIST }}
     description: JSON list of ALLINONE values.
 
 runs:
