@@ -17,10 +17,6 @@ on:
         type: string
         required: true
         description: The version of the documentation.
-      LANGUAGE:
-        type: string
-        required: true
-        description: The language of the documentation.
       MODE_OF_UPDATE:
         type: string
         required: true
@@ -75,7 +71,6 @@ jobs:
           echo "[Inputs]"
           echo "inputs.RUNNER = ${{ inputs.RUNNER }}"
           echo "inputs.VERSION = ${{ inputs.VERSION }}"
-          echo "inputs.LANGUAGE = ${{ inputs.LANGUAGE }}"
           echo "inputs.MODE_OF_UPDATE = ${{ inputs.MODE_OF_UPDATE }}"
           echo "inputs.CALLER_JOB = ${{ inputs.CALLER_JOB }}"
           echo "inputs.ENABLE_JOB = ${{ inputs.ENABLE_JOB }}"
@@ -109,11 +104,11 @@ jobs:
           version: ${{ inputs.VERSION }}
           versions-file: 'versions.json'
 
-      - name: Configure the '${{ inputs.LANGUAGE }}' preset for '${{ inputs.VERSION }}' version
+      - name: Configure the 'all' preset for '${{ inputs.VERSION }}' version
         uses: hwhsu1231/ci-sphinx/.github/actions/cmake-configure-preset@main
         with:
           source-directory: ${{ github.workspace }}
-          preset: ${{ inputs.LANGUAGE }}
+          preset: 'all'
           cache-version: ${{ inputs.VERSION }}
           cache-compendium: ${{ steps.gocv.outputs.COMPENDIUM }}
           cache-mode-of-update: ${{ inputs.MODE_OF_UPDATE }}
@@ -134,21 +129,21 @@ jobs:
         uses: hwhsu1231/ci-sphinx/.github/actions/cmake-build-target@main
         with:
           source-directory: ${{ github.workspace }}
-          preset: ${{ inputs.LANGUAGE }}
+          preset: 'all'
           target: 'prepare_repositories'
 
       - name: Build the 'install_requirements' target
         uses: hwhsu1231/ci-sphinx/.github/actions/cmake-build-target@main
         with:
           source-directory: ${{ github.workspace }}
-          preset: ${{ inputs.LANGUAGE }}
+          preset: 'all'
           target: 'install_requirements'
 
       - name: Build the 'sphinx_update_pot' target
         uses: hwhsu1231/ci-sphinx/.github/actions/cmake-build-target@main
         with:
           source-directory: ${{ github.workspace }}
-          preset: ${{ inputs.LANGUAGE }}
+          preset: 'all'
           target: 'sphinx_update_pot'
 
       - name: Get the Version Reference of '.pot' After Building
