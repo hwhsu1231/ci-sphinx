@@ -30,6 +30,10 @@ on:
         required: true
         type: string
         description: Base URL for the generated HTML documentation.
+      SPHINX_BUILDER:
+        required: true
+        type: string
+        description: xxx
       CALLER_JOB:
         required: true
         type: string
@@ -84,6 +88,7 @@ jobs:
           echo "inputs.LANGUAGE = ${{ inputs.LANGUAGE }}"
           echo "inputs.MODE_OF_UPDATE = ${{ inputs.MODE_OF_UPDATE }}"
           echo "inputs.BASEURL_HREF = ${{ inputs.BASEURL_HREF }}"
+          echo "inputs.SPHINX_BUILDER = ${{ inputs.SPHINX_BUILDER }}"
           echo "inputs.CALLER_JOB = ${{ inputs.CALLER_JOB }}"
           echo "inputs.ENABLE_JOB = ${{ inputs.ENABLE_JOB }}"
           echo "inputs.DEPLOY_HTML = ${{ inputs.DEPLOY_HTML }}"
@@ -127,6 +132,7 @@ jobs:
           cache-auto-depend: 'OFF'
           cache-mode-of-update: ${{ inputs.MODE_OF_UPDATE }}
           cache-baseurl-href: ${{ inputs.BASEURL_HREF }}
+          cache-sphinx-builder: ${{ inputs.SPHINX_BUILDER }}
           cache-version-of-python: ${{ steps.gocv.outputs.VERSION_OF_PYTHON }}
           cache-version-of-sphinx: ${{ steps.gocv.outputs.VERSION_OF_SPHINX }}
           cache-version-of-doxygen: ${{ steps.gocv.outputs.VERSION_OF_DOXYGEN }}
@@ -182,7 +188,7 @@ jobs:
           git-config-name: ${{ inputs.ACTOR_NAME }}
           git-config-email: ${{ inputs.ACTOR_EMAIL }}
           branch: 'gh-pages'
-          folder: './out/html'
+          folder: './out/${{ inputs.SPHINX_BUILDER }}'
           target-folder: '.'
           single-commit: true
           clean: false
