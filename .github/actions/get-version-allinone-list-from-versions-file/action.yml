@@ -76,6 +76,9 @@ runs:
         JQ_FILE="${VERSIONS_FILE}"
         OBJECT_LIST=$(jq -c "${JQ_FILTER}" "${JQ_FILE}")
 
+        echo "OBJECT_LIST:"
+        echo "${OBJECT_LIST}" | jq "."
+
         if [[ "${TYPE}" == "matrix" ]]; then
           VERSION_LIST=$(echo "${OBJECT_LIST}" | jq -c "[.[].VERSION]")
           ALLINONE_LIST=$(echo "${OBJECT_LIST}" | jq -c "[.[].ALLINONE]")
