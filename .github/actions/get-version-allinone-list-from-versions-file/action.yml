@@ -58,59 +58,67 @@ runs:
 
         cd ${WORKING_DIRECTORY}
 
-        if [[ "${VERSION_GROUP}" == "all" || "${VERSION_GROUP}" == "" ]]; then
-          VERSION_GROUP_FILTER=""
-        else
-          VERSION_GROUP_FILTER="\"${VERSION_GROUP}\""
-        fi
-        if [[ "${VERSION_FILTER}" == "all" ]]; then
-          JQ_FILTER="[.[${VERSION_GROUP_FILTER}] | map(.)] | add"
-        elif [[ "${VERSION_FILTER}" == "gettext" ]]; then
-          JQ_FILTER="[.[${VERSION_GROUP_FILTER}] | map(select(.COMPENDIUM != \"\") | .)] | add"
-        elif [[ "${VERSION_FILTER}" == "tmscli" ]]; then
-          JQ_FILTER="[.[${VERSION_GROUP_FILTER}] | map(select(.COMPENDIUM == \"\") | .)] | add"
-        else
-          echo "Error: Invalid VERSION_FILTER value. (${VERSION_FILTER})" >&2
-          exit 1
-        fi
-        JQ_FILE="${VERSIONS_FILE}"
-        OBJECT_LIST=$(jq -c "${JQ_FILTER}" "${JQ_FILE}")
-
-        echo "OBJECT_LIST:"
-        echo "${OBJECT_LIST}" | jq "."
-
         if [[ "${TYPE}" == "matrix" ]]; then
+          if [[ "${VERSION_GROUP}" == "all" ]]; then
+            VERSION_GROUP_FILTER=""
+          else
+            VERSION_GROUP_FILTER="\"${VERSION_GROUP}\""
+          fi
+          if [[ "${VERSION_FILTER}" == "all" ]]; then
+            JQ_FILTER="[.[${VERSION_GROUP_FILTER}] | map(.)] | add"
+          elif [[ "${VERSION_FILTER}" == "gettext" ]]; then
+            JQ_FILTER="[.[${VERSION_GROUP_FILTER}] | map(select(.COMPENDIUM != \"\") | .)] | add"
+          elif [[ "${VERSION_FILTER}" == "tmscli" ]]; then
+            JQ_FILTER="[.[${VERSION_GROUP_FILTER}] | map(select(.COMPENDIUM == \"\") | .)] | add"
+          else
+            echo "Error: Invalid VERSION_FILTER value. (${VERSION_FILTER})" >&2
+            exit 1
+          fi
+          JQ_FILE="${VERSIONS_FILE}"
+          OBJECT_LIST=$(jq -c "${JQ_FILTER}" "${JQ_FILE}")
           VERSION_LIST=$(echo "${OBJECT_LIST}" | jq -c "[.[].VERSION]")
           ALLINONE_LIST=$(echo "${OBJECT_LIST}" | jq -c "[.[].ALLINONE]")
         elif [[ "${TYPE}" == "single" ]]; then
+          if [[ "${VERSION_FILTER}" == "all" ]]; then
+            JQ_FILTER="[.[] | map(.)] | add"
+          elif [[ "${VERSION_FILTER}" == "gettext" ]]; then
+            JQ_FILTER="[.[] | map(select(.COMPENDIUM != \"\") | .)] | add"
+          elif [[ "${VERSION_FILTER}" == "tmscli" ]]; then
+            JQ_FILTER="[.[] | map(select(.COMPENDIUM == \"\") | .)] | add"
+          else
+            echo "Error: Invalid VERSION_FILTER value. (${VERSION_FILTER})" >&2
+            exit 1
+          fi
+          JQ_FILE="${VERSIONS_FILE}"
+          OBJECT_LIST=$(jq -c "${JQ_FILTER}" "${JQ_FILE}")
           VERSION_LINES=($(echo "${OBJECT_LIST}" | jq -c -r ".[].VERSION" | tr -d '\r'))
           FOUND_VERSION=false
           for VERSION_LINE in ${VERSION_LINES[@]}; do
             if [[ "${VERSION_LINE}" == "${VERSION}" ]]; then
               FOUND_VERSION=true
-              VERSION_LIST="[ \"${VERSION}\" ]"
               break
             fi
           done
           if [[ "${FOUND_VERSION}" == "true" ]]; then
-            echo "Version '${VERSION}' is found in the list."
+            echo "VERSION '${VERSION}' is found in the list."
           else
-            echo "Error: Version '${VERSION}' is NOT found in the list." >&2
+            echo "Error: VERSION '${VERSION}' is NOT found in the list." >&2
             exit 1
           fi
-
           ALLINONE=$(echo "${OBJECT_LIST}" | jq -r ".[] | select(.VERSION == \"${VERSION}\") | .ALLINONE")
           if [[ "${ALLINONE}" == "true" || "${ALLINONE}" == "false" ]]; then
-            echo "ALLINONE value for VERSION '${VERSION}' is: ${ALLINONE}"
+            echo "ALLINONE for VERSION '${VERSION}' is: ${ALLINONE}"
           else
-            echo "Error: Version '${VERSION}' is NOT found in the list." >&2
+            echo "Error: VERSION '${VERSION}' is NOT found in the list." >&2
             exit 1
           fi
-          ALLINONE_LIST="[ \"${ALLINONE_VALUE}\" ]"
+          VERSION_LIST="[ \"${VERSION}\" ]"
+          ALLINONE_LIST="[ \"${ALLINONE}\" ]"
         else
           echo "Error: Invalid TYPE value. (${TYPE})" >&2
           exit 1
         fi
+
         VERSION_NUM=$(jq "length" <<< "${VERSION_LIST}")
         ALLINONE_NUM=$(jq "length" <<< "${ALLINONE_LIST}")
 
