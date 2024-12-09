@@ -91,29 +91,22 @@ runs:
           fi
           JQ_FILE="${VERSIONS_FILE}"
           OBJECT_LIST=$(jq -c "${JQ_FILTER}" "${JQ_FILE}")
-          VERSION_LINES=($(echo "${OBJECT_LIST}" | jq -c -r ".[].VERSION" | tr -d '\r'))
-          FOUND_VERSION=false
-          for VERSION_LINE in ${VERSION_LINES[@]}; do
-            if [[ "${VERSION_LINE}" == "${VERSION}" ]]; then
-              FOUND_VERSION=true
-              break
-            fi
-          done
-          if [[ "${FOUND_VERSION}" == "true" ]]; then
-            echo "VERSION '${VERSION}' is found in the list."
+          VERSION_VALUE=$(echo "${OBJECT_LIST}" | jq -r ".[] | select(.VERSION == \"${VERSION}\") | .VERSION")
+          ALLINONE_VALUE=$(echo "${OBJECT_LIST}" | jq -r ".[] | select(.VERSION == \"${VERSION}\") | .ALLINONE")
+          if [[ "${VERSION_VALUE}" != "" ]]; then
+            echo "VERSION '${VERSION_VALUE}' is found in the list."
           else
-            echo "Error: VERSION '${VERSION}' is NOT found in the list." >&2
+            echo "Error: VERSION '${VERSION_VALUE}' is NOT found in the list." >&2
             exit 1
           fi
-          ALLINONE=$(echo "${OBJECT_LIST}" | jq -r ".[] | select(.VERSION == \"${VERSION}\") | .ALLINONE")
-          if [[ "${ALLINONE}" == "true" || "${ALLINONE}" == "false" ]]; then
-            echo "ALLINONE for VERSION '${VERSION}' is: ${ALLINONE}"
+          if [[ "${ALLINONE_VALUE}" == "true" || "${ALLINONE_VALUE}" == "false" ]]; then
+            echo "ALLINONE for VERSION '${VERSION_VALUE}' is: ${ALLINONE_VALUE}"
           else
-            echo "Error: VERSION '${VERSION}' is NOT found in the list." >&2
+            echo "Error: ALLINONE for VERSION '${VERSION_VALUE}' is NOT found in the list." >&2
             exit 1
           fi
-          VERSION_LIST="[ \"${VERSION}\" ]"
-          ALLINONE_LIST="[ \"${ALLINONE}\" ]"
+          VERSION_LIST="[ \"${VERSION_VALUE}\" ]"
+          ALLINONE_LIST="[ \"${ALLINONE_VALUE}\" ]"
         else
           echo "Error: Invalid TYPE value. (${TYPE})" >&2
           exit 1
