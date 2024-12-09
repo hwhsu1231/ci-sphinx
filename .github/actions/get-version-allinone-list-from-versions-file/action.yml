@@ -58,7 +58,7 @@ runs:
 
         cd ${WORKING_DIRECTORY}
 
-        if [[ ${VERSION_GROUP} == "all" ]]; then
+        if [[ "${VERSION_GROUP}" == "all" || "${VERSION_GROUP}" == "" ]]; then
           VERSION_GROUP_FILTER=""
         else
           VERSION_GROUP_FILTER="\"${VERSION_GROUP}\""
@@ -100,7 +100,7 @@ runs:
           fi
 
           ALLINONE=$(echo "${OBJECT_LIST}" | jq -r ".[] | select(.VERSION == \"${VERSION}\") | .ALLINONE")
-          if [ "${ALLINONE}" == "true" ] || [ "${ALLINONE}" == "false" ]; then
+          if [[ "${ALLINONE}" == "true" || "${ALLINONE}" == "false" ]]; then
             echo "ALLINONE value for VERSION '${VERSION}' is: ${ALLINONE}"
           else
             echo "Error: Version '${VERSION}' is NOT found in the list." >&2
