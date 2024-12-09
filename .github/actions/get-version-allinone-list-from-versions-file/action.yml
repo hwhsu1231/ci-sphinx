@@ -94,15 +94,15 @@ runs:
           VERSION_VALUE=$(echo "${OBJECT_LIST}" | jq -r ".[] | select(.VERSION == \"${VERSION}\") | .VERSION")
           ALLINONE_VALUE=$(echo "${OBJECT_LIST}" | jq -r ".[] | select(.VERSION == \"${VERSION}\") | .ALLINONE")
           if [[ "${VERSION_VALUE}" != "" ]]; then
-            echo "VERSION '${VERSION_VALUE}' is found in the list."
+            echo "VERSION '${VERSION}' is found in the list."
           else
-            echo "Error: VERSION '${VERSION_VALUE}' is NOT found in the list." >&2
+            echo "Error: VERSION '${VERSION}' is NOT found in the list." >&2
             exit 1
           fi
           if [[ "${ALLINONE_VALUE}" == "true" || "${ALLINONE_VALUE}" == "false" ]]; then
-            echo "ALLINONE for VERSION '${VERSION_VALUE}' is: ${ALLINONE_VALUE}"
+            echo "ALLINONE for VERSION '${VERSION}' is: ${ALLINONE_VALUE}"
           else
-            echo "Error: ALLINONE for VERSION '${VERSION_VALUE}' is NOT found in the list." >&2
+            echo "Error: ALLINONE for VERSION '${VERSION}' is NOT found in the list." >&2
             exit 1
           fi
           VERSION_LIST="[ \"${VERSION_VALUE}\" ]"
