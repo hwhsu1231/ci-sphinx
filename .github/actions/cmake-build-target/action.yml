@@ -33,7 +33,6 @@ runs:
       if: ${{ runner.os == 'Linux' || runner.os == 'macOS' }}
       shell: bash
       run: |
-        echo "CROWDIN_PERSONAL_TOKEN: ${CROWDIN_PERSONAL_TOKEN}"
         echo "Building the project..."
         echo ""
         echo "cmake --build ${{ inputs.source-directory }}/out/build/${{ inputs.preset }} --target ${{ inputs.target }}"
