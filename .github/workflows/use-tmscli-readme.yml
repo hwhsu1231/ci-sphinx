@@ -97,10 +97,11 @@ jobs:
         uses: hwhsu1231/ci-sphinx/.github/actions/crowdin-upload-sources@main
         with:
           crowdin-branch-name: ${{ inputs.VERSION }}
-          crowdin-project-id: ${{ inputs.CROWDIN_PROJECT_ID }}
-          crowdin-personal-token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
           crowdin-no-progress: 'true'
           crowdin-verbose: 'true'
+        env:
+          CROWDIN_PROJECT_ID: ${{ inputs.CROWDIN_PROJECT_ID }}
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
 
       #
       # If the '${{ inputs.VERSION }}' is NOT 'readme', then...
@@ -111,8 +112,9 @@ jobs:
         uses: hwhsu1231/ci-sphinx/.github/actions/crowdin-branch-delete@main
         with:
           crowdin-branch-name: ${{ inputs.VERSION }}
-          crowdin-project-id: ${{ inputs.CROWDIN_PROJECT_ID }}
-          crowdin-personal-token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+        env:
+          CROWDIN_PROJECT_ID: ${{ inputs.CROWDIN_PROJECT_ID }}
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
 
       #
       # If the '${{ inputs.VERSION }}' is 'readme', then...
@@ -123,12 +125,13 @@ jobs:
         uses: hwhsu1231/ci-sphinx/.github/actions/crowdin-download-translations@main
         with:
           crowdin-branch-name: ${{ inputs.VERSION }}
-          crowdin-project-id: ${{ inputs.CROWDIN_PROJECT_ID }}
-          crowdin-personal-token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
           crowdin-language-list: ${{ steps.gcll.outputs.CROWDIN_LANGUAGE_LIST }}
           crowdin-export-only-approved: 'true'
           crowdin-no-progress: 'true'
           crowdin-verbose: 'true'
+        env:
+          CROWDIN_PROJECT_ID: ${{ inputs.CROWDIN_PROJECT_ID }}
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
 
       - name: Get the Crowdin Status Progress of the '${{ inputs.VERSION }}' branch
         id: gtpp
@@ -136,10 +139,11 @@ jobs:
         uses: hwhsu1231/ci-sphinx/.github/actions/get-crowdin-status-progress@main
         with:
           crowdin-branch-name: ${{ inputs.VERSION }}
-          crowdin-project-id: ${{ inputs.CROWDIN_PROJECT_ID }}
-          crowdin-personal-token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
           crowdin-no-progress: 'true'
           crowdin-verbose: 'true'
+        env:
+          CROWDIN_PROJECT_ID: ${{ inputs.CROWDIN_PROJECT_ID }}
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
 
       - name: Get the Current Job's ID
         id: gcji
