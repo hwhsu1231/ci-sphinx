@@ -8,12 +8,14 @@ description: Upload Sources to Crowdin
 inputs:
   crowdin-config-file:
     required: false
-    description: The path to the Crowdin configuration file.
     default: ''
+    description: >
+      The path to the Crowdin configuration file.
   crowdin-branch-name:
     required: false
-    description: The name of the branch to upload sources in Crowdin.
     default: ''
+    description: >
+      The name of the branch to upload sources in Crowdin.
   crowdin-project-id:
     required: false
     default: ''
@@ -21,24 +23,29 @@ inputs:
       The numeric ID of the project in Crowdin.
   crowdin-personal-token:
     required: false
-    description: The personal access token for authentication.
     default: ''
+    description: >
+      The personal access token for authentication.
   crowdin-no-progress:
     required: false
-    description: Whether to disable progress on executed command.
     default: 'false'
+    description: >
+      Whether to disable progress on executed command.
   crowdin-verbose:
     required: false
-    description: Whether to provide more information about the command execution.
     default: 'false'
+    description: >
+      Whether to provide more information about the command execution.
   crowdin-dryrun:
     required: false
-    description: Whether to print a command output without execution.
     default: 'false'
+    description: >
+      Whether to print a command output without execution.
   working-directory:
     required: false
-    description: The directory from which to run commands or locate files.
     default: '${{ github.workspace }}'
+    description: >
+      The directory from which to run commands or locate files.
 
 runs:
   using: composite
