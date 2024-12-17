@@ -33,6 +33,9 @@ on:
       ACTOR_EMAIL:
         type: string
         required: true
+      CROWDIN_PROJECT_ID:
+        type: string
+        required: true
     secrets:
       ACTOR_GITHUB_TOKEN:
         required: true
@@ -70,9 +73,9 @@ jobs:
           echo "inputs.MODE_OF_UPDATE = ${{ inputs.MODE_OF_UPDATE }}"
           echo "inputs.CALLER_JOB = ${{ inputs.CALLER_JOB }}"
           echo "inputs.ENABLE_JOB = ${{ inputs.ENABLE_JOB }}"
-          echo "inputs.ACTOR_ID = ${{ inputs.ACTOR_ID }}"
           echo "inputs.ACTOR_NAME = ${{ inputs.ACTOR_NAME }}"
           echo "inputs.ACTOR_EMAIL = ${{ inputs.ACTOR_EMAIL }}"
+          echo "inputs.CROWDIN_PROJECT_ID = ${{ inputs.CROWDIN_PROJECT_ID }}"
           echo "[Secrets]"
           echo "secrets.ACTOR_GITHUB_TOKEN = ${{ secrets.ACTOR_GITHUB_TOKEN }}"
           echo "secrets.CROWDIN_PERSONAL_TOKEN = ${{ secrets.CROWDIN_PERSONAL_TOKEN }}"
@@ -129,6 +132,7 @@ jobs:
           preset: ${{ inputs.LANGUAGE }}
           target: 'tmscli_pull_po'
         env:
+          CROWDIN_PROJECT_ID: ${{ inputs.CROWDIN_PROJECT_ID }}
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
 
       - name: Get the Crowdin Status Progress of the '${{ inputs.VERSION }}' branch
@@ -137,6 +141,7 @@ jobs:
         with:
           crowdin-config-file: 'l10n/${{ inputs.VERSION }}/crowdin.yml'
           crowdin-branch-name: ${{ inputs.VERSION }}
+          crowdin-project-id: ${{ inputs.CROWDIN_PROJECT_ID }}
           crowdin-personal-token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
           crowdin-no-progress: true
           crowdin-verbose: true
