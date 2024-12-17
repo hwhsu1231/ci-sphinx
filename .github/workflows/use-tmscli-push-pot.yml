@@ -27,6 +27,9 @@ on:
       ACTOR_EMAIL:
         type: string
         required: true
+      CROWDIN_PROJECT_ID:
+        type: string
+        required: true
     secrets:
       CROWDIN_PERSONAL_TOKEN:
         required: true
@@ -61,6 +64,7 @@ jobs:
           echo "inputs.ENABLE_JOB = ${{ inputs.ENABLE_JOB }}"
           echo "inputs.ACTOR_NAME = ${{ inputs.ACTOR_NAME }}"
           echo "inputs.ACTOR_EMAIL = ${{ inputs.ACTOR_EMAIL }}"
+          echo "inputs.CROWDIN_PROJECT_ID = ${{ inputs.CROWDIN_PROJECT_ID }}"
           echo "[Secrets]"
           echo "secrets.CROWDIN_PERSONAL_TOKEN = ${{ secrets.CROWDIN_PERSONAL_TOKEN }}"
 
@@ -132,4 +136,5 @@ jobs:
           preset: 'all'
           target: 'tmscli_push_pot'
         env:
+          CROWDIN_PROJECT_ID: ${{ inputs.CROWDIN_PROJECT_ID }}
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
