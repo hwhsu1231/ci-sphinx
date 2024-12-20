@@ -31,6 +31,9 @@ outputs:
   MATRIX:
     value: ${{ steps.gain.outputs.MATRIX }}
     description: xxx
+  MATRIX_NUM:
+    value: ${{ steps.gain.outputs.MATRIX_NUM }}
+    description: xxx
 
 runs:
   using: composite
@@ -39,12 +42,18 @@ runs:
       id: gain
       shell: bash
       run: |
-        # Get the Matrix type and the JSON lists from Inputs.
+        # Get the matrix type and the JSON lists from Inputs.
         MATRIX_TYPE='${{ inputs.matrix-type }}'
         VERSION_LIST='${{ inputs.version-list }}'
         ALLINONE_LIST='${{ inputs.allinone-list }}'
         LANGUAGE_LIST='${{ inputs.language-list }}'
         SUBMODULE_LIST='${{ inputs.submodule-list }}'
+
+        # Get the number of the JSON lists.
+        VERSION_NUM=$(echo "${VERSION_LIST}" | jq 'length')
+        ALLINONE_NUM=$(echo "${ALLINONE_LIST}" | jq 'length')
+        LANGUAGE_NUM=$(echo "${LANGUAGE_LIST}" | jq 'length')
+        SUBMODULE_NUM=$(echo "${SUBMODULE_LIST}" | jq 'length')
 
         # Convert the JSON lists to the Bash arraies.
         VERSION_ARRAY=($(echo "${VERSION_LIST}" | jq -r '.[]'))
@@ -52,22 +61,22 @@ runs:
         LANGUAGE_ARRAY=($(echo "${LANGUAGE_LIST}" | jq -r '.[]'))
         SUBMODULE_ARRAY=($(echo "${SUBMODULE_LIST}" | jq -r '.[]'))
 
-        # Initialize the Matrix Array
+        # Initialize the matrix array.
         MATRIX_ARRAY=()
 
-        # Check the type of matrix to generate
+        # Check the type of matrix to generate.
         if [[ "${MATRIX_TYPE}" == "version" ]]; then
-          # Generate a matrix with only VERSION objects
+          # Generate a matrix with only VERSION objects.
           for VERSION in "${VERSION_ARRAY[@]}"; do
             MATRIX_ARRAY+=("{\"VERSION\":\"${VERSION}\"}")
           done
         elif [[ "${MATRIX_TYPE}" == "submodule" ]]; then
-          # Generate a matrix with only SUBMODULE objects
+          # Generate a matrix with only SUBMODULE objects.
           for SUBMODULE in "${SUBMODULE_ARRAY[@]}"; do
             MATRIX_ARRAY+=("{\"SUBMODULE\":\"${SUBMODULE}\"}")
           done
         elif [[ "${MATRIX_TYPE}" == "version-language" ]]; then
-          # Generate a full matrix with VERSION and LANGUAGE combinations
+          # Generate a full matrix with VERSION and LANGUAGE combinations.
           for INDEX in "${!VERSION_ARRAY[@]}"; do
             VERSION="${VERSION_ARRAY[${INDEX}]}"
             ALLINONE="${ALLINONE_ARRAY[${INDEX}]}"
@@ -89,10 +98,16 @@ runs:
 
         # Convert the MATRIX_ARRAY to the MATRIX_LIST.
         MATRIX_LIST=$(printf '%s\n' "${MATRIX_ARRAY[@]}" | jq -c -s '.')
+        echo "MATRIX_LIST:"
+        echo "${MATRIX_LIST}" | jq .
+
+        # Get the number of the JSON lists.
+        MATRIX_NUM=$(echo "${MATRIX_LIST}" | jq 'length')
+        echo "MATRIX_NUM:"
+        echo "${MATRIX_NUM}"
 
         # Wrap the MATRIX_LIST in an include object.
         MATRIX=$(echo "${MATRIX_LIST}" | jq -c '{include: .}')
-
 
         # Output and Print the Matrix.
         echo "MATRIX=${MATRIX}" >> ${GITHUB_OUTPUT}
