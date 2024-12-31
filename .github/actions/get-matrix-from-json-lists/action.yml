@@ -103,6 +103,7 @@ runs:
 
         # Get the number of the JSON lists.
         MATRIX_NUM=$(echo "${MATRIX_LIST}" | jq 'length')
+        echo "MATRIX_NUM=${MATRIX_NUM}" >> ${GITHUB_OUTPUT}
         echo "MATRIX_NUM:"
         echo "${MATRIX_NUM}"
 
