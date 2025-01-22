@@ -50,6 +50,7 @@ runs:
         # See https://github.com/jqlang/jq/issues/92#issuecomment-350754078
         # Starting from version 1.7 of jq, we can pass --binary/-b argument to do so.
         # See https://github.com/jqlang/jq/releases/tag/jq-1.7
+
         if [[ "${LANGUAGE}" == "all" ]]; then
           CROWDIN_LANGUAGE_ARRAY=($(
             jq -r \
