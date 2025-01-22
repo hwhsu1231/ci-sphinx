@@ -10,13 +10,13 @@ inputs:
     required: true    # [required]
     description: The version to search for in the specified versions.json file.
   versions-file:
+    default: 'versions.json'
     required: false
     description: The path to the JSON file containing version data.
-    default: 'versions.json'
   working-directory:
+    default: '${{ github.workspace }}'
     required: false
     description: The directory from which to run commands or locate files.
-    default: '${{ github.workspace }}'
 
 outputs:
   PULL_REQUEST_LABEL_LIST:

@@ -8,15 +8,18 @@ description: Get the Language List from languages.json
 inputs:
   language:
     required: true    # [required]
-    description: xxx
+    description: >
+      xxx
   languages-file:
-    required: false
     default: 'languages.json'
-    description: xxx
-  working-directory:
     required: false
+    description: >
+      xxx
+  working-directory:
     default: ${{ github.workspace }}
-    description: The directory from which to run commands or locate files.
+    required: false
+    description: >
+      The directory from which to run commands or locate files.
 
 outputs:
   LANGUAGE_NUM:

@@ -37,7 +37,7 @@ runs:
         GITMODULES_FILE="${{ inputs.gitmodules-file }}"
         WORKING_DIRECTORY=$(echo "${{ inputs.working-directory }}" | sed 's#\\#/#g' | sed 's#^\([A-Za-z]\):#/\L\1#')
 
-        cd ${WORKING_DIRECTORY}
+        cd "${WORKING_DIRECTORY}"
 
         if [[ "${SUBMODULE}" == "all" ]]; then
           SUBMODULE_LINES=$(git config --file ${GITMODULES_FILE} --get-regexp path | awk '{print $2}')

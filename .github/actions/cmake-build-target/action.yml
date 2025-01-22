@@ -6,15 +6,18 @@ name: cmake-build-target
 description: Build the target with CMake
 
 inputs:
-  source-directory:   # [required]
-    required: true
-    description: 'The source directory of the CMake project.'
-  preset:             # [required]
-    required: true
-    description: 'The configure preset name of the CMake project.'
-  target:             # [required]
-    required: true
-    description: 'The build target of the CMake project.'
+  source-directory:
+    required: true    # [required]
+    description: >
+      The source directory of the CMake project.
+  preset:
+    required: true    # [required]
+    description: >
+      The configure preset name of the CMake project.
+  target:
+    required: true    # [required]
+    description: >
+      The build target of the CMake project.
 
 runs:
   using: composite
@@ -23,6 +26,8 @@ runs:
       if: ${{ runner.os == 'Windows' }}
       shell: cmd
       run: |
+        WORKING_DIRECTORY="${{ inputs.working-directory }}"
+        cd "${WORKING_DIRECTORY}"
         echo Building the project...
         echo.
         echo cmake --build ${{ inputs.source-directory }}\out\build\${{ inputs.preset }} --target ${{ inputs.target }}
@@ -33,6 +38,8 @@ runs:
       if: ${{ runner.os == 'Linux' || runner.os == 'macOS' }}
       shell: bash
       run: |
+        WORKING_DIRECTORY="${{ inputs.working-directory }}"
+        cd "${WORKING_DIRECTORY}"
         echo "Building the project..."
         echo ""
         echo "cmake --build ${{ inputs.source-directory }}/out/build/${{ inputs.preset }} --target ${{ inputs.target }}"

@@ -104,9 +104,9 @@ runs:
       run: |
         WORKING_DIRECTORY=$(echo "${{ inputs.working-directory }}" | sed 's#\\#/#g' | sed 's#^\([A-Za-z]\):#/\L\1#')
         CROWDIN_ARGS="${{ steps.crowdin-args.outputs.CROWDIN_ARGS }}"
+        cd "${WORKING_DIRECTORY}"
         echo "Uploading Sources to Crowdin..."
         echo ""
         echo "crowdin upload sources ${CROWDIN_ARGS[@]}"
         echo ""
-        cd ${WORKING_DIRECTORY}
         crowdin upload sources ${CROWDIN_ARGS[@]}

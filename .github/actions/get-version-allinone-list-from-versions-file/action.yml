@@ -56,7 +56,7 @@ runs:
         VERSIONS_FILE="${{ inputs.versions-file }}"
         WORKING_DIRECTORY=$(echo "${{ inputs.working-directory }}" | sed 's#\\#/#g' | sed 's#^\([A-Za-z]\):#/\L\1#')
 
-        cd ${WORKING_DIRECTORY}
+        cd "${WORKING_DIRECTORY}"
 
         if [[ "${TYPE}" == "matrix" ]]; then
           if [[ "${VERSION_GROUP}" == "all" ]]; then

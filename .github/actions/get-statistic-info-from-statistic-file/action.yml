@@ -29,7 +29,7 @@ runs:
         VERSION="${{ inputs.version }}"
         WORKING_DIRECTORY=$(echo "${{ inputs.working-directory }}" | sed 's#\\#/#g' | sed 's#^\([A-Za-z]\):#/\L\1#')
 
-        cd ${WORKING_DIRECTORY}
+        cd "${WORKING_DIRECTORY}"
 
         STATISTIC_TXT_PATH=l10n/${VERSION}/statistic.txt
         DELIMITER="$(openssl rand -hex 8)"
