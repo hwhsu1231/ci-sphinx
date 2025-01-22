@@ -121,7 +121,7 @@ jobs:
       #
 
       - name: Download Translations of the '${{ inputs.VERSION }}' branch from Crowdin
-        if: ${{ inputs.VERSION == 'readme' }}
+        if: ${{ inputs.VERSION == 'readme' && steps.gcll.outputs.CROWDIN_LANGUAGE_LIST != '' }}
         uses: hwhsu1231/ci-sphinx/.github/actions/crowdin-download-translations@main
         with:
           crowdin-branch-name: ${{ inputs.VERSION }}
