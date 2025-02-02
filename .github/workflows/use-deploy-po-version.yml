@@ -95,14 +95,14 @@ jobs:
           cd ${{ github.workspace }}
           cmake -E rm -rf l10n/${{ inputs.VERSION }}/locale/pot
 
-      - name: Deploy to 'po/${{ inputs.VERSION }}' branch
+      - name: Deploy to the 'po/${{ inputs.VERSION }}' branch
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          token: ${{ secrets.ACTOR_GITHUB_TOKEN }}
-          git-config-name: ${{ inputs.ACTOR_NAME }}
-          git-config-email: ${{ inputs.ACTOR_EMAIL }}
           branch: 'po/${{ inputs.VERSION }}'
           folder: './l10n/${{ inputs.VERSION }}/locale'
           target-folder: '.'
           single-commit: true
           clean: true
+          git-config-name: ${{ inputs.ACTOR_NAME }}
+          git-config-email: ${{ inputs.ACTOR_EMAIL }}
+          token: ${{ secrets.ACTOR_GITHUB_TOKEN }}

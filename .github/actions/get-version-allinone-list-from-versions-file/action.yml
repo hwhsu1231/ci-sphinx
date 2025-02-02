@@ -58,7 +58,7 @@ runs:
 
         cd "${WORKING_DIRECTORY}"
 
-        if [[ "${TYPE}" == "matrix" ]]; then
+        if [[ "${TYPE}" == "group" ]]; then
           if [[ "${VERSION_GROUP}" == "all" ]]; then
             VERSION_GROUP_FILTER=""
           else

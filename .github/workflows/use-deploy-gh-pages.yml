@@ -171,28 +171,8 @@ jobs:
           preset: ${{ inputs.LANGUAGE }}
           target: 'sphinx_build_docs'
 
-      # - name: Set up mutex for the 'gh-pages' branch
-      #   if: ${{ inputs.DEPLOY_HTML }}
-      #   uses: ben-z/gh-action-mutex@v1.0.0-alpha.9
-      #   with:
-      #     branch: mutex/gh-pages
-      #     repo-token: ${{ secrets.ACTOR_GITHUB_TOKEN }}
-
-      # - name: Deploy to the 'gh-pages' branch
-      #   if: ${{ inputs.DEPLOY_HTML }}
-      #   uses: JamesIves/github-pages-deploy-action@v4
-      #   with:
-      #     token: ${{ secrets.ACTOR_GITHUB_TOKEN }}
-      #     git-config-name: ${{ inputs.ACTOR_NAME }}
-      #     git-config-email: ${{ inputs.ACTOR_EMAIL }}
-      #     branch: 'gh-pages'
-      #     folder: './out/${{ inputs.SPHINX_BUILDER }}'
-      #     target-folder: '.'
-      #     single-commit: true
-      #     clean: false
-
-      - name: Upload artifact for ${{ inputs.LANGUAGE }}-${{ inputs.VERSION }}
+      - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: build-${{ inputs.LANGUAGE }}-${{ inputs.VERSION }}
+          name: build-${{ inputs.VERSION }}-${{ inputs.LANGUAGE }}
           path: './out/${{ inputs.SPHINX_BUILDER }}'

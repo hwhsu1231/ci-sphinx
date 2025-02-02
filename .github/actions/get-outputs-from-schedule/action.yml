@@ -46,7 +46,7 @@ runs:
           exit 1
         fi
 
-        TYPE="matrix"
+        TYPE="group"
         VERSION=""
         LANGUAGE="all"
 
