@@ -22,10 +22,10 @@ inputs:
       The directory from which to run commands or locate files.
 
 outputs:
-  COMPENDIUM:
-    value: ${{ steps.gocv.outputs.COMPENDIUM }}
+  VERSION_COMPENDIUM:
+    value: ${{ steps.gocv.outputs.VERSION_COMPENDIUM }}
     description: >
-      The COMPENDIUM retrieved from versions.json, or '[default]' if not found.
+      The VERSION_COMPENDIUM retrieved from versions.json, or '[default]' if not found.
   VERSION_OF_PYTHON:
     value: ${{ steps.gocv.outputs.VERSION_OF_PYTHON }}
     description: >
@@ -66,7 +66,7 @@ runs:
         cd ${WORKING_DIRECTORY}
 
         CACHE_VERSIONS=(
-          "COMPENDIUM"
+          "VERSION_COMPENDIUM"
           "VERSION_OF_PYTHON"
           "VERSION_OF_SPHINX"
           "VERSION_OF_DOXYGEN"

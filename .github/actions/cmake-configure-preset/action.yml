@@ -21,11 +21,11 @@ inputs:
     default: '[default]'
     description: >
       The value for the VERSION cache entry.
-  cache-compendium:
+  cache-version-compendium:
     required: false
     default: '[default]'
     description: >
-      The value for the COMPENDIUM cache entry.
+      The value for the VERSION_COMPENDIUM cache entry.
   cache-auto-depend:
     required: false
     default: '[default]'

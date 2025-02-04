@@ -87,7 +87,7 @@ jobs:
       #   shell: bash
       #   run: |
       #     VERSION="${{ inputs.VERSION }}"
-      #     FILTER=".v3 | map(select(.COMPENDIUM == \"\")) | .[].VERSION"
+      #     FILTER=".v3 | map(select(.VERSION_COMPENDIUM == \"\")) | .[].VERSION"
       #     OUTPUT=$(jq -r "${FILTER}" versions.json)
       #     readarray -t CROWDIN_BRANCHES <<< "$OUTPUT"
       #     VERSION_FOUND=false
@@ -126,7 +126,7 @@ jobs:
           source-directory: ${{ github.workspace }}
           preset: 'all'
           cache-version: ${{ inputs.VERSION }}
-          cache-compendium: ${{ steps.gocv.outputs.COMPENDIUM }}
+          cache-version-compendium: ${{ steps.gocv.outputs.VERSION_COMPENDIUM }}
           cache-auto-depend: 'OFF'
           cache-version-of-python: ${{ steps.gocv.outputs.VERSION_OF_PYTHON }}
           cache-version-of-sphinx: ${{ steps.gocv.outputs.VERSION_OF_SPHINX }}

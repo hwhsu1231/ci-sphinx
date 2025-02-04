@@ -114,7 +114,7 @@ jobs:
           source-directory: ${{ github.workspace }}
           preset: ${{ inputs.LANGUAGE }}
           cache-version: ${{ inputs.VERSION }}
-          cache-compendium: ${{ steps.gocv.outputs.COMPENDIUM }}
+          cache-version-compendium: ${{ steps.gocv.outputs.VERSION_COMPENDIUM }}
           cache-mode-of-update: ${{ inputs.MODE_OF_UPDATE }}
           cache-auto-depend: 'OFF'
           cache-version-of-python: ${{ steps.gocv.outputs.VERSION_OF_PYTHON }}

@@ -96,7 +96,7 @@ jobs:
           source-directory: ${{ github.workspace }}
           preset: ${{ inputs.LANGUAGE }}
           cache-version: ${{ inputs.VERSION }}
-          cache-compendium: ${{ steps.gocv.outputs.COMPENDIUM }}
+          cache-version-compendium: ${{ steps.gocv.outputs.VERSION_COMPENDIUM }}
           cache-auto-depend: 'OFF'
           cache-version-of-python: ${{ steps.gocv.outputs.VERSION_OF_PYTHON }}
           cache-version-of-sphinx: ${{ steps.gocv.outputs.VERSION_OF_SPHINX }}
@@ -141,9 +141,9 @@ jobs:
           author_name: ${{ inputs.ACTOR_NAME }}
           author_email: ${{ inputs.ACTOR_EMAIL }}
           message: |
-            tr(${{ inputs.VERSION }}): merge po with compendium of '${{ steps.gocv.outputs.COMPENDIUM }}'
+            tr(${{ inputs.VERSION }}): merge po with compendium of '${{ steps.gocv.outputs.VERSION_COMPENDIUM }}'
 
-            Merged .po files of ${{ inputs.VERSION }} with compendium of ${{ steps.gocv.outputs.COMPENDIUM }}
+            Merged .po files of ${{ inputs.VERSION }} with compendium of ${{ steps.gocv.outputs.VERSION_COMPENDIUM }}
 
             Created by the GitHub Workflow:
 
