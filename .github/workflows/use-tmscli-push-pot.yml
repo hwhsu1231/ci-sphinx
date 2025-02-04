@@ -30,6 +30,9 @@ on:
       CROWDIN_PROJECT_ID:
         type: string
         required: true
+      CROWDIN_BASE_URL:
+        type: string
+        required: true
     secrets:
       CROWDIN_PERSONAL_TOKEN:
         required: true
@@ -65,6 +68,7 @@ jobs:
           echo "inputs.ACTOR_NAME = ${{ inputs.ACTOR_NAME }}"
           echo "inputs.ACTOR_EMAIL = ${{ inputs.ACTOR_EMAIL }}"
           echo "inputs.CROWDIN_PROJECT_ID = ${{ inputs.CROWDIN_PROJECT_ID }}"
+          echo "inputs.CROWDIN_BASE_URL = ${{ inputs.CROWDIN_BASE_URL }}"
           echo "[Secrets]"
           echo "secrets.CROWDIN_PERSONAL_TOKEN = ${{ secrets.CROWDIN_PERSONAL_TOKEN }}"
 
@@ -138,3 +142,4 @@ jobs:
         env:
           CROWDIN_PROJECT_ID: ${{ inputs.CROWDIN_PROJECT_ID }}
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          CROWDIN_BASE_URL: ${{ inputs.CROWDIN_BASE_URL }}

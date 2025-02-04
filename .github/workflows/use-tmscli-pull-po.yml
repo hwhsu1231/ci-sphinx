@@ -36,6 +36,9 @@ on:
       CROWDIN_PROJECT_ID:
         type: string
         required: true
+      CROWDIN_BASE_URL:
+        type: string
+        required: true
     secrets:
       ACTOR_GITHUB_TOKEN:
         required: true
@@ -76,6 +79,7 @@ jobs:
           echo "inputs.ACTOR_NAME = ${{ inputs.ACTOR_NAME }}"
           echo "inputs.ACTOR_EMAIL = ${{ inputs.ACTOR_EMAIL }}"
           echo "inputs.CROWDIN_PROJECT_ID = ${{ inputs.CROWDIN_PROJECT_ID }}"
+          echo "inputs.CROWDIN_BASE_URL = ${{ inputs.CROWDIN_BASE_URL }}"
           echo "[Secrets]"
           echo "secrets.ACTOR_GITHUB_TOKEN = ${{ secrets.ACTOR_GITHUB_TOKEN }}"
           echo "secrets.CROWDIN_PERSONAL_TOKEN = ${{ secrets.CROWDIN_PERSONAL_TOKEN }}"
@@ -134,6 +138,7 @@ jobs:
         env:
           CROWDIN_PROJECT_ID: ${{ inputs.CROWDIN_PROJECT_ID }}
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          CROWDIN_BASE_URL: ${{ inputs.CROWDIN_BASE_URL }}
 
       - name: Get the Crowdin Status Progress of the '${{ inputs.VERSION }}' branch
         id: gtpp
@@ -146,6 +151,7 @@ jobs:
         env:
           CROWDIN_PROJECT_ID: ${{ inputs.CROWDIN_PROJECT_ID }}
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          CROWDIN_BASE_URL: ${{ inputs.CROWDIN_BASE_URL }}
 
       - name: Build the 'gettext_statistic_po' target
         uses: hwhsu1231/ci-sphinx/.github/actions/cmake-build-target@main
