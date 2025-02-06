@@ -77,7 +77,7 @@ runs:
           JQ_FILE="${VERSIONS_FILE}"
           OBJECT_LIST=$(jq -c "${JQ_FILTER}" "${JQ_FILE}")
           VERSION_LIST=$(echo "${OBJECT_LIST}" | jq -c "[.[].VERSION]")
-          ALLINONE_LIST=$(echo "${OBJECT_LIST}" | jq -c "[.[].ALLINONE]")
+          ALLINONE_LIST=$(echo "${OBJECT_LIST}" | jq -c "[.[].LANGUAGE_ALLINONE]")
         elif [[ "${TYPE}" == "single" ]]; then
           if [[ "${VERSION_FILTER}" == "all" ]]; then
             JQ_FILTER="[.[] | map(.)] | add"
@@ -92,7 +92,7 @@ runs:
           JQ_FILE="${VERSIONS_FILE}"
           OBJECT_LIST=$(jq -c "${JQ_FILTER}" "${JQ_FILE}")
           VERSION_VALUE=$(echo "${OBJECT_LIST}" | jq -r ".[] | select(.VERSION == \"${VERSION}\") | .VERSION")
-          ALLINONE_VALUE=$(echo "${OBJECT_LIST}" | jq -r ".[] | select(.VERSION == \"${VERSION}\") | .ALLINONE")
+          ALLINONE_VALUE=$(echo "${OBJECT_LIST}" | jq -r ".[] | select(.VERSION == \"${VERSION}\") | .LANGUAGE_ALLINONE")
           if [[ "${VERSION_VALUE}" != "" ]]; then
             echo "VERSION '${VERSION}' is found in the list."
           else
@@ -100,9 +100,9 @@ runs:
             exit 1
           fi
           if [[ "${ALLINONE_VALUE}" == "true" || "${ALLINONE_VALUE}" == "false" ]]; then
-            echo "ALLINONE for VERSION '${VERSION}' is: ${ALLINONE_VALUE}"
+            echo "LANGUAGE_ALLINONE for VERSION '${VERSION}' is: ${ALLINONE_VALUE}"
           else
-            echo "Error: ALLINONE for VERSION '${VERSION}' is NOT found in the list." >&2
+            echo "Error: LANGUAGE_ALLINONE for VERSION '${VERSION}' is NOT found in the list." >&2
             exit 1
           fi
           VERSION_LIST="[ \"${VERSION_VALUE}\" ]"
