@@ -10,7 +10,7 @@ inputs:
     required: true    # [required]
     description: >
       The language to fetch from the list, or 'all' to get all languages.
-  source-language:
+  language-source:
     default: 'en_US'
     required: false
     description: >
@@ -40,7 +40,7 @@ runs:
       shell: bash
       run: |
         LANGUAGE="${{ inputs.language }}"
-        SOURCE_LANGUAGE="${{ inputs.source-language }}"
+        LANGUAGE_SOURCE="${{ inputs.language-source }}"
         LANGUAGES_FILE="${{ inputs.languages-file }}"
         WORKING_DIRECTORY=$(echo "${{ inputs.working-directory }}" | sed 's#\\#/#g' | sed 's#^\([A-Za-z]\):#/\L\1#')
 
@@ -54,7 +54,7 @@ runs:
         if [[ "${LANGUAGE}" == "all" ]]; then
           CROWDIN_LANGUAGE_ARRAY=($(
             jq -r \
-            --arg src "${SOURCE_LANGUAGE}" \
+            --arg src "${LANGUAGE_SOURCE}" \
             'to_entries | map(select(.key != $src)) | .[].value.crowdin' \
             "${LANGUAGES_FILE}" \
             | tr -d '\r'
@@ -63,7 +63,7 @@ runs:
           CROWDIN_LANGUAGE_ARRAY=($(
             jq -r \
             --arg key "${LANGUAGE}" \
-            --arg src "${SOURCE_LANGUAGE}" \
+            --arg src "${LANGUAGE_SOURCE}" \
             'if $key == $src then empty else values[$key].crowdin end' \
             "${LANGUAGES_FILE}" \
             | tr -d '\r'

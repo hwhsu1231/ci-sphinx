@@ -18,7 +18,7 @@ on:
       LANGUAGE:
         type: string
         required: true  # [required]
-      SORUCE_LANGUAGE:
+      LANGUAGE_SOURCE:
         type: string
         required: true  # [required]
       CALLER_JOB:
@@ -73,7 +73,7 @@ jobs:
           echo "inputs.CHECKOUT = ${{ inputs.CHECKOUT }}"
           echo "inputs.VERSION = ${{ inputs.VERSION }}"
           echo "inputs.LANGUAGE = ${{ inputs.LANGUAGE }}"
-          echo "inputs.SORUCE_LANGUAGE = ${{ inputs.SORUCE_LANGUAGE }}"
+          echo "inputs.LANGUAGE_SOURCE = ${{ inputs.LANGUAGE_SOURCE }}"
           echo "inputs.CALLER_JOB = ${{ inputs.CALLER_JOB }}"
           echo "inputs.ENABLE_JOB = ${{ inputs.ENABLE_JOB }}"
           echo "inputs.ACTOR_NAME = ${{ inputs.ACTOR_NAME }}"
@@ -99,7 +99,7 @@ jobs:
         uses: hwhsu1231/ci-sphinx/.github/actions/get-crowdin-language-list-from-languages-file@main
         with:
           language: ${{ inputs.LANGUAGE }}
-          source-language: ${{ inputs.SORUCE_LANGUAGE }}
+          language-source: ${{ inputs.LANGUAGE_SOURCE }}
 
       - name: Upload Sources of the '${{ inputs.VERSION }}' branch to Crowdin
         continue-on-error: true
