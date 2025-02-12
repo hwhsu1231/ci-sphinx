@@ -34,6 +34,8 @@ on:
         type: string
         required: true
     secrets:
+      ACTOR_GITHUB_TOKEN:
+        required: true
       CROWDIN_PERSONAL_TOKEN:
         required: true
 
@@ -70,12 +72,14 @@ jobs:
           echo "inputs.CROWDIN_PROJECT_ID = ${{ inputs.CROWDIN_PROJECT_ID }}"
           echo "inputs.CROWDIN_BASE_URL = ${{ inputs.CROWDIN_BASE_URL }}"
           echo "[Secrets]"
+          echo "secrets.ACTOR_GITHUB_TOKEN = ${{ secrets.ACTOR_GITHUB_TOKEN }}"
           echo "secrets.CROWDIN_PERSONAL_TOKEN = ${{ secrets.CROWDIN_PERSONAL_TOKEN }}"
 
       - name: Checkout to '${{ inputs.CHECKOUT }}'
         uses: actions/checkout@v4
         with:
           ref: ${{ inputs.CHECKOUT }}
+          token: ${{ secrets.ACTOR_GITHUB_TOKEN }}
           submodules: true
 
       # - name: Set up Environment Variables

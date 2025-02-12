@@ -130,7 +130,6 @@ jobs:
           branch: mutex/l10n
           repo-token: ${{ secrets.ACTOR_GITHUB_TOKEN }}
 
-      # https://stackoverflow.com/a/74071223/16265240
       - name: Add and Commit Changes
         id: acc
         uses: EndBug/add-and-commit@v9
