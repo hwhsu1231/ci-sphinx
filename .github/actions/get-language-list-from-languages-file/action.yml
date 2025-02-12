@@ -43,9 +43,10 @@ runs:
         cd ${WORKING_DIRECTORY}
 
         if [[ "${LANGUAGE}" == "all" ]]; then
-          JQ_FILTER="keys"
-          JQ_FILE="${LANGUAGES_FILE}"
-          LANGUAGE_LIST=$(jq -c "${JQ_FILTER}" "${JQ_FILE}")
+          # JQ_FILTER="keys"
+          # JQ_FILE="${LANGUAGES_FILE}"
+          # LANGUAGE_LIST=$(jq -c "${JQ_FILTER}" "${JQ_FILE}")
+          LANGUAGE_LIST="[ \"${LANGUAGE}\" ]"
         else
           JQ_FILTER="keys[]"
           JQ_FILE="${LANGUAGES_FILE}"
