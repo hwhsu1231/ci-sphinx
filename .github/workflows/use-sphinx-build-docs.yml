@@ -1,0 +1,171 @@
+# Distributed under the OSI-approved BSD 3-Clause License.
+# See accompanying file LICENSE.txt for details.
+
+name: use-sphinx-build-docs
+
+on:
+  workflow_call:
+    inputs:
+      RUNNER:
+        required: true
+        type: string
+        description: >
+          Runner image for executing the job (e.g., 'ubuntu-latest').
+      CHECKOUT:
+        required: true
+        type: string
+        description: >
+          Git reference to be checked out (e.g., \$\{\{ github.ref \}\}).
+      VERSION:
+        required: true
+        type: string
+        description: Version of the documentation.
+      LANGUAGE:
+        required: true
+        type: string
+        description: Language of the documentation.
+      MODE_OF_UPDATE:
+        required: true
+        type: string
+        description: Mode of updating .pot and .po files.
+      BASEURL_HREF:
+        required: true
+        type: string
+        description: Base URL for the generated HTML documentation.
+      SPHINX_BUILDER:
+        required: true
+        type: string
+        description: xxx
+      CALLER_JOB:
+        required: true
+        type: string
+        description: Name of the job that triggers this workflow call.
+      ENABLE_JOB:
+        required: true
+        type: boolean
+        description: Whether to enable the job.
+      ACTOR_NAME:
+        required: true
+        type: string
+        description: Name of the GitHub actor.
+      ACTOR_EMAIL:
+        required: true
+        type: string
+        description: Login handle of the GitHub actor.
+    secrets:
+      ACTOR_GITHUB_TOKEN:
+        required: true
+
+jobs:
+  sphinx-build-docs:
+    if: ${{ inputs.ENABLE_JOB }}
+    runs-on: ${{ inputs.RUNNER }}
+    steps:
+      - name: Print Contexts/Inputs/Secrets
+        shell: bash
+        run: |
+          echo "[Contexts]"
+          echo "github.job = ${{ github.job }}"
+          echo "github.ref = ${{ github.ref }}"
+          echo "github.ref_name = ${{ github.ref_name }}"
+          echo "github.event_name = ${{ github.event_name }}"
+          echo "github.event.action = ${{ github.event.action }}"
+          echo "github.event.number = ${{ github.event.number }}"
+          echo "github.workflow = ${{ github.workflow }}"
+          echo "github.workflow_ref = ${{ github.workflow_ref }}"
+          echo "github.run_id = ${{ github.run_id }}"
+          echo "github.run_number = ${{ github.run_number }}"
+          echo "github.run_attempt = ${{ github.run_attempt }}"
+          echo "github.server_url = ${{ github.server_url }}"
+          echo "github.repository = ${{ github.repository }}"
+          echo "github.workspace = ${{ github.workspace }}"
+          echo "[Inputs]"
+          echo "inputs.RUNNER = ${{ inputs.RUNNER }}"
+          echo "inputs.CHECKOUT = ${{ inputs.CHECKOUT }}"
+          echo "inputs.VERSION = ${{ inputs.VERSION }}"
+          echo "inputs.LANGUAGE = ${{ inputs.LANGUAGE }}"
+          echo "inputs.MODE_OF_UPDATE = ${{ inputs.MODE_OF_UPDATE }}"
+          echo "inputs.BASEURL_HREF = ${{ inputs.BASEURL_HREF }}"
+          echo "inputs.SPHINX_BUILDER = ${{ inputs.SPHINX_BUILDER }}"
+          echo "inputs.CALLER_JOB = ${{ inputs.CALLER_JOB }}"
+          echo "inputs.ENABLE_JOB = ${{ inputs.ENABLE_JOB }}"
+          echo "inputs.ACTOR_NAME = ${{ inputs.ACTOR_NAME }}"
+          echo "inputs.ACTOR_EMAIL = ${{ inputs.ACTOR_EMAIL }}"
+          echo "[Secrets]"
+          echo "secrets.ACTOR_GITHUB_TOKEN = ${{ secrets.ACTOR_GITHUB_TOKEN }}"
+
+      - name: Checkout to '${{ inputs.CHECKOUT }}'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.CHECKOUT }}
+          token: ${{ secrets.ACTOR_GITHUB_TOKEN }}
+          submodules: true
+
+      - name: Install CMake
+        uses: hwhsu1231/ci-sphinx/.github/actions/install-cmake@main
+
+      - name: Install Conda
+        uses: hwhsu1231/ci-sphinx/.github/actions/install-conda@main
+
+      - name: Install Gettext
+        uses: hwhsu1231/ci-sphinx/.github/actions/install-gettext@main
+
+      - name: Get Other Caches from versions.json
+        id: gocv
+        uses: hwhsu1231/ci-sphinx/.github/actions/get-other-caches-from-versions-file@main
+        with:
+          version: ${{ inputs.VERSION }}
+          versions-file: 'versions.json'
+
+      - name: Configure the '${{ inputs.LANGUAGE }}' preset for '${{ inputs.VERSION }}' version
+        uses: hwhsu1231/ci-sphinx/.github/actions/cmake-configure-preset@main
+        with:
+          source-directory: ${{ github.workspace }}
+          preset: ${{ inputs.LANGUAGE }}
+          cache-version: ${{ inputs.VERSION }}
+          cache-version-compendium: ${{ steps.gocv.outputs.VERSION_COMPENDIUM }}
+          cache-auto-depend: 'OFF'
+          cache-mode-of-update: ${{ inputs.MODE_OF_UPDATE }}
+          cache-baseurl-href: ${{ inputs.BASEURL_HREF }}
+          cache-sphinx-builder: ${{ inputs.SPHINX_BUILDER }}
+
+      - name: Build the 'prepare_repositories' target
+        uses: hwhsu1231/ci-sphinx/.github/actions/cmake-build-target@main
+        with:
+          source-directory: ${{ github.workspace }}
+          preset: ${{ inputs.LANGUAGE }}
+          target: 'prepare_repositories'
+
+      - name: Build the 'install_requirements' target
+        uses: hwhsu1231/ci-sphinx/.github/actions/cmake-build-target@main
+        with:
+          source-directory: ${{ github.workspace }}
+          preset: ${{ inputs.LANGUAGE }}
+          target: 'install_requirements'
+
+      - name: Build the 'sphinx_update_pot' target
+        uses: hwhsu1231/ci-sphinx/.github/actions/cmake-build-target@main
+        with:
+          source-directory: ${{ github.workspace }}
+          preset: ${{ inputs.LANGUAGE }}
+          target: 'sphinx_update_pot'
+
+      - name: Build the 'gettext_update_po' target
+        uses: hwhsu1231/ci-sphinx/.github/actions/cmake-build-target@main
+        with:
+          source-directory: ${{ github.workspace }}
+          preset: ${{ inputs.LANGUAGE }}
+          target: 'gettext_update_po'
+
+      - name: Build the 'sphinx_build_docs' target
+        uses: hwhsu1231/ci-sphinx/.github/actions/cmake-build-target@main
+        with:
+          source-directory: ${{ github.workspace }}
+          preset: ${{ inputs.LANGUAGE }}
+          target: 'sphinx_build_docs'
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-${{ inputs.VERSION }}-${{ inputs.LANGUAGE }}
+          path: './out/${{ inputs.SPHINX_BUILDER }}'
