@@ -14,10 +14,6 @@ inputs:
     required: false
     default: '[]'
     description: xxx
-  allinone-list:
-    required: false
-    default: '[]'
-    description: xxx
   language-list:
     required: false
     default: '[]'
@@ -45,19 +41,16 @@ runs:
         # Get the matrix type and the JSON lists from Inputs.
         MATRIX_TYPE='${{ inputs.matrix-type }}'
         VERSION_LIST='${{ inputs.version-list }}'
-        ALLINONE_LIST='${{ inputs.allinone-list }}'
         LANGUAGE_LIST='${{ inputs.language-list }}'
         SUBMODULE_LIST='${{ inputs.submodule-list }}'
 
         # Get the number of the JSON lists.
         VERSION_NUM=$(echo "${VERSION_LIST}" | jq 'length')
-        ALLINONE_NUM=$(echo "${ALLINONE_LIST}" | jq 'length')
         LANGUAGE_NUM=$(echo "${LANGUAGE_LIST}" | jq 'length')
         SUBMODULE_NUM=$(echo "${SUBMODULE_LIST}" | jq 'length')
 
         # Convert the JSON lists to the Bash arraies.
         VERSION_ARRAY=($(echo "${VERSION_LIST}" | jq -r '.[]'))
-        ALLINONE_ARRAY=($(echo "${ALLINONE_LIST}" | jq -r '.[]'))
         LANGUAGE_ARRAY=($(echo "${LANGUAGE_LIST}" | jq -r '.[]'))
         SUBMODULE_ARRAY=($(echo "${SUBMODULE_LIST}" | jq -r '.[]'))
 
@@ -79,14 +72,17 @@ runs:
           # Generate a full matrix with VERSION and LANGUAGE combinations.
           for INDEX in "${!VERSION_ARRAY[@]}"; do
             VERSION="${VERSION_ARRAY[${INDEX}]}"
-            LANGUAGE_ALLINONE="${ALLINONE_ARRAY[${INDEX}]}"
-            if [[ "${LANGUAGE_ALLINONE}" == "true" ]]; then
-              MATRIX_ARRAY+=("{\"VERSION\":\"${VERSION}\",\"LANGUAGE\":\"all\"}")
-            else
-              for LANGUAGE in "${LANGUAGE_ARRAY[@]}"; do
-                MATRIX_ARRAY+=("{\"VERSION\":\"${VERSION}\",\"LANGUAGE\":\"${LANGUAGE}\"}")
-              done
-            fi
+            # LANGUAGE_ALLINONE="${ALLINONE_ARRAY[${INDEX}]}"
+            # if [[ "${LANGUAGE_ALLINONE}" == "true" ]]; then
+            #   MATRIX_ARRAY+=("{\"VERSION\":\"${VERSION}\",\"LANGUAGE\":\"all\"}")
+            # else
+            #   for LANGUAGE in "${LANGUAGE_ARRAY[@]}"; do
+            #     MATRIX_ARRAY+=("{\"VERSION\":\"${VERSION}\",\"LANGUAGE\":\"${LANGUAGE}\"}")
+            #   done
+            # fi
+            for LANGUAGE in "${LANGUAGE_ARRAY[@]}"; do
+              MATRIX_ARRAY+=("{\"VERSION\":\"${VERSION}\",\"LANGUAGE\":\"${LANGUAGE}\"}")
+            done
           done
         else
           echo "Error: Invalid MATRIX_TYPE value. (${MATRIX_TYPE})" >&2
