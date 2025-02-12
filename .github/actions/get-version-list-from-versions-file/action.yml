@@ -1,7 +1,7 @@
 # Distributed under the OSI-approved BSD 3-Clause License.
 # See accompanying file LICENSE.txt for details.
 
-name: get-version-allinone-list-from-versions-file
+name: get-version-list-from-versions-file
 
 description: Get the Version List from versions.json
 
@@ -35,17 +35,11 @@ outputs:
   VERSION_LIST:
     value: ${{ steps.gvav.outputs.VERSION_LIST }}
     description: xxx
-  ALLINONE_NUM:
-    value: ${{ steps.gvav.outputs.ALLINONE_NUM }}
-    description: Number of items in the ALLINONE list.
-  ALLINONE_LIST:
-    value: ${{ steps.gvav.outputs.ALLINONE_LIST }}
-    description: JSON list of ALLINONE values.
 
 runs:
   using: composite
   steps:
-    - name: Get VERSION_LIST and ALLINONE_LIST from versions.json
+    - name: Get VERSION_LIST from versions.json
       id: gvav
       shell: bash
       run: |
@@ -77,7 +71,6 @@ runs:
           JQ_FILE="${VERSIONS_FILE}"
           OBJECT_LIST=$(jq -c "${JQ_FILTER}" "${JQ_FILE}")
           VERSION_LIST=$(echo "${OBJECT_LIST}" | jq -c "[.[].VERSION]")
-          ALLINONE_LIST=$(echo "${OBJECT_LIST}" | jq -c "[.[].LANGUAGE_ALLINONE]")
         elif [[ "${TYPE}" == "single" ]]; then
           if [[ "${VERSION_FILTER}" == "all" ]]; then
             JQ_FILTER="[.[] | map(.)] | add"
@@ -92,28 +85,19 @@ runs:
           JQ_FILE="${VERSIONS_FILE}"
           OBJECT_LIST=$(jq -c "${JQ_FILTER}" "${JQ_FILE}")
           VERSION_VALUE=$(echo "${OBJECT_LIST}" | jq -r ".[] | select(.VERSION == \"${VERSION}\") | .VERSION")
-          ALLINONE_VALUE=$(echo "${OBJECT_LIST}" | jq -r ".[] | select(.VERSION == \"${VERSION}\") | .LANGUAGE_ALLINONE")
           if [[ "${VERSION_VALUE}" != "" ]]; then
             echo "VERSION '${VERSION}' is found in the list."
           else
             echo "Error: VERSION '${VERSION}' is NOT found in the list." >&2
             exit 1
           fi
-          if [[ "${ALLINONE_VALUE}" == "true" || "${ALLINONE_VALUE}" == "false" ]]; then
-            echo "LANGUAGE_ALLINONE for VERSION '${VERSION}' is: ${ALLINONE_VALUE}"
-          else
-            echo "Error: LANGUAGE_ALLINONE for VERSION '${VERSION}' is NOT found in the list." >&2
-            exit 1
-          fi
           VERSION_LIST="[ \"${VERSION_VALUE}\" ]"
-          ALLINONE_LIST="[ \"${ALLINONE_VALUE}\" ]"
         else
           echo "Error: Invalid TYPE value. (${TYPE})" >&2
           exit 1
         fi
 
         VERSION_NUM=$(jq "length" <<< "${VERSION_LIST}")
-        ALLINONE_NUM=$(jq "length" <<< "${ALLINONE_LIST}")
 
         echo "VERSION_NUM=${VERSION_NUM}" >> ${GITHUB_OUTPUT}
         echo "VERSION_NUM:"
@@ -122,11 +106,3 @@ runs:
         echo "VERSION_LIST=${VERSION_LIST}" >> ${GITHUB_OUTPUT}
         echo "VERSION_LIST:"
         echo "${VERSION_LIST}" | jq "."
-
-        echo "ALLINONE_NUM=${ALLINONE_NUM}" >> ${GITHUB_OUTPUT}
-        echo "ALLINONE_NUM:"
-        echo "${ALLINONE_NUM}"
-
-        echo "ALLINONE_LIST=${ALLINONE_LIST}" >> ${GITHUB_OUTPUT}
-        echo "ALLINONE_LIST:"
-        echo "${ALLINONE_LIST}" | jq "."
