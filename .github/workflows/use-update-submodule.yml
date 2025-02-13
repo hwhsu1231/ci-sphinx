@@ -28,9 +28,13 @@ on:
       ACTOR_NAME:
         type: string
         required: true
+        description: >
+          The name of the GitHub actor.
       ACTOR_EMAIL:
         type: string
         required: true
+        description: >
+          The email of the GitHub actor.
     secrets:
       ACTOR_GITHUB_TOKEN:
         required: true

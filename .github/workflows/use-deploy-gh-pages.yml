@@ -7,34 +7,34 @@ on:
   workflow_call:
     inputs:
       RUNNER:
-        required: true
         type: string
+        required: true
         description: >
           The runner image for executing the job (e.g., 'ubuntu-latest').
       CHECKOUT:
-        required: true
         type: string
+        required: true
         description: >
           The git reference to be checked out (e.g., \$\{\{ github.ref \}\}).
       RUN_ID:
-        required: true
         type: string
+        required: true
         description: xxx
       DEPLOY_ONLY:
-        required: true
         type: string
+        required: true
         description: xxx
       DEPLOY_BRANCH:
-        required: true
         type: string
+        required: true
         description: xxx
       CALLER_JOB:
-        required: true
         type: string
+        required: true
         description: Name of the job that triggers this workflow call.
       ENABLE_JOB:
-        required: true
         type: string
+        required: true
         description: >
           Whether to enable the job.
       ACTOR_NAME:
@@ -43,8 +43,8 @@ on:
         description: >
           The name of the GitHub actor.
       ACTOR_EMAIL:
-        required: true
         type: string
+        required: true
         description: >
           The email of the GitHub actor.
     secrets:
