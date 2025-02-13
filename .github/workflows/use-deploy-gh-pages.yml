@@ -48,7 +48,7 @@ on:
 
 jobs:
   merge-build-artifacts:
-    if: ${{ inputs.ENABLE_JOB && !inputs.DEPLOY_ONLY }}
+    if: ${{ inputs.ENABLE_JOB == 'true' && inputs.DEPLOY_ONLY == 'false' }}
     runs-on: ${{ inputs.RUNNER }}
     steps:
       - name: Print Contexts/Inputs/Secrets
@@ -117,7 +117,7 @@ jobs:
 
   deploy-gh-pages:
     needs: [ 'merge-build-artifacts' ]
-    if: ${{ inputs.ENABLE_JOB }}
+    if: ${{ inputs.ENABLE_JOB == 'true' }}
     runs-on: ${{ inputs.RUNNER }}
     # Refer to: https://stackoverflow.com/a/76883315
     permissions:
