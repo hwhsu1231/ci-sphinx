@@ -20,7 +20,7 @@ on:
         description: xxx
       DEPLOY_ONLY:
         required: true
-        type: boolean
+        type: string
         description: xxx
       DEPLOY_BRANCH:
         required: true
@@ -32,7 +32,7 @@ on:
         description: Name of the job that triggers this workflow call.
       ENABLE_JOB:
         required: true
-        type: boolean
+        type: string
         description: Whether to enable the job.
       ACTOR_NAME:
         required: true
@@ -47,151 +47,135 @@ on:
         required: true
 
 jobs:
-  test:
+  merge-build-artifacts:
+    if: ${{ inputs.ENABLE_JOB == 'true' && inputs.DEPLOY_ONLY == 'false' }}
     runs-on: ${{ inputs.RUNNER }}
     steps:
       - name: Print Contexts/Inputs/Secrets
         shell: bash
         run: |
-          echo "[Test]"
-          echo "inputs.DEPLOY_ONLY            : ${{ inputs.DEPLOY_ONLY }}"
-          echo "inputs.ENABLE_JOB             : ${{ inputs.ENABLE_JOB }}"
-          echo "toJSON(inputs.DEPLOY_ONLY)    : ${{ toJSON(inputs.DEPLOY_ONLY) }}"
-          echo "toJSON(inputs.ENABLE_JOB)     : ${{ toJSON(inputs.ENABLE_JOB) }}"
-          echo "inputs.DEPLOY_ONLY == 'true'  : ${{ inputs.DEPLOY_ONLY == 'true' }}"
-          echo "inputs.DEPLOY_ONLY == 'false' : ${{ inputs.DEPLOY_ONLY == 'false' }}"
-          echo "inputs.ENABLE_JOB == 'true'   : ${{ inputs.ENABLE_JOB == 'true' }}"
-          echo "inputs.ENABLE_JOB == 'false'  : ${{ inputs.ENABLE_JOB == 'false' }}"
+          echo "[Contexts]"
+          echo "github.job = ${{ github.job }}"
+          echo "github.ref = ${{ github.ref }}"
+          echo "github.ref_name = ${{ github.ref_name }}"
+          echo "github.event_name = ${{ github.event_name }}"
+          echo "github.event.action = ${{ github.event.action }}"
+          echo "github.event.number = ${{ github.event.number }}"
+          echo "github.workflow = ${{ github.workflow }}"
+          echo "github.workflow_ref = ${{ github.workflow_ref }}"
+          echo "github.run_id = ${{ github.run_id }}"
+          echo "github.run_number = ${{ github.run_number }}"
+          echo "github.run_attempt = ${{ github.run_attempt }}"
+          echo "github.server_url = ${{ github.server_url }}"
+          echo "github.repository = ${{ github.repository }}"
+          echo "github.workspace = ${{ github.workspace }}"
+          echo "[Inputs]"
+          echo "inputs.RUNNER = ${{ inputs.RUNNER }}"
+          echo "inputs.CHECKOUT = ${{ inputs.CHECKOUT }}"
+          echo "inputs.RUN_ID = ${{ inputs.RUN_ID }}"
+          echo "inputs.DEPLOY_ONLY = ${{ inputs.DEPLOY_ONLY }}"
+          echo "inputs.DEPLOY_BRANCH = ${{ inputs.DEPLOY_BRANCH }}"
+          echo "inputs.CALLER_JOB = ${{ inputs.CALLER_JOB }}"
+          echo "inputs.ENABLE_JOB = ${{ inputs.ENABLE_JOB }}"
+          echo "inputs.ACTOR_NAME = ${{ inputs.ACTOR_NAME }}"
+          echo "inputs.ACTOR_EMAIL = ${{ inputs.ACTOR_EMAIL }}"
+          echo "[Secrets]"
+          echo "secrets.ACTOR_GITHUB_TOKEN = ${{ secrets.ACTOR_GITHUB_TOKEN }}"
 
-  # merge-build-artifacts:
-  #   if: ${{ inputs.ENABLE_JOB == 'true' && inputs.DEPLOY_ONLY == 'false' }}
-  #   runs-on: ${{ inputs.RUNNER }}
-  #   steps:
-  #     - name: Print Contexts/Inputs/Secrets
-  #       shell: bash
-  #       run: |
-  #         echo "[Contexts]"
-  #         echo "github.job = ${{ github.job }}"
-  #         echo "github.ref = ${{ github.ref }}"
-  #         echo "github.ref_name = ${{ github.ref_name }}"
-  #         echo "github.event_name = ${{ github.event_name }}"
-  #         echo "github.event.action = ${{ github.event.action }}"
-  #         echo "github.event.number = ${{ github.event.number }}"
-  #         echo "github.workflow = ${{ github.workflow }}"
-  #         echo "github.workflow_ref = ${{ github.workflow_ref }}"
-  #         echo "github.run_id = ${{ github.run_id }}"
-  #         echo "github.run_number = ${{ github.run_number }}"
-  #         echo "github.run_attempt = ${{ github.run_attempt }}"
-  #         echo "github.server_url = ${{ github.server_url }}"
-  #         echo "github.repository = ${{ github.repository }}"
-  #         echo "github.workspace = ${{ github.workspace }}"
-  #         echo "[Inputs]"
-  #         echo "inputs.RUNNER = ${{ inputs.RUNNER }}"
-  #         echo "inputs.CHECKOUT = ${{ inputs.CHECKOUT }}"
-  #         echo "inputs.RUN_ID = ${{ inputs.RUN_ID }}"
-  #         echo "inputs.DEPLOY_ONLY = ${{ inputs.DEPLOY_ONLY }}"
-  #         echo "inputs.DEPLOY_BRANCH = ${{ inputs.DEPLOY_BRANCH }}"
-  #         echo "inputs.CALLER_JOB = ${{ inputs.CALLER_JOB }}"
-  #         echo "inputs.ENABLE_JOB = ${{ inputs.ENABLE_JOB }}"
-  #         echo "inputs.ACTOR_NAME = ${{ inputs.ACTOR_NAME }}"
-  #         echo "inputs.ACTOR_EMAIL = ${{ inputs.ACTOR_EMAIL }}"
-  #         echo "[Secrets]"
-  #         echo "secrets.ACTOR_GITHUB_TOKEN = ${{ secrets.ACTOR_GITHUB_TOKEN }}"
+      - name: Checkout to '${{ inputs.CHECKOUT }}'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.CHECKOUT }}
+          token: ${{ secrets.ACTOR_GITHUB_TOKEN }}
+          submodules: false
 
-  #     - name: Checkout to '${{ inputs.CHECKOUT }}'
-  #       uses: actions/checkout@v4
-  #       with:
-  #         ref: ${{ inputs.CHECKOUT }}
-  #         token: ${{ secrets.ACTOR_GITHUB_TOKEN }}
-  #         submodules: false
+      - name: Download and Merge Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: 'out/${{ inputs.DEPLOY_BRANCH }}'
+          run-id: ${{ inputs.RUN_ID }}
+          github-token: ${{ secrets.ACTOR_GITHUB_TOKEN }}
+          merge-multiple: true
 
-  #     - name: Download and Merge Build Artifacts
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         path: 'out/${{ inputs.DEPLOY_BRANCH }}'
-  #         run-id: ${{ inputs.RUN_ID }}
-  #         github-token: ${{ secrets.ACTOR_GITHUB_TOKEN }}
-  #         merge-multiple: true
+      - name: Set up mutex for the '${{ inputs.DEPLOY_BRANCH }}' branch
+        uses: ben-z/gh-action-mutex@v1.0.0-alpha.9
+        with:
+          branch: mutex/${{ inputs.DEPLOY_BRANCH }}
+          repo-token: ${{ secrets.ACTOR_GITHUB_TOKEN }}
 
-  #     - name: Set up mutex for the '${{ inputs.DEPLOY_BRANCH }}' branch
-  #       uses: ben-z/gh-action-mutex@v1.0.0-alpha.9
-  #       with:
-  #         branch: mutex/${{ inputs.DEPLOY_BRANCH }}
-  #         repo-token: ${{ secrets.ACTOR_GITHUB_TOKEN }}
+      - name: Deploy to the '${{ inputs.DEPLOY_BRANCH }}' branch
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: ${{ inputs.DEPLOY_BRANCH }}
+          folder: 'out/${{ inputs.DEPLOY_BRANCH }}'
+          target-folder: '.'
+          single-commit: true
+          clean: false
+          git-config-name: ${{ inputs.ACTOR_NAME }}
+          git-config-email: ${{ inputs.ACTOR_EMAIL }}
+          token: ${{ secrets.ACTOR_GITHUB_TOKEN }}
 
-  #     - name: Deploy to the '${{ inputs.DEPLOY_BRANCH }}' branch
-  #       uses: JamesIves/github-pages-deploy-action@v4
-  #       with:
-  #         branch: ${{ inputs.DEPLOY_BRANCH }}
-  #         folder: 'out/${{ inputs.DEPLOY_BRANCH }}'
-  #         target-folder: '.'
-  #         single-commit: true
-  #         clean: false
-  #         git-config-name: ${{ inputs.ACTOR_NAME }}
-  #         git-config-email: ${{ inputs.ACTOR_EMAIL }}
-  #         token: ${{ secrets.ACTOR_GITHUB_TOKEN }}
+  deploy-gh-pages:
+    needs: [ 'merge-build-artifacts' ]
+    if: ${{ ( always() ) &&
+            ( !contains(needs.*.result, 'failure') ) &&
+            ( !contains(needs.*.result, 'cancelled') ) &&
+            ( inputs.ENABLE_JOB == 'true' ) }}
+    runs-on: ${{ inputs.RUNNER }}
+    # Refer to: https://stackoverflow.com/a/76883315
+    permissions:
+      id-token: write
+      pages: write
+    steps:
+      - name: Print Contexts/Inputs/Secrets
+        shell: bash
+        run: |
+          echo "[Contexts]"
+          echo "github.job = ${{ github.job }}"
+          echo "github.ref = ${{ github.ref }}"
+          echo "github.ref_name = ${{ github.ref_name }}"
+          echo "github.event_name = ${{ github.event_name }}"
+          echo "github.event.action = ${{ github.event.action }}"
+          echo "github.event.number = ${{ github.event.number }}"
+          echo "github.workflow = ${{ github.workflow }}"
+          echo "github.workflow_ref = ${{ github.workflow_ref }}"
+          echo "github.run_id = ${{ github.run_id }}"
+          echo "github.run_number = ${{ github.run_number }}"
+          echo "github.run_attempt = ${{ github.run_attempt }}"
+          echo "github.server_url = ${{ github.server_url }}"
+          echo "github.repository = ${{ github.repository }}"
+          echo "github.workspace = ${{ github.workspace }}"
+          echo "[Inputs]"
+          echo "inputs.RUNNER = ${{ inputs.RUNNER }}"
+          echo "inputs.CHECKOUT = ${{ inputs.CHECKOUT }}"
+          echo "inputs.DEPLOY_BRANCH = ${{ inputs.DEPLOY_BRANCH }}"
+          echo "inputs.CALLER_JOB = ${{ inputs.CALLER_JOB }}"
+          echo "inputs.ENABLE_JOB = ${{ inputs.ENABLE_JOB }}"
+          echo "inputs.ACTOR_NAME = ${{ inputs.ACTOR_NAME }}"
+          echo "inputs.ACTOR_EMAIL = ${{ inputs.ACTOR_EMAIL }}"
+          echo "[Secrets]"
+          echo "secrets.ACTOR_GITHUB_TOKEN = ${{ secrets.ACTOR_GITHUB_TOKEN }}"
 
-  # deploy-gh-pages:
-  #   needs: [ 'merge-build-artifacts' ]
-  #   if: ${{ ( always() ) &&
-  #           ( !contains(needs.*.result, 'failure') ) &&
-  #           ( !contains(needs.*.result, 'cancelled') ) &&
-  #           ( inputs.ENABLE_JOB ) }}
-  #   runs-on: ${{ inputs.RUNNER }}
-  #   # Refer to: https://stackoverflow.com/a/76883315
-  #   permissions:
-  #     id-token: write
-  #     pages: write
-  #   steps:
-  #     - name: Print Contexts/Inputs/Secrets
-  #       shell: bash
-  #       run: |
-  #         echo "[Contexts]"
-  #         echo "github.job = ${{ github.job }}"
-  #         echo "github.ref = ${{ github.ref }}"
-  #         echo "github.ref_name = ${{ github.ref_name }}"
-  #         echo "github.event_name = ${{ github.event_name }}"
-  #         echo "github.event.action = ${{ github.event.action }}"
-  #         echo "github.event.number = ${{ github.event.number }}"
-  #         echo "github.workflow = ${{ github.workflow }}"
-  #         echo "github.workflow_ref = ${{ github.workflow_ref }}"
-  #         echo "github.run_id = ${{ github.run_id }}"
-  #         echo "github.run_number = ${{ github.run_number }}"
-  #         echo "github.run_attempt = ${{ github.run_attempt }}"
-  #         echo "github.server_url = ${{ github.server_url }}"
-  #         echo "github.repository = ${{ github.repository }}"
-  #         echo "github.workspace = ${{ github.workspace }}"
-  #         echo "[Inputs]"
-  #         echo "inputs.RUNNER = ${{ inputs.RUNNER }}"
-  #         echo "inputs.CHECKOUT = ${{ inputs.CHECKOUT }}"
-  #         echo "inputs.DEPLOY_BRANCH = ${{ inputs.DEPLOY_BRANCH }}"
-  #         echo "inputs.CALLER_JOB = ${{ inputs.CALLER_JOB }}"
-  #         echo "inputs.ENABLE_JOB = ${{ inputs.ENABLE_JOB }}"
-  #         echo "inputs.ACTOR_NAME = ${{ inputs.ACTOR_NAME }}"
-  #         echo "inputs.ACTOR_EMAIL = ${{ inputs.ACTOR_EMAIL }}"
-  #         echo "[Secrets]"
-  #         echo "secrets.ACTOR_GITHUB_TOKEN = ${{ secrets.ACTOR_GITHUB_TOKEN }}"
+      - name: Checkout to 'refs/heads/${{ inputs.DEPLOY_BRANCH }}'
+        uses: actions/checkout@v4
+        with:
+          ref: 'refs/heads/${{ inputs.DEPLOY_BRANCH }}'
+          token: ${{ secrets.ACTOR_GITHUB_TOKEN }}
+          submodules: false
 
-  #     - name: Checkout to 'refs/heads/${{ inputs.DEPLOY_BRANCH }}'
-  #       uses: actions/checkout@v4
-  #       with:
-  #         ref: 'refs/heads/${{ inputs.DEPLOY_BRANCH }}'
-  #         token: ${{ secrets.ACTOR_GITHUB_TOKEN }}
-  #         submodules: false
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+        with:
+          token: ${{ secrets.ACTOR_GITHUB_TOKEN }}
 
-  #     - name: Setup Pages
-  #       uses: actions/configure-pages@v5
-  #       with:
-  #         token: ${{ secrets.ACTOR_GITHUB_TOKEN }}
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          name: 'github-pages'
+          path: '.'
 
-  #     - name: Upload Pages Artifact
-  #       uses: actions/upload-pages-artifact@v3
-  #       with:
-  #         name: 'github-pages'
-  #         path: '.'
-
-  #     - name: Deploy Pages Artifact
-  #       uses: actions/deploy-pages@v4
-  #       with:
-  #         artifact_name: 'github-pages'
-  #         token: ${{ secrets.ACTOR_GITHUB_TOKEN }}
+      - name: Deploy Pages Artifact
+        uses: actions/deploy-pages@v4
+        with:
+          artifact_name: 'github-pages'
+          token: ${{ secrets.ACTOR_GITHUB_TOKEN }}
