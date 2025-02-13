@@ -14,9 +14,17 @@ on:
         required: true
         type: string
         description: Git reference to be checked out (e.g., \$\{\{ github.ref \}\}).
-      DEPLOY_BRANCH:
+      RUN_ID:
+        required: true
+        type: string
+        description: xxx
+      DEPLOY_ONLY:
         required: true
         type: boolean
+        description: xxx
+      DEPLOY_BRANCH:
+        required: true
+        type: string
         description: xxx
       CALLER_JOB:
         required: true
@@ -64,6 +72,8 @@ jobs:
           echo "[Inputs]"
           echo "inputs.RUNNER = ${{ inputs.RUNNER }}"
           echo "inputs.CHECKOUT = ${{ inputs.CHECKOUT }}"
+          echo "inputs.RUN_ID = ${{ inputs.RUN_ID }}"
+          echo "inputs.DEPLOY_ONLY = ${{ inputs.DEPLOY_ONLY }}"
           echo "inputs.DEPLOY_BRANCH = ${{ inputs.DEPLOY_BRANCH }}"
           echo "inputs.CALLER_JOB = ${{ inputs.CALLER_JOB }}"
           echo "inputs.ENABLE_JOB = ${{ inputs.ENABLE_JOB }}"
@@ -83,8 +93,9 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: 'out/${{ inputs.DEPLOY_BRANCH }}'
-          merge-multiple: true
+          run-id: ${{ inputs.RUN_ID }}
           github-token: ${{ secrets.ACTOR_GITHUB_TOKEN }}
+          merge-multiple: true
 
       - name: Set up mutex for the '${{ inputs.DEPLOY_BRANCH }}' branch
         uses: ben-z/gh-action-mutex@v1.0.0-alpha.9
