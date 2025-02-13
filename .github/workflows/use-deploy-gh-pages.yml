@@ -48,7 +48,7 @@ on:
 
 jobs:
   merge-build-artifacts:
-    if: ${{ inputs.ENABLE_JOB }}
+    if: ${{ inputs.ENABLE_JOB && !inputs.DEPLOY_ONLY }}
     runs-on: ${{ inputs.RUNNER }}
     steps:
       - name: Print Contexts/Inputs/Secrets
