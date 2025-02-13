@@ -53,20 +53,15 @@ jobs:
       - name: Print Contexts/Inputs/Secrets
         shell: bash
         run: |
-          echo "[Contexts]"
-          echo "[Inputs]"
-          echo "inputs.RUNNER = ${{ inputs.RUNNER }}"
-          echo "inputs.CHECKOUT = ${{ inputs.CHECKOUT }}"
-          echo "inputs.RUN_ID = ${{ inputs.RUN_ID }}"
-          echo "inputs.DEPLOY_ONLY = ${{ inputs.DEPLOY_ONLY }}"
-          echo "inputs.DEPLOY_BRANCH = ${{ inputs.DEPLOY_BRANCH }}"
-          echo "inputs.CALLER_JOB = ${{ inputs.CALLER_JOB }}"
-          echo "inputs.ENABLE_JOB = ${{ inputs.ENABLE_JOB }}"
-          echo "inputs.ACTOR_NAME = ${{ inputs.ACTOR_NAME }}"
-          echo "inputs.ACTOR_EMAIL = ${{ inputs.ACTOR_EMAIL }}"
           echo "[Test]"
-          echo "toJSON(inputs.DEPLOY_ONLY) = ${{ toJSON(inputs.DEPLOY_ONLY) }}"
-          echo "toJSON(inputs.ENABLE_JOB) = ${{ toJSON(inputs.ENABLE_JOB) }}"
+          echo "inputs.DEPLOY_ONLY            : ${{ inputs.DEPLOY_ONLY }}"
+          echo "inputs.ENABLE_JOB             : ${{ inputs.ENABLE_JOB }}"
+          echo "toJSON(inputs.DEPLOY_ONLY)    : ${{ toJSON(inputs.DEPLOY_ONLY) }}"
+          echo "toJSON(inputs.ENABLE_JOB)     : ${{ toJSON(inputs.ENABLE_JOB) }}"
+          echo "inputs.DEPLOY_ONLY == 'true'  : ${{ inputs.DEPLOY_ONLY == 'true' }}"
+          echo "inputs.DEPLOY_ONLY == 'false' : ${{ inputs.DEPLOY_ONLY == 'false' }}"
+          echo "inputs.ENABLE_JOB == 'true'   : ${{ inputs.ENABLE_JOB == 'true' }}"
+          echo "inputs.ENABLE_JOB == 'false'  : ${{ inputs.ENABLE_JOB == 'false' }}"
 
   # merge-build-artifacts:
   #   if: ${{ inputs.ENABLE_JOB == 'true' && inputs.DEPLOY_ONLY == 'false' }}
