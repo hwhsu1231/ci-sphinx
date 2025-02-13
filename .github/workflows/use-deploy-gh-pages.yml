@@ -120,7 +120,7 @@ jobs:
     if: ${{ ( always() ) &&
             ( !contains(needs.*.result, 'failure') ) &&
             ( !contains(needs.*.result, 'cancelled') ) &&
-            ( inputs.ENABLE_JOB == 'true' ) }}
+            ( inputs.ENABLE_JOB ) }}
     runs-on: ${{ inputs.RUNNER }}
     # Refer to: https://stackoverflow.com/a/76883315
     permissions:
