@@ -26,11 +26,11 @@ on:
         required: true
         description: The name of the job that triggers this workflow call.
       ENABLE_JOB:
-        type: boolean
+        type: string
         required: true
         description: Whether to enable the job.
       CREATE_PR:
-        type: boolean
+        type: string
         required: true
         description: Whether to create a pull request.
       ACTOR_NAME:
@@ -47,7 +47,7 @@ on:
 
 jobs:
   sphinx-update-pot:
-    if: ${{ inputs.ENABLE_JOB }}
+    if: ${{ inputs.ENABLE_JOB == 'true' }}
     runs-on: ${{ inputs.RUNNER }}
     steps:
       - name: Print Contexts/Inputs/Secrets
@@ -187,7 +187,7 @@ jobs:
 
       - name: Add and Commit the Change
         id: acc
-        if: ${{ inputs.CREATE_PR }}
+        if: ${{ inputs.CREATE_PR == 'true' }}
         uses: EndBug/add-and-commit@v9
         with:
           cwd: './l10n'
@@ -205,7 +205,7 @@ jobs:
             After: ${{ steps.pot-after.outputs.VERSION_REF }}
 
       - name: Check Outputs of the Commit
-        if: ${{ inputs.CREATE_PR && steps.acc.outputs.committed == 'true' }}
+        if: ${{ inputs.CREATE_PR == 'true' && steps.acc.outputs.committed == 'true' }}
         shell: bash
         run: |
           echo "Commit's SHA = ${{ steps.acc.outputs.commit_long_sha }}"
@@ -213,7 +213,7 @@ jobs:
 
       - name: Create a Pull Request
         id: cpr
-        if: ${{ inputs.CREATE_PR && steps.acc.outputs.committed == 'true' }}
+        if: ${{ inputs.CREATE_PR == 'true' && steps.acc.outputs.committed == 'true' }}
         uses: devops-infra/action-pull-request@v0.5.5
         with:
           github_token: ${{ secrets.ACTOR_GITHUB_TOKEN }}  # required
@@ -230,7 +230,7 @@ jobs:
             - Job: [${{ inputs.CALLER_JOB }} / ${{ github.job }}](${{ steps.gcji.outputs.html_url }})
 
       - name: Check Outputs of the Pull Request
-        if: ${{ inputs.CREATE_PR && steps.acc.outputs.committed == 'true' }}
+        if: ${{ inputs.CREATE_PR == 'true' && steps.acc.outputs.committed == 'true' }}
         shell: bash
         run: |
           echo "Pull Request's Number = ${{ steps.cpr.outputs.pr_number }}"

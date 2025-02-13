@@ -19,7 +19,7 @@ on:
         type: string
         required: true
       ENABLE_JOB:
-        type: boolean
+        type: string
         required: true
       ACTOR_NAME:
         type: string
@@ -41,7 +41,7 @@ on:
 
 jobs:
   tmscli-push-pot:
-    if: ${{ inputs.ENABLE_JOB }}
+    if: ${{ inputs.ENABLE_JOB == 'true' }}
     runs-on: ${{ inputs.RUNNER }}
     steps:
       - name: Print Contexts/Inputs/Secrets

@@ -22,7 +22,7 @@ on:
         type: string
         required: true
       ENABLE_JOB:
-        type: boolean
+        type: string
         required: true
     secrets:
       ACTOR_GITHUB_TOKEN:
@@ -30,7 +30,7 @@ on:
 
 jobs:
   pr-merged-to-l10n:
-    if: ${{ inputs.ENABLE_JOB }}
+    if: ${{ inputs.ENABLE_JOB == 'true' }}
     runs-on: ${{ inputs.RUNNER }}
     steps:
       - name: Print Contexts/Inputs

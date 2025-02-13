@@ -25,7 +25,7 @@ on:
         type: string
         required: true  # [required]
       ENABLE_JOB:
-        type: boolean
+        type: string
         required: true  # [required]
       ACTOR_NAME:
         type: string
@@ -47,7 +47,7 @@ on:
 
 jobs:
   tmscli-readme:
-    if: ${{ inputs.ENABLE_JOB }}
+    if: ${{ inputs.ENABLE_JOB == 'true' }}
     runs-on: ${{ inputs.RUNNER }}
     steps:
       - name: Print Contexts/Inputs/Secrets

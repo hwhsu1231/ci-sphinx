@@ -42,7 +42,7 @@ on:
         description: Name of the job that triggers this workflow call.
       ENABLE_JOB:
         required: true
-        type: boolean
+        type: string
         description: Whether to enable the job.
       ACTOR_NAME:
         required: true
@@ -58,7 +58,7 @@ on:
 
 jobs:
   sphinx-build-docs:
-    if: ${{ inputs.ENABLE_JOB }}
+    if: ${{ inputs.ENABLE_JOB == 'true' }}
     runs-on: ${{ inputs.RUNNER }}
     steps:
       - name: Print Contexts/Inputs/Secrets
