@@ -31,12 +31,18 @@ on:
       ENABLE_JOB:
         type: string
         required: true
+        description: >
+          Whether to enable the job.
       ACTOR_NAME:
         type: string
         required: true
+        description: >
+          The name of the GitHub actor.
       ACTOR_EMAIL:
-        type: string
         required: true
+        type: string
+        description: >
+          The email of the GitHub actor.
       CROWDIN_PROJECT_ID:
         type: string
         required: true

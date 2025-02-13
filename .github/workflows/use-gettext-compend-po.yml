@@ -28,6 +28,8 @@ on:
       ENABLE_JOB:
         type: string
         required: true
+        description: >
+          Whether to enable the job.
       ACTOR_NAME:
         type: string
         required: true
