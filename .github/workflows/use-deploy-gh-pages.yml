@@ -47,6 +47,20 @@ on:
         required: true
 
 jobs:
+  test:
+    runs-on: ${{ inputs.RUNNER }}
+    steps:
+      - name: ENABLE_JOB is true
+        if: ${{ inputs.ENABLE_JOB == 'true' }}
+        shell: bash
+        run: |
+          echo "ENABLE_JOB is true"
+      - name: DEPLOY_ONLY is false
+        if: ${{ inputs.DEPLOY_ONLY == 'false' }}
+        shell: bash
+        run: |
+          echo "DEPLOY_ONLY is false"
+
   merge-build-artifacts:
     if: ${{ inputs.ENABLE_JOB == 'true' && inputs.DEPLOY_ONLY == 'false' }}
     runs-on: ${{ inputs.RUNNER }}
