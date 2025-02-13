@@ -10,28 +10,32 @@ on:
         required: true
         type: string
         description: >
-          Runner image for executing the job (e.g., 'ubuntu-latest').
+          The runner image for executing the job (e.g., 'ubuntu-latest').
       CHECKOUT:
         required: true
         type: string
         description: >
-          Git reference to be checked out (e.g., \$\{\{ github.ref \}\}).
+          The git reference to be checked out (e.g., \$\{\{ github.ref \}\}).
       VERSION:
         required: true
         type: string
-        description: Version of the documentation.
+        description: >
+          Version of the documentation.
       LANGUAGE:
         required: true
         type: string
-        description: Language of the documentation.
+        description: >
+          Language of the documentation.
       MODE_OF_UPDATE:
         required: true
         type: string
-        description: Mode of updating .pot and .po files.
+        description: >
+          Mode of updating .pot and .po files.
       BASEURL_HREF:
         required: true
         type: string
-        description: Base URL for the generated HTML documentation.
+        description: >
+          Base URL for the generated HTML documentation.
       SPHINX_BUILDER:
         required: true
         type: string
@@ -43,15 +47,18 @@ on:
       ENABLE_JOB:
         required: true
         type: string
-        description: Whether to enable the job.
+        description: >
+          Whether to enable the job.
       ACTOR_NAME:
-        required: true
         type: string
-        description: Name of the GitHub actor.
+        required: true
+        description: >
+          The name of the GitHub actor.
       ACTOR_EMAIL:
         required: true
         type: string
-        description: Login handle of the GitHub actor.
+        description: >
+          The email of the GitHub actor.
     secrets:
       ACTOR_GITHUB_TOKEN:
         required: true

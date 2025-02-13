@@ -9,9 +9,13 @@ on:
       RUNNER:
         type: string
         required: true
+        description: >
+          The runner image for executing the job (e.g., 'ubuntu-latest').
       CHECKOUT:
         type: string
         required: true
+        description: >
+          The git reference to be checked out (e.g., \$\{\{ github.ref \}\}).
       VERSION:
         type: string
         required: true
@@ -24,9 +28,13 @@ on:
       ACTOR_NAME:
         type: string
         required: true
+        description: >
+          The name of the GitHub actor.
       ACTOR_EMAIL:
         required: true
         type: string
+        description: >
+          The email of the GitHub actor.
     secrets:
       ACTOR_GITHUB_TOKEN:
         required: true

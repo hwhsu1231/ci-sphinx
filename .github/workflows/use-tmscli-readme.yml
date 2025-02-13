@@ -9,9 +9,13 @@ on:
       RUNNER:
         type: string
         required: true  # [required]
+        description: >
+          The runner image for executing the job (e.g., 'ubuntu-latest').
       CHECKOUT:
         type: string
         required: true  # [required]
+        description: >
+          The git reference to be checked out (e.g., \$\{\{ github.ref \}\}).
       VERSION:
         type: string
         required: true  # [required]

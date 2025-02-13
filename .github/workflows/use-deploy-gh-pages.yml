@@ -9,11 +9,13 @@ on:
       RUNNER:
         required: true
         type: string
-        description: Runner image for executing the job (e.g., 'ubuntu-latest').
+        description: >
+          The runner image for executing the job (e.g., 'ubuntu-latest').
       CHECKOUT:
         required: true
         type: string
-        description: Git reference to be checked out (e.g., \$\{\{ github.ref \}\}).
+        description: >
+          The git reference to be checked out (e.g., \$\{\{ github.ref \}\}).
       RUN_ID:
         required: true
         type: string
@@ -33,15 +35,18 @@ on:
       ENABLE_JOB:
         required: true
         type: string
-        description: Whether to enable the job.
+        description: >
+          Whether to enable the job.
       ACTOR_NAME:
-        required: true
         type: string
-        description: Name of the GitHub actor.
+        required: true
+        description: >
+          The name of the GitHub actor.
       ACTOR_EMAIL:
         required: true
         type: string
-        description: Login handle of the GitHub actor.
+        description: >
+          The email of the GitHub actor.
     secrets:
       ACTOR_GITHUB_TOKEN:
         required: true
