@@ -20,35 +20,36 @@ on:
         required: true
         type: string
         description: >
-          Version of the documentation.
+          The version of the documentation.
       LANGUAGE:
         required: true
         type: string
         description: >
-          Language of the documentation.
+          The language of the documentation.
       MODE_OF_UPDATE:
         required: true
         type: string
         description: >
-          Mode of updating .pot and .po files.
+          The mode of updating .pot and .po files.
       BASEURL_HREF:
         required: true
         type: string
         description: >
-          Base URL for the generated HTML documentation.
+          The base URL for the deployed HTML documentation.
       SPHINX_BUILDER:
         required: true
         type: string
         description: xxx
       CALLER_JOB:
-        required: true
         type: string
-        description: Name of the job that triggers this workflow call.
-      ENABLE_JOB:
         required: true
-        type: string
         description: >
-          Whether to enable the job.
+          The name of the caller job.
+      ENABLE_JOB:
+        type: string
+        required: true
+        description: >
+          Whether to enable the job ('true' or 'false').
       ACTOR_NAME:
         type: string
         required: true
@@ -62,6 +63,8 @@ on:
     secrets:
       ACTOR_GITHUB_TOKEN:
         required: true
+        description: >
+          The token of the GitHub actor.
 
 jobs:
   sphinx-build-docs:
