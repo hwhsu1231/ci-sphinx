@@ -31,7 +31,8 @@ on:
       CALLER_JOB:
         type: string
         required: true
-        description: Name of the job that triggers this workflow call.
+        description: >
+          The name of the caller job.
       ENABLE_JOB:
         type: string
         required: true

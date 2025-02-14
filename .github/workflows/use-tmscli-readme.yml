@@ -19,12 +19,18 @@ on:
       VERSION:
         type: string
         required: true  # [required]
+        description: >
+          The version of the documentation.
       LANGUAGE:
         type: string
         required: true  # [required]
+        description: >
+          The language of the documentation.
       LANGUAGE_SOURCE:
         type: string
         required: true  # [required]
+        description: >
+          The source language of the documentation.
       CALLER_JOB:
         type: string
         required: true

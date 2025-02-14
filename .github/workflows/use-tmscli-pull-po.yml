@@ -41,8 +41,8 @@ on:
         description: >
           The name of the GitHub actor.
       ACTOR_EMAIL:
-        required: true
         type: string
+        required: true
         description: >
           The email of the GitHub actor.
       CROWDIN_PROJECT_ID:

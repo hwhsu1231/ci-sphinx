@@ -19,15 +19,23 @@ on:
       VERSION:
         type: string
         required: true
+        description: >
+          The version of the documentation.
       LANGUAGE:
         type: string
         required: true
+        description: >
+          The language of the documentation.
       MODE_OF_UPDATE:
         type: string
         required: true
+        description: >
+          The mode of updating .pot and .po files.
       CALLER_JOB:
         type: string
         required: true
+        description: >
+          The name of the caller job.
       ENABLE_JOB:
         type: string
         required: true
@@ -39,13 +47,15 @@ on:
         description: >
           The name of the GitHub actor.
       ACTOR_EMAIL:
-        required: true
         type: string
+        required: true
         description: >
           The email of the GitHub actor.
     secrets:
       ACTOR_GITHUB_TOKEN:
         required: true
+        description: >
+          The token of the GitHub actor.
 
 jobs:
   gettext-update-po:

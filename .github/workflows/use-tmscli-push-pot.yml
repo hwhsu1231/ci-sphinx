@@ -19,6 +19,8 @@ on:
       VERSION:
         type: string
         required: true
+        description: >
+          The version of the documentation.
       CALLER_JOB:
         type: string
         required: true
