@@ -123,10 +123,6 @@ jobs:
           cache-version-compendium: ${{ steps.gocv.outputs.VERSION_COMPENDIUM }}
           cache-mode-of-update: ${{ inputs.MODE_OF_UPDATE }}
           cache-auto-depend: 'OFF'
-          cache-version-of-python: ${{ steps.gocv.outputs.VERSION_OF_PYTHON }}
-          cache-version-of-sphinx: ${{ steps.gocv.outputs.VERSION_OF_SPHINX }}
-          cache-version-of-doxygen: ${{ steps.gocv.outputs.VERSION_OF_DOXYGEN }}
-          cache-version-of-proj: ${{ steps.gocv.outputs.VERSION_OF_PROJ }}
 
       - name: Get the Version Reference of '.po' Before Building
         id: po-before
