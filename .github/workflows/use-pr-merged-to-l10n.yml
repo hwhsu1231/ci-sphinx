@@ -14,6 +14,8 @@ on:
       PR_TITLE:
         type: string
         required: true
+        description: >
+          The title of the merged pull request.
       GETTEXT:
         type: string
         required: true

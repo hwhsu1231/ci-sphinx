@@ -18,13 +18,19 @@ on:
           The git reference to be checked out (e.g., \$\{\{ github.ref \}\}).
       VERSION:
         type: string
-        required: true
+        required: true  # [required]
+        description: >
+          The version of the documentation.
       LANGUAGE:
         type: string
-        required: true
+        required: true  # [required]
+        description: >
+          The language of the documentation.
       MODE_OF_UPDATE:
         type: string
         required: true
+        description: >
+          The mode of updating .pot and .po files.
       CALLER_JOB:
         type: string
         required: true
