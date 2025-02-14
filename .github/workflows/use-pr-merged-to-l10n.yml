@@ -23,12 +23,18 @@ on:
       CALLER_JOB:
         type: string
         required: true
+        description: >
+          The name of the caller job.
       ENABLE_JOB:
         type: string
         required: true
+        description: >
+          Whether to enable the job ('true' or 'false').
     secrets:
       ACTOR_GITHUB_TOKEN:
         required: true
+        description: >
+          The token of the GitHub actor.
 
 jobs:
   pr-merged-to-l10n:

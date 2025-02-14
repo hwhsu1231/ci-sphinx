@@ -48,6 +48,8 @@ on:
     secrets:
       ACTOR_GITHUB_TOKEN:
         required: true
+        description: >
+          The token of the GitHub actor.
       CROWDIN_PERSONAL_TOKEN:
         required: true
 
