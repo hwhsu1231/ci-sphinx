@@ -19,7 +19,7 @@ inputs:
     required: false
     default: '${{ github.workspace }}'
     description: >
-      The root directory for running commands or locating files.
+      The directory from which to run commands or locate files.
 
 outputs:
   VERSION_GROUP:

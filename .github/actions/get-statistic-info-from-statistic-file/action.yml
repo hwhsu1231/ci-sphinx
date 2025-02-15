@@ -12,7 +12,8 @@ inputs:
   working-directory:
     required: false
     default: '${{ github.workspace }}'
-    description: xxx
+    description: >
+      The directory from which to run commands or locate files.
 
 outputs:
   STATISTIC_INFO:

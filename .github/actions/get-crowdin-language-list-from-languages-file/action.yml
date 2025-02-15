@@ -11,18 +11,18 @@ inputs:
     description: >
       The language to fetch from the list, or 'all' to get all languages.
   language-source:
-    default: 'en_US'
     required: false
+    default: 'en_US'
     description: >
       The language from which Crowdin translates from.
   languages-file:
-    default: 'languages.json'
     required: false
+    default: 'languages.json'
     description: >
       The filename of the languages.json.
   working-directory:
-    default: ${{ github.workspace }}
     required: false
+    default: ${{ github.workspace }}
     description: >
       The directory from which to run commands or locate files.
 

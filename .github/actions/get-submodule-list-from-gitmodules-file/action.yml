@@ -16,7 +16,8 @@ inputs:
   working-directory:
     required: false
     default: ${{ github.workspace }}
-    description: The directory from which to run commands or locate files.
+    description: >
+      The directory from which to run commands or locate files.
 
 outputs:
   SUBMODULE_NUM:

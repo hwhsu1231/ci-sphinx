@@ -8,12 +8,12 @@ description: Install CMake
 inputs:
   cmake-version:
     required: false
-    description: 'Specific version of CMake to install.'
     default: ''
+    description: 'Specific version of CMake to install.'
   token:
     required: false
-    description: xxx
     default: '${{ github.token }}'
+    description: xxx
 
 runs:
   using: composite
