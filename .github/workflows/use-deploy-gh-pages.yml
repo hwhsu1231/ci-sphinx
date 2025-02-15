@@ -19,11 +19,13 @@ on:
       BUILD_RUN_ID:
         type: string
         required: true
-        description: xxx
+        description: >
+          The ID of the workflow run that uploaded the build artifacts.
       DEPLOY_ONLY:
         type: string
         required: true
-        description: xxx
+        description: >
+          Whether to deploy the documentation only (e.g., 'true' or 'false').
       DEPLOY_BRANCH:
         type: string
         required: true
@@ -55,7 +57,7 @@ on:
           The token of the GitHub actor.
 
 jobs:
-  merge-build-artifacts:
+  download-build-artifacts:
     if: ${{ inputs.ENABLE_JOB == 'true' && inputs.DEPLOY_ONLY == 'false' }}
     runs-on: ${{ inputs.RUNNER }}
     steps:
@@ -124,7 +126,7 @@ jobs:
           token: ${{ secrets.ACTOR_GITHUB_TOKEN }}
 
   deploy-gh-pages:
-    needs: [ 'merge-build-artifacts' ]
+    needs: [ 'download-build-artifacts' ]
     if: ${{ ( always() ) &&
             ( !contains(needs.*.result, 'failure') ) &&
             ( !contains(needs.*.result, 'cancelled') ) &&
