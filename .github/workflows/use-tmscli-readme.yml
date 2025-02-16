@@ -15,7 +15,7 @@ on:
         type: string
         required: true  # [required]
         description: >
-          The git reference to be checked out (e.g., \$\{\{ github.ref \}\}).
+          The git reference to be checked out (e.g., `${{ github.ref }}`).
       VERSION:
         type: string
         required: true  # [required]
