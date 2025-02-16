@@ -20,7 +20,7 @@ inputs:
     default: '${{ github.workspace }}'
     required: false
     description: >
-      The directory from which to run commands or locate files. Defaults to `\$\{\{ github.workspace \}\}`.
+      The directory from which to run commands or locate files. Defaults to `'\$\{\{ github.workspace \}\}'`.
 
 outputs:
   PULL_REQUEST_LABEL_LIST:
