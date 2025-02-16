@@ -4,7 +4,7 @@
 name: get-label-list-for-pr-from-versions-file
 
 description: >
-  Get the Label List for the Pull Request from `versions.json` file.
+  Get the label list for the pull request from `versions.json` file.
 
 inputs:
   version:
