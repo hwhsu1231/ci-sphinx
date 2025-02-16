@@ -25,7 +25,8 @@ inputs:
 outputs:
   PULL_REQUEST_LABEL_LIST:
     value: ${{ steps.gllpr.outputs.PULL_REQUEST_LABEL_LIST }}
-    description: A comma-separated list of PR labels.
+    description: >
+      A comma-separated list of PR labels.
 
 runs:
   using: composite
