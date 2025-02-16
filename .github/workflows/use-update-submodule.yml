@@ -125,10 +125,10 @@ jobs:
           echo "Current Job's URL = ${{ steps.gcji.outputs.html_url }}"
           echo "Current Job's ID  = ${{ steps.gcji.outputs.job_id }}"
 
-      - name: Set up mutex for the 'source' branch
+      - name: Set up mutex for the 'main' branch
         uses: ben-z/gh-action-mutex@v1.0.0-alpha.9
         with:
-          branch: mutex/source
+          branch: 'mutex/source'
           repo-token: ${{ secrets.ACTOR_GITHUB_TOKEN }}
 
       - name: Add and Commit Changes
