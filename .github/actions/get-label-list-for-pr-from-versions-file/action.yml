@@ -3,20 +3,24 @@
 
 name: get-label-list-for-pr-from-versions-file
 
-description: Get the Label List for the Pull Request from versions.json
+description: >
+  Get the Label List for the Pull Request from `versions.json` file.
 
 inputs:
   version:
     required: true    # [required]
-    description: The version to search for in the specified versions.json file.
+    description: >
+      The version to search for in the specified `versions.json` file.
   versions-file:
     default: 'versions.json'
     required: false
-    description: The path to the JSON file containing version data.
+    description: >
+      The path to the JSON file containing version data. Defaults to `versions.json`.
   working-directory:
     default: '${{ github.workspace }}'
     required: false
-    description: The directory from which to run commands or locate files.
+    description: >
+      The directory from which to run commands or locate files. Defaults to `\$\{\{ github.workspace \}\}`.
 
 outputs:
   PULL_REQUEST_LABEL_LIST:
