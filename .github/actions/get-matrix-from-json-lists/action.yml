@@ -72,14 +72,6 @@ runs:
           # Generate a full matrix with VERSION and LANGUAGE combinations.
           for INDEX in "${!VERSION_ARRAY[@]}"; do
             VERSION="${VERSION_ARRAY[${INDEX}]}"
-            # LANGUAGE_ALLINONE="${ALLINONE_ARRAY[${INDEX}]}"
-            # if [[ "${LANGUAGE_ALLINONE}" == "true" ]]; then
-            #   MATRIX_ARRAY+=("{\"VERSION\":\"${VERSION}\",\"LANGUAGE\":\"all\"}")
-            # else
-            #   for LANGUAGE in "${LANGUAGE_ARRAY[@]}"; do
-            #     MATRIX_ARRAY+=("{\"VERSION\":\"${VERSION}\",\"LANGUAGE\":\"${LANGUAGE}\"}")
-            #   done
-            # fi
             for LANGUAGE in "${LANGUAGE_ARRAY[@]}"; do
               MATRIX_ARRAY+=("{\"VERSION\":\"${VERSION}\",\"LANGUAGE\":\"${LANGUAGE}\"}")
             done

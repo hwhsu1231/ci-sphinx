@@ -9,15 +9,15 @@ inputs:
   language:
     required: true    # [required]
     description: >
-      xxx
+      The language to fetch from the list, or 'all' to get all languages.
   languages-file:
+    required: false
     default: 'languages.json'
-    required: false
     description: >
-      xxx
+      The filename of the languages.json.
   working-directory:
-    default: ${{ github.workspace }}
     required: false
+    default: ${{ github.workspace }}
     description: >
       The directory from which to run commands or locate files.
 

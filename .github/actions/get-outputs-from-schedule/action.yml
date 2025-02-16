@@ -8,21 +8,26 @@ description: Get Outputs from Schedule
 inputs:
   schedule:
     required: true
-    description: xxx
+    description: >
+      The schedule string to match against predefined CRON_XXX environment variables.
 
 outputs:
   TYPE:
     value: ${{ steps.gos.outputs.TYPE }}
-    description: xxx
+    description: >
+      The type of the schedule match. Defaults to 'group'.
   VERSION:
     value: ${{ steps.gos.outputs.VERSION }}
-    description: xxx
+    description: >
+      The version associated with the schedule. Defaults to an empty string.
   VERSION_GROUP:
     value: ${{ steps.gos.outputs.VERSION_GROUP }}
-    description: xxx
+    description: >
+      The matched version group based on the provided schedule.
   LANGUAGE:
     value: ${{ steps.gos.outputs.LANGUAGE }}
-    description: xxx
+    description: >
+      The language code for the schedule. Defaults to 'all'.
 
 runs:
   using: composite

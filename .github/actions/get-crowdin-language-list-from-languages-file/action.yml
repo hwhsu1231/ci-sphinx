@@ -3,7 +3,7 @@
 
 name: get-crowdin-language-list-from-languages-file
 
-description: Get the Crowdin Language List
+description: Get the Crowdin Language List from languages.json
 
 inputs:
   language:
@@ -11,8 +11,7 @@ inputs:
     description: >
       The language to fetch from the list, or 'all' to get all languages.
   language-source:
-    required: false
-    default: 'en_US'
+    required: true    # [required]
     description: >
       The language from which Crowdin translates from.
   languages-file:
