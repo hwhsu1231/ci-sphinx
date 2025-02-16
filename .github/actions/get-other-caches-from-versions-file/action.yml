@@ -67,10 +67,6 @@ runs:
 
         CACHE_VERSIONS=(
           "VERSION_COMPENDIUM"
-          "VERSION_OF_PYTHON"
-          "VERSION_OF_SPHINX"
-          "VERSION_OF_DOXYGEN"
-          "VERSION_OF_PROJ"
         )
 
         # Initialize all output variables with the default value

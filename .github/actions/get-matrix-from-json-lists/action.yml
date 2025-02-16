@@ -9,27 +9,35 @@ inputs:
   matrix-type:
     required: true    # [required]
     description: >
-      Possible values are: 'version', 'submodule', or 'version-language'.
+      Specifies the type of matrix to generate. Possible values:
+      - 'version': Generates a matrix based on the version list.
+      - 'submodule': Generates a matrix based on the submodule list.
+      - 'version-language': Generates a matrix combining the version and language lists.
   version-list:
     required: false
     default: '[]'
-    description: xxx
+    description: >
+      A JSON array containing version values. Used when `matrix-type` is 'version' or 'version-language'.
   language-list:
     required: false
     default: '[]'
-    description: xxx
+    description: >
+      A JSON array containing language values. Used when `matrix-type` is 'version-language'.
   submodule-list:
     required: false
     default: '[]'
-    description: xxx
+    description: >
+      A JSON array containing submodule values. Used when `matrix-type` is 'submodule'.
 
 outputs:
   MATRIX:
     value: ${{ steps.gain.outputs.MATRIX }}
-    description: xxx
+    description: >
+      The generated job matrix in JSON format, wrapped in an "include" object.
   MATRIX_NUM:
     value: ${{ steps.gain.outputs.MATRIX_NUM }}
-    description: xxx
+    description: >
+      The total number of entries in the generated matrix.
 
 runs:
   using: composite
@@ -50,30 +58,30 @@ runs:
         SUBMODULE_NUM=$(echo "${SUBMODULE_LIST}" | jq 'length')
 
         # Convert the JSON lists to the Bash arraies.
-        VERSION_ARRAY=($(echo "${VERSION_LIST}" | jq -r '.[]'))
-        LANGUAGE_ARRAY=($(echo "${LANGUAGE_LIST}" | jq -r '.[]'))
-        SUBMODULE_ARRAY=($(echo "${SUBMODULE_LIST}" | jq -r '.[]'))
+        VERSION_BASH_ARRAY=($(echo "${VERSION_LIST}" | jq -r '.[]'))
+        LANGUAGE_BASH_ARRAY=($(echo "${LANGUAGE_LIST}" | jq -r '.[]'))
+        SUBMODULE_BASH_ARRAY=($(echo "${SUBMODULE_LIST}" | jq -r '.[]'))
 
         # Initialize the matrix array.
-        MATRIX_ARRAY=()
+        MATRIX_BASH_ARRAY=()
 
         # Check the type of matrix to generate.
         if [[ "${MATRIX_TYPE}" == "version" ]]; then
           # Generate a matrix with only VERSION objects.
-          for VERSION in "${VERSION_ARRAY[@]}"; do
-            MATRIX_ARRAY+=("{\"VERSION\":\"${VERSION}\"}")
+          for VERSION in "${VERSION_BASH_ARRAY[@]}"; do
+            MATRIX_BASH_ARRAY+=("{\"VERSION\":\"${VERSION}\"}")
           done
         elif [[ "${MATRIX_TYPE}" == "submodule" ]]; then
           # Generate a matrix with only SUBMODULE objects.
-          for SUBMODULE in "${SUBMODULE_ARRAY[@]}"; do
-            MATRIX_ARRAY+=("{\"SUBMODULE\":\"${SUBMODULE}\"}")
+          for SUBMODULE in "${SUBMODULE_BASH_ARRAY[@]}"; do
+            MATRIX_BASH_ARRAY+=("{\"SUBMODULE\":\"${SUBMODULE}\"}")
           done
         elif [[ "${MATRIX_TYPE}" == "version-language" ]]; then
           # Generate a full matrix with VERSION and LANGUAGE combinations.
-          for INDEX in "${!VERSION_ARRAY[@]}"; do
-            VERSION="${VERSION_ARRAY[${INDEX}]}"
-            for LANGUAGE in "${LANGUAGE_ARRAY[@]}"; do
-              MATRIX_ARRAY+=("{\"VERSION\":\"${VERSION}\",\"LANGUAGE\":\"${LANGUAGE}\"}")
+          for INDEX in "${!VERSION_BASH_ARRAY[@]}"; do
+            VERSION="${VERSION_BASH_ARRAY[${INDEX}]}"
+            for LANGUAGE in "${LANGUAGE_BASH_ARRAY[@]}"; do
+              MATRIX_BASH_ARRAY+=("{\"VERSION\":\"${VERSION}\",\"LANGUAGE\":\"${LANGUAGE}\"}")
             done
           done
         else
@@ -81,11 +89,11 @@ runs:
           exit 1
         fi
 
-        echo "MATRIX_ARRAY:"
-        echo "${MATRIX_ARRAY[@]}"
+        echo "MATRIX_BASH_ARRAY:"
+        echo "${MATRIX_BASH_ARRAY[@]}"
 
-        # Convert the MATRIX_ARRAY to the MATRIX_LIST.
-        MATRIX_LIST=$(printf '%s\n' "${MATRIX_ARRAY[@]}" | jq -c -s '.')
+        # Convert the MATRIX_BASH_ARRAY to the MATRIX_LIST.
+        MATRIX_LIST=$(printf '%s\n' "${MATRIX_BASH_ARRAY[@]}" | jq -c -s '.')
         echo "MATRIX_LIST:"
         echo "${MATRIX_LIST}" | jq .
 

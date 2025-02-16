@@ -12,10 +12,9 @@ inputs:
     description: >
       The path to the Crowdin configuration file. Defaults to an empty string.
   crowdin-branch-name:
-    required: false
-    default: ''
+    required: true  # [required]
     description: >
-      The name of the branch to delete in Crowdin. Defaults to an empty string.
+      The name of the branch to delete in Crowdin.
   crowdin-project-id:
     required: false
     default: ''
@@ -59,11 +58,6 @@ runs:
             if [[ "${VALUE}" != "" ]]; then
               CROWDIN_CONFIG_FILE=$(echo "${{ inputs.crowdin-config-file }}" | sed 's#\\#/#g' | sed 's#^\([A-Za-z]\):#/\L\1#')
               CROWDIN_ARG="--config=${CROWDIN_CONFIG_FILE}"
-            fi
-          elif [[ "${KEY}" == "crowdin-branch-name" ]]; then
-            if [[ "${VALUE}" != "" ]]; then
-              CROWDIN_BRANCH_NAME="${{ inputs.crowdin-branch-name }}"
-              CROWDIN_ARG="--branch=${CROWDIN_BRANCH_NAME}"
             fi
           elif [[ "${KEY}" == "crowdin-project-id" ]]; then
             if [[ "${VALUE}" != "" ]]; then
