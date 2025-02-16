@@ -34,7 +34,7 @@ on:
           Whether to enable the job ('true' or 'false').
     secrets:
       ACTOR_GITHUB_TOKEN:
-        required: true
+        required: true  # [required]
         description: >
           The token of the GitHub actor.
 

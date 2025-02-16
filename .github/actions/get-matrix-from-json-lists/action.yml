@@ -4,6 +4,7 @@
 name: get-matrix-from-json-lists
 
 description: Get the MATRIX from the JSON Lists
+  Generate a job matrix based on JSON lists of versions, languages, or submodules.
 
 inputs:
   matrix-type:

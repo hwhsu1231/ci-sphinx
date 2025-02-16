@@ -158,7 +158,7 @@ jobs:
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
           CROWDIN_BASE_URL: ${{ inputs.CROWDIN_BASE_URL }}
 
-      - name: Get the Crowdin Status Progress of the '${{ inputs.VERSION }}' branch
+      - name: Get CROWDIN_STATUS_PROGRESS of the '${{ inputs.VERSION }}' branch
         id: gtpp
         uses: hwhsu1231/ci-sphinx/.github/actions/get-crowdin-status-progress@main
         with:

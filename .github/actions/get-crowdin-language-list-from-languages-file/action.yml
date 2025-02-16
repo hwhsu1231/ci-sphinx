@@ -3,7 +3,8 @@
 
 name: get-crowdin-language-list-from-languages-file
 
-description: Get the Crowdin Language List from languages.json
+description: >
+  Get the Crowdin Language List from languages.json file.
 
 inputs:
   language:
