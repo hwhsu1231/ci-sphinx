@@ -141,7 +141,7 @@ jobs:
       - name: Set up mutex for 'l10n' branch
         uses: ben-z/gh-action-mutex@v1.0.0-alpha.9
         with:
-          branch: mutex/l10n
+          branch: 'mutex/l10n'
           repo-token: ${{ secrets.ACTOR_GITHUB_TOKEN }}
 
       - name: Add and Commit Changes
