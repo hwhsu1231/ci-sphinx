@@ -43,17 +43,23 @@ on:
           The email of the GitHub actor.
       CROWDIN_PROJECT_ID:
         type: string
-        required: true
+        required: true  # [required]
+        description: >
+          The numeric ID of the Crowdin project.
       CROWDIN_BASE_URL:
         type: string
-        required: true
+        required: true  # [required]
+        description: >
+          The base URL of Crowdin server for API requests execution.
     secrets:
       ACTOR_GITHUB_TOKEN:
-        required: true
+        required: true  # [required]
         description: >
           The token of the GitHub actor.
       CROWDIN_PERSONAL_TOKEN:
-        required: true
+        required: true  # [required]
+        description: >
+          The personal access token for Crowdin authentication.
 
 jobs:
   tmscli-push-pot:

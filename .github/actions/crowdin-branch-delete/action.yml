@@ -24,7 +24,7 @@ inputs:
     required: false
     default: ''
     description: >
-      The personal access token for authentication. Defaults to an empty string.
+      The personal access token for Crowdin authentication. Defaults to an empty string.
   crowdin-no-progress:
     required: false
     default: 'false'
