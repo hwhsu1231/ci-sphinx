@@ -19,9 +19,15 @@ on:
       GETTEXT:
         type: string
         required: true  # [required]
+        description: >
+          Whether to trigger the `ci-gettext-update-po.yml` workflow to update `.po` files
+          from `.pot` files (.e.g, 'true' or 'false').
       TMSCLI:
         type: string
         required: true  # [required]
+        description: >
+          Whether to trigger the `ci-tmscli-push-pot.yml` workflow to push `.pot` files to
+          the translation management server (.e.g, 'true' or 'false').
       CALLER_JOB:
         type: string
         required: true  # [required]
@@ -31,12 +37,12 @@ on:
         type: string
         required: true  # [required]
         description: >
-          Whether to enable the job ('true' or 'false').
+          Whether to enable the job (e.g., 'true' or 'false').
     secrets:
       ACTOR_GITHUB_TOKEN:
         required: true  # [required]
         description: >
-          The token of the GitHub actor.
+          The personal access token of the GitHub actor.
 
 jobs:
   pr-merged-to-l10n:
@@ -64,6 +70,8 @@ jobs:
           echo "inputs.TMSCLI = ${{ inputs.TMSCLI }}"
           echo "inputs.CALLER_JOB = ${{ inputs.CALLER_JOB }}"
           echo "inputs.ENABLE_JOB = ${{ inputs.ENABLE_JOB }}"
+          echo "[Secrets]"
+          echo "secrets.ACTOR_GITHUB_TOKEN = ${{ secrets.ACTOR_GITHUB_TOKEN }}"
 
       - name: Get VERSION from the Pull Request Title
         id: gvprt

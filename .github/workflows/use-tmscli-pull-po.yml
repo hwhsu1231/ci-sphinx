@@ -45,12 +45,12 @@ on:
         type: string
         required: true  # [required]
         description: >
-          The name of the GitHub actor.
+          The user name of the GitHub actor.
       ACTOR_EMAIL:
         type: string
         required: true  # [required]
         description: >
-          The email of the GitHub actor.
+          The user email of the GitHub actor.
       CROWDIN_PROJECT_ID:
         type: string
         required: true  # [required]
@@ -65,7 +65,7 @@ on:
       ACTOR_GITHUB_TOKEN:
         required: true  # [required]
         description: >
-          The token of the GitHub actor.
+          The personal access token of the GitHub actor.
       CROWDIN_PERSONAL_TOKEN:
         required: true  # [required]
         description: >
