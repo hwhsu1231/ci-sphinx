@@ -1,9 +1,9 @@
 # Distributed under the OSI-approved BSD 3-Clause License.
 # See accompanying file LICENSE.txt for details.
 
-name: get-language-list-from-languages-file
+name: get-language-array-from-languages-file
 
-description: Get the Language List from languages.json
+description: Get the Language Array from languages.json
 
 inputs:
   language:
@@ -25,8 +25,8 @@ outputs:
   LANGUAGE_NUM:
     value: ${{ steps.glll.outputs.LANGUAGE_NUM }}
     description: xxx
-  LANGUAGE_LIST:
-    value: ${{ steps.glll.outputs.LANGUAGE_LIST }}
+  LANGUAGE_ARRAY:
+    value: ${{ steps.glll.outputs.LANGUAGE_ARRAY }}
     description: xxx
 
 runs:
@@ -43,7 +43,7 @@ runs:
         cd ${WORKING_DIRECTORY}
 
         if [[ "${LANGUAGE}" == "all" ]]; then
-          LANGUAGE_LIST="[ \"${LANGUAGE}\" ]"
+          LANGUAGE_ARRAY="[ \"${LANGUAGE}\" ]"
         else
           JQ_FILTER="keys[]"
           JQ_FILE="${LANGUAGES_FILE}"
@@ -52,7 +52,7 @@ runs:
           for LANGUAGE_LINE in ${LANGUAGE_LINES[@]}; do
             if [[ "${LANGUAGE_LINE}" == "${LANGUAGE}" ]]; then
               FOUND_LANGUAGE=true
-              LANGUAGE_LIST="[ \"${LANGUAGE}\" ]"
+              LANGUAGE_ARRAY="[ \"${LANGUAGE}\" ]"
               break
             fi
           done
@@ -63,12 +63,12 @@ runs:
             exit 1
           fi
         fi
-        LANGUAGE_NUM=$(jq "length" <<< "${LANGUAGE_LIST}")
+        LANGUAGE_NUM=$(jq "length" <<< "${LANGUAGE_ARRAY}")
 
         echo "LANGUAGE_NUM=${LANGUAGE_NUM}" >> ${GITHUB_OUTPUT}
         echo "LANGUAGE_NUM:"
         echo "${LANGUAGE_NUM}"
 
-        echo "LANGUAGE_LIST=${LANGUAGE_LIST}" >> ${GITHUB_OUTPUT}
-        echo "LANGUAGE_LIST:"
-        echo "${LANGUAGE_LIST}" | jq "."
+        echo "LANGUAGE_ARRAY=${LANGUAGE_ARRAY}" >> ${GITHUB_OUTPUT}
+        echo "LANGUAGE_ARRAY:"
+        echo "${LANGUAGE_ARRAY}" | jq "."

@@ -20,7 +20,7 @@ on:
         type: string
         required: true
         description: >
-          The ID of the workflow run that uploaded the build artifacts.
+          The numeric ID of the workflow run that uploaded the build artifacts.
       DEPLOY_ONLY:
         type: string
         required: true

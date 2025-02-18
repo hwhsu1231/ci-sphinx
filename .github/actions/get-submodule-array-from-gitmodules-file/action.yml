@@ -1,9 +1,9 @@
 # Distributed under the OSI-approved BSD 3-Clause License.
 # See accompanying file LICENSE.txt for details.
 
-name: get-submodule-list-from-gitmodules-file
+name: get-submodule-array-from-gitmodules-file
 
-description: Get the Submodule List from .gitmodules
+description: Get the Submodule Array from .gitmodules
 
 inputs:
   submodule:
@@ -23,8 +23,8 @@ outputs:
   SUBMODULE_NUM:
     value: ${{ steps.glll.outputs.SUBMODULE_NUM }}
     description: xxx
-  SUBMODULE_LIST:
-    value: ${{ steps.glll.outputs.SUBMODULE_LIST }}
+  SUBMODULE_ARRAY:
+    value: ${{ steps.glll.outputs.SUBMODULE_ARRAY }}
     description: xxx
 
 runs:
@@ -42,14 +42,14 @@ runs:
 
         if [[ "${SUBMODULE}" == "all" ]]; then
           SUBMODULE_LINES=$(git config --file ${GITMODULES_FILE} --get-regexp path | awk '{print $2}')
-          SUBMODULE_LIST=$(echo "${SUBMODULE_LINES}" | jq -R -s -c "split(\"\n\") | map(select(length > 0))")
+          SUBMODULE_ARRAY=$(echo "${SUBMODULE_LINES}" | jq -R -s -c "split(\"\n\") | map(select(length > 0))")
         else
           SUBMODULE_LINES=($(git config --file ${GITMODULES_FILE} --get-regexp path | awk '{print $2}'))
           FOUND_SUBMODULE=false
           for SUBMODULE_LINE in ${SUBMODULE_LINES[@]}; do
             if [[ "${SUBMODULE_LINE}" == "${SUBMODULE}" ]]; then
               FOUND_SUBMODULE=true
-              SUBMODULE_LIST="[ \"${LANGUAGE}\" ]"
+              SUBMODULE_ARRAY="[ \"${LANGUAGE}\" ]"
               break
             fi
           done
@@ -60,12 +60,12 @@ runs:
             exit 1
           fi
         fi
-        SUBMODULE_NUM=$(jq "length" <<< "${SUBMODULE_LIST}")
+        SUBMODULE_NUM=$(jq "length" <<< "${SUBMODULE_ARRAY}")
 
         echo "SUBMODULE_NUM=${SUBMODULE_NUM}" >> ${GITHUB_OUTPUT}
         echo "SUBMODULE_NUM:"
         echo "${SUBMODULE_NUM}"
 
-        echo "SUBMODULE_LIST=${SUBMODULE_LIST}" >> ${GITHUB_OUTPUT}
-        echo "SUBMODULE_LIST:"
-        echo "${SUBMODULE_LIST}" | jq "."
+        echo "SUBMODULE_ARRAY=${SUBMODULE_ARRAY}" >> ${GITHUB_OUTPUT}
+        echo "SUBMODULE_ARRAY:"
+        echo "${SUBMODULE_ARRAY}" | jq "."

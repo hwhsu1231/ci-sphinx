@@ -1,10 +1,9 @@
 # Distributed under the OSI-approved BSD 3-Clause License.
 # See accompanying file LICENSE.txt for details.
 
-name: get-matrix-from-json-lists
+name: get-matrix-from-json-arraies
 
-description: Get the MATRIX from the JSON Lists
-  Generate a job matrix based on JSON lists of versions, languages, or submodules.
+description: Get MATRIX from the JSON Arraies.
 
 inputs:
   matrix-type:
@@ -14,7 +13,7 @@ inputs:
       - 'version': Generates a matrix based on the version list.
       - 'submodule': Generates a matrix based on the submodule list.
       - 'version-language': Generates a matrix combining the version and language lists.
-  version-list:
+  version-array:
     required: false
     default: '[]'
     description: >
@@ -24,7 +23,7 @@ inputs:
     default: '[]'
     description: >
       A JSON array containing language values. Used when `matrix-type` is 'version-language'.
-  submodule-list:
+  submodule-array:
     required: false
     default: '[]'
     description: >
@@ -43,25 +42,25 @@ outputs:
 runs:
   using: composite
   steps:
-    - name: Get the MATRIX from the JSON Lists
+    - name: Get the MATRIX from the JSON Arraies
       id: gain
       shell: bash
       run: |
         # Get the matrix type and the JSON lists from Inputs.
         MATRIX_TYPE='${{ inputs.matrix-type }}'
-        VERSION_LIST='${{ inputs.version-list }}'
-        LANGUAGE_LIST='${{ inputs.language-list }}'
-        SUBMODULE_LIST='${{ inputs.submodule-list }}'
+        VERSION_ARRAY='${{ inputs.version-array }}'
+        LANGUAGE_ARRAY='${{ inputs.language-list }}'
+        SUBMODULE_ARRAY='${{ inputs.submodule-array }}'
 
         # Get the number of the JSON lists.
-        VERSION_NUM=$(echo "${VERSION_LIST}" | jq 'length')
-        LANGUAGE_NUM=$(echo "${LANGUAGE_LIST}" | jq 'length')
-        SUBMODULE_NUM=$(echo "${SUBMODULE_LIST}" | jq 'length')
+        VERSION_NUM=$(echo "${VERSION_ARRAY}" | jq 'length')
+        LANGUAGE_NUM=$(echo "${LANGUAGE_ARRAY}" | jq 'length')
+        SUBMODULE_NUM=$(echo "${SUBMODULE_ARRAY}" | jq 'length')
 
         # Convert the JSON lists to the Bash arraies.
-        VERSION_BASH_ARRAY=($(echo "${VERSION_LIST}" | jq -r '.[]'))
-        LANGUAGE_BASH_ARRAY=($(echo "${LANGUAGE_LIST}" | jq -r '.[]'))
-        SUBMODULE_BASH_ARRAY=($(echo "${SUBMODULE_LIST}" | jq -r '.[]'))
+        VERSION_BASH_ARRAY=($(echo "${VERSION_ARRAY}" | jq -r '.[]'))
+        LANGUAGE_BASH_ARRAY=($(echo "${LANGUAGE_ARRAY}" | jq -r '.[]'))
+        SUBMODULE_BASH_ARRAY=($(echo "${SUBMODULE_ARRAY}" | jq -r '.[]'))
 
         # Initialize the matrix array.
         MATRIX_BASH_ARRAY=()
