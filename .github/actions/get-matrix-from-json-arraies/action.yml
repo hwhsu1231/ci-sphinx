@@ -18,7 +18,7 @@ inputs:
     default: '[]'
     description: >
       A JSON array containing version values. Used when `matrix-type` is 'version' or 'version-language'.
-  language-list:
+  language-array:
     required: false
     default: '[]'
     description: >
@@ -49,7 +49,7 @@ runs:
         # Get the matrix type and the JSON lists from Inputs.
         MATRIX_TYPE='${{ inputs.matrix-type }}'
         VERSION_ARRAY='${{ inputs.version-array }}'
-        LANGUAGE_ARRAY='${{ inputs.language-list }}'
+        LANGUAGE_ARRAY='${{ inputs.language-array }}'
         SUBMODULE_ARRAY='${{ inputs.submodule-array }}'
 
         # Get the number of the JSON lists.
