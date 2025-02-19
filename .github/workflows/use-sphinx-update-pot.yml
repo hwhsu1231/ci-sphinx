@@ -159,7 +159,7 @@ jobs:
         with:
           version: ${{ inputs.VERSION }}
 
-      - name: Get PULL_REQUEST_LABEL_LIST from versions.json
+      - name: Get PR_LABEL_LIST from versions.json
         id: gllpr
         uses: hwhsu1231/ci-sphinx/.github/actions/get-label-list-for-pr-from-versions-file@main
         with:
@@ -220,7 +220,7 @@ jobs:
           github_token: ${{ secrets.ACTOR_GITHUB_TOKEN }}  # required
           source_branch: sphinx/pot/${{ inputs.VERSION }}
           target_branch: l10n
-          label: ${{ steps.gllpr.outputs.PULL_REQUEST_LABEL_LIST }}
+          label: ${{ steps.gllpr.outputs.PR_LABEL_LIST }}
           title: |
             pot(${{ inputs.VERSION }}): update .pot from sphinx
           body: |
