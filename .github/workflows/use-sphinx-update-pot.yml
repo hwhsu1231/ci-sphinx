@@ -159,7 +159,7 @@ jobs:
         with:
           version: ${{ inputs.VERSION }}
 
-      - name: Get the Label List for the Pull Request from versions.json
+      - name: Get PULL_REQUEST_LABEL_LIST from versions.json
         id: gllpr
         uses: hwhsu1231/ci-sphinx/.github/actions/get-label-list-for-pr-from-versions-file@main
         with:
