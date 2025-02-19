@@ -1,7 +1,7 @@
 # Distributed under the OSI-approved BSD 3-Clause License.
 # See accompanying file LICENSE.txt for details.
 
-name: get-tmscli-list-from-languages-file
+name: get-tmscli-language-list-from-languages-file
 
 description: >
   Get the TMSCLI List from languages.json file.
