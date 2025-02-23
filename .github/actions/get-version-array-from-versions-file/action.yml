@@ -18,7 +18,7 @@ inputs:
   version-filter:
     required: true    # [required]
     description: >
-      Possible values are: 'all', 'gettext', and 'tmscli'.
+      Possible values are: 'all', 'gettext', and 'crowdin'.
   versions-file:
     required: false
     default: 'versions.json'
@@ -62,7 +62,7 @@ runs:
             JQ_FILTER="[.[${VERSION_GROUP_FILTER}] | map(.)] | add"
           elif [[ "${VERSION_FILTER}" == "gettext" ]]; then
             JQ_FILTER="[.[${VERSION_GROUP_FILTER}] | map(select(.VERSION_COMPENDIUM != \"\") | .)] | add"
-          elif [[ "${VERSION_FILTER}" == "tmscli" ]]; then
+          elif [[ "${VERSION_FILTER}" == "crowdin" ]]; then
             JQ_FILTER="[.[${VERSION_GROUP_FILTER}] | map(select(.VERSION_COMPENDIUM == \"\") | .)] | add"
           else
             echo "Error: Invalid VERSION_FILTER value. (${VERSION_FILTER})" >&2
@@ -76,7 +76,7 @@ runs:
             JQ_FILTER="[.[] | map(.)] | add"
           elif [[ "${VERSION_FILTER}" == "gettext" ]]; then
             JQ_FILTER="[.[] | map(select(.VERSION_COMPENDIUM != \"\") | .)] | add"
-          elif [[ "${VERSION_FILTER}" == "tmscli" ]]; then
+          elif [[ "${VERSION_FILTER}" == "crowdin" ]]; then
             JQ_FILTER="[.[] | map(select(.VERSION_COMPENDIUM == \"\") | .)] | add"
           else
             echo "Error: Invalid VERSION_FILTER value. (${VERSION_FILTER})" >&2

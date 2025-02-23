@@ -29,7 +29,7 @@ outputs:
 runs:
   using: composite
   steps:
-    - name: Get the Version Group from versions.json
+    - name: Get VERSION_GROUP from versions.json
       id: gvgv
       shell: bash
       run: |

@@ -45,7 +45,7 @@ runs:
         PR_LABEL_LIST="gettext"
         for VERSION_LINE in "${VERSION_LINES[@]}"; do
           if [[ "${VERSION}" == "${VERSION_LINE}" ]]; then
-            PR_LABEL_LIST="${PR_LABEL_LIST},tmscli"
+            PR_LABEL_LIST="${PR_LABEL_LIST},crowdin"
             break
           fi
         done

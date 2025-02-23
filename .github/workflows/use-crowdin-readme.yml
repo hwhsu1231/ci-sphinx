@@ -1,7 +1,7 @@
 # Distributed under the OSI-approved BSD 3-Clause License.
 # See accompanying file LICENSE.txt for details.
 
-name: use-tmscli-readme
+name: use-crowdin-readme
 
 on:
   workflow_call:
@@ -72,7 +72,7 @@ on:
           The personal access token for Crowdin authentication.
 
 jobs:
-  tmscli-readme:
+  crowdin-readme:
     if: ${{ inputs.ENABLE_JOB == 'true' }}
     runs-on: ${{ inputs.RUNNER }}
     steps:
@@ -120,9 +120,9 @@ jobs:
       - name: Install Crowdin
         uses: hwhsu1231/ci-sphinx/.github/actions/install-crowdin@main
 
-      - name: Get TMSCLI_LANGUAGE_LIST from languages.json
+      - name: Get CROWDIN_LANGUAGE_LIST from languages.json
         id: gcll
-        uses: hwhsu1231/ci-sphinx/.github/actions/get-tmscli-language-list-from-languages-file@main
+        uses: hwhsu1231/ci-sphinx/.github/actions/get-crowdin-language-list-from-languages-file@main
         with:
           language: ${{ inputs.LANGUAGE }}
           language-source: ${{ inputs.LANGUAGE_SOURCE }}
@@ -158,11 +158,11 @@ jobs:
       #
 
       - name: Download Translations of the '${{ inputs.VERSION }}' branch from Crowdin
-        if: ${{ inputs.VERSION == 'readme' && steps.gcll.outputs.TMSCLI_LANGUAGE_LIST != '' }}
+        if: ${{ inputs.VERSION == 'readme' && steps.gcll.outputs.CROWDIN_LANGUAGE_LIST != '' }}
         uses: hwhsu1231/ci-sphinx/.github/actions/crowdin-download-translations@main
         with:
           crowdin-branch-name: ${{ inputs.VERSION }}
-          crowdin-language-list: ${{ steps.gcll.outputs.TMSCLI_LANGUAGE_LIST }}
+          crowdin-language-list: ${{ steps.gcll.outputs.CROWDIN_LANGUAGE_LIST }}
           crowdin-export-only-approved: 'true'
           crowdin-no-progress: 'true'
           crowdin-verbose: 'true'
