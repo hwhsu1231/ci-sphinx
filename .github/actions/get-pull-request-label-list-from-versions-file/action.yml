@@ -1,7 +1,7 @@
 # Distributed under the OSI-approved BSD 3-Clause License.
 # See accompanying file LICENSE.txt for details.
 
-name: get-label-list-for-pr-from-versions-file
+name: get-pull-request-label-list-from-versions-file
 
 description: >
   Get the label list for the pull request from `versions.json` file.
@@ -23,8 +23,8 @@ inputs:
       The directory from which to run commands or locate files. Defaults to `'\$\{\{ github.workspace \}\}'`.
 
 outputs:
-  PR_LABEL_LIST:
-    value: ${{ steps.gllpr.outputs.PR_LABEL_LIST }}
+  PULL_REQUEST_LABEL_LIST:
+    value: ${{ steps.gllpr.outputs.PULL_REQUEST_LABEL_LIST }}
     description: >
       A comma-separated list of PR labels.
 
@@ -42,14 +42,14 @@ runs:
         JQ_FILTER="[.[] | map(select(.VERSION_COMPENDIUM == \"\"))] | add | .[].VERSION"
         JQ_FILE="${VERSIONS_FILE}"
         VERSION_LINES=($(jq -r "${JQ_FILTER}" "${JQ_FILE}" | tr -d '\r'))
-        PR_LABEL_LIST="gettext"
+        PULL_REQUEST_LABEL_LIST="gettext"
         for VERSION_LINE in "${VERSION_LINES[@]}"; do
           if [[ "${VERSION}" == "${VERSION_LINE}" ]]; then
-            PR_LABEL_LIST="${PR_LABEL_LIST},crowdin"
+            PULL_REQUEST_LABEL_LIST="${PULL_REQUEST_LABEL_LIST},crowdin"
             break
           fi
         done
 
-        echo "PR_LABEL_LIST=${PR_LABEL_LIST}" >> ${GITHUB_OUTPUT}
-        echo "PR_LABEL_LIST:"
-        echo "${PR_LABEL_LIST}"
+        echo "PULL_REQUEST_LABEL_LIST=${PULL_REQUEST_LABEL_LIST}" >> ${GITHUB_OUTPUT}
+        echo "PULL_REQUEST_LABEL_LIST:"
+        echo "${PULL_REQUEST_LABEL_LIST}"
