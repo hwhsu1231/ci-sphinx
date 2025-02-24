@@ -124,7 +124,7 @@ jobs:
           cache-mode-of-update: ${{ inputs.MODE_OF_UPDATE }}
           cache-auto-depend: 'OFF'
 
-      - name: Get the Version Reference of '.po' Before Building
+      - name: Get VERSION_REFERENCE of '.po' Before Building
         id: po-before
         uses: hwhsu1231/ci-sphinx/.github/actions/get-version-ref-from-references-file@main
         with:
@@ -138,7 +138,7 @@ jobs:
           preset: ${{ inputs.LANGUAGE }}
           target: 'gettext_update_po'
 
-      - name: Get the Version Reference of '.po' After Building
+      - name: Get VERSION_REFERENCE of '.po' After Building
         id: po-after
         uses: hwhsu1231/ci-sphinx/.github/actions/get-version-ref-from-references-file@main
         with:
@@ -179,8 +179,8 @@ jobs:
 
             Update .po files from Gettext.
 
-            Before: ${{ steps.po-before.outputs.VERSION_REF }}
-            After: ${{ steps.po-after.outputs.VERSION_REF }}
+            Before: ${{ steps.po-before.outputs.VERSION_REFERENCE }}
+            After: ${{ steps.po-after.outputs.VERSION_REFERENCE }}
 
             Created by the GitHub Workflow:
 

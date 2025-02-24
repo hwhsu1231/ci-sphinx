@@ -118,7 +118,7 @@ jobs:
           cache-mode-of-update: ${{ inputs.MODE_OF_UPDATE }}
           cache-auto-depend: 'OFF'
 
-      - name: Get VERSION_REF of '.pot' Before Building
+      - name: Get VERSION_REFERENCE of '.pot' Before Building
         id: pot-before
         uses: hwhsu1231/ci-sphinx/.github/actions/get-version-ref-from-references-file@main
         with:
@@ -146,7 +146,7 @@ jobs:
           preset: 'all'
           target: 'sphinx_update_pot'
 
-      - name: Get VERSION_REF of '.pot' After Building
+      - name: Get VERSION_REFERENCE of '.pot' After Building
         id: pot-after
         uses: hwhsu1231/ci-sphinx/.github/actions/get-version-ref-from-references-file@main
         with:
@@ -196,8 +196,8 @@ jobs:
 
             Update .pot files from Sphinx.
 
-            Before: ${{ steps.pot-before.outputs.VERSION_REF }}
-            After: ${{ steps.pot-after.outputs.VERSION_REF }}
+            Before: ${{ steps.pot-before.outputs.VERSION_REFERENCE }}
+            After: ${{ steps.pot-after.outputs.VERSION_REFERENCE }}
 
       - name: Check Outputs of the Commit
         if: ${{ inputs.CREATE_PR == 'true' && steps.acc.outputs.committed == 'true' }}

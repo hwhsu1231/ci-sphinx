@@ -19,8 +19,8 @@ inputs:
       The directory from which to run commands or locate files. Defaults to '\$\{\{ github.workspace \}\}'.
 
 outputs:
-  VERSION_REF:
-    value: ${{ steps.gvi.outputs.VERSION_REF }}
+  VERSION_REFERENCE:
+    value: ${{ steps.gvi.outputs.VERSION_REFERENCE }}
     description: xxx
 
 runs:
@@ -40,10 +40,10 @@ runs:
 
         cd ${WORKING_DIRECTORY}
 
-        VERSION_REF=$(jq "${JQ_FILTER}" "${JQ_FILE}")
+        VERSION_REFERENCE=$(jq "${JQ_FILTER}" "${JQ_FILE}")
         DELIMITER="$(openssl rand -hex 8)"
-        echo "VERSION_REF<<${DELIMITER}"  >> ${GITHUB_OUTPUT}
-        echo "${VERSION_REF}"             >> ${GITHUB_OUTPUT}
-        echo "${DELIMITER}"               >> ${GITHUB_OUTPUT}
-        echo "VERSION_REF:"
-        echo "${VERSION_REF}"
+        echo "VERSION_REFERENCE<<${DELIMITER}"  >> ${GITHUB_OUTPUT}
+        echo "${VERSION_REFERENCE}"             >> ${GITHUB_OUTPUT}
+        echo "${DELIMITER}"                     >> ${GITHUB_OUTPUT}
+        echo "VERSION_REFERENCE:"
+        echo "${VERSION_REFERENCE}"
